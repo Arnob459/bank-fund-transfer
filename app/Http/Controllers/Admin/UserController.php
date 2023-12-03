@@ -9,9 +9,6 @@ use App\Models\Trx;
 use App\Models\UserLogin;
 use App\Models\Setting;
 use App\Models\Admin;
-use App\Models\Invest;
-use App\Models\Deposit;
-use App\Models\Withdrawal;
 
 
 
@@ -26,13 +23,13 @@ class UserController extends Controller
     //
     public function Index(){
         $data['page_title'] = 'All Users';
-        $data['users'] = User::with('parent')->latest()->paginate(15);
+        $data['users'] = User::latest()->paginate(15);
         return view('admin.users.all_users',$data);
     }
 
     public function activeUsers(){
         $data['page_title'] = 'Active Users';
-        $data['users'] = User::with('parent')->where('email_verify', 1)->where('sms_verify', 1)->where('status', 1)->orderBy('id','desc')->paginate(15);
+        $data['users'] = User::where('kyc_verify', 1)->where('email_verify', 1)->where('sms_verify', 1)->where('status', 1)->orderBy('id','desc')->paginate(15);
 
 
         return view('admin.users.all_users',$data);
@@ -40,7 +37,7 @@ class UserController extends Controller
 
     public function pendingUsers(){
         $data['page_title'] = 'Pending Users';
-        $data['users'] = User::with('parent')->where('status', 2)->latest()->paginate(15);
+        $data['users'] = User::where('status', 2)->latest()->paginate(15);
 
 
         return view('admin.users.all_users',$data);
@@ -48,7 +45,7 @@ class UserController extends Controller
 
     public function blockedUsers(){
         $data['page_title'] = 'Blocked Users';
-        $data['users'] = User::with('parent')->where('status', 0)->latest()->paginate(15);
+        $data['users'] = User::where('status', 0)->latest()->paginate(15);
 
 
         return view('admin.users.all_users',$data);
@@ -56,7 +53,7 @@ class UserController extends Controller
 
     public function emailUnverifiedUsers(){
         $data['page_title'] = 'Email Unverified Users';
-        $data['users'] = User::with('parent')->where('email_verify', 0)->latest()->paginate(15);
+        $data['users'] = User::where('email_verify', 0)->latest()->paginate(15);
 
 
         return view('admin.users.all_users',$data);
@@ -64,27 +61,36 @@ class UserController extends Controller
 
     public function smsUnverifiedUsers(){
         $data['page_title'] = 'Sms Unverified Users';
-        $data['users'] = User::with('parent')->where('sms_verify', 0)->latest()->paginate(15);
+        $data['users'] = User::where('sms_verify', 0)->latest()->paginate(15);
 
 
         return view('admin.users.all_users',$data);
     }
 
+    public function kycUnverifiedUsers(){
+        $data['page_title'] = 'Kyc Unverified Users';
+        $data['users'] = User::where('kyc_verify', 0)->latest()->paginate(15);
+
+
+        return view('admin.users.all_users',$data);
+    }
+
+    public function kycVerifiedUsers(){
+        $data['page_title'] = 'Kyc Verified Users';
+        $data['users'] = User::where('kyc_verify', 1)->latest()->paginate(15);
+
+
+        return view('admin.users.all_users',$data);
+    }
+
+
     public function userEdit($id){
 
         $data['user'] = User::findOrfail($id);
         $data['page_title'] = 'USER: ' .$data['user']->username;
-        $data['ref'] = User::find( $data['user']->refferal);
-        $data['total_invest'] = Invest::where('user_id', $id)->sum('amount');
-        $data['total_deposit'] = Deposit::where('user_id', $id)->where('status', 1)->sum('amount');
-        $data['total_Withdrawal'] = Withdrawal::where('user_id', $id)->where('status', 1)->sum('amount');
-
-
-        $data['total_interest_return'] = Trx::where('user_id', $id)->where('remark', 'interest')->sum('amount');
-        $data['ref_com'] = Trx::where('user_id', $id)->where('remark', 'ref_com')->sum('amount');
+        $data['request_amount'] = Trx::where('user_id', $id)->where('remark', 'request')->sum('amount');
+        $data['send_amount'] = Trx::where('user_id', $id)->where('remark', 'send')->sum('amount');
         $data['total_trx'] = Trx::where('user_id', $id)->count();
-
-        $data['ref_by'] = User::where('refferal', $data['user']->id)->first(['username', 'id']);
 
         return view('admin.users.profile',$data);
     }
@@ -96,11 +102,14 @@ class UserController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:50',
-            'username' => 'required|integer|digits:8|unique:users,username,'.$user->id,
+            'username' => 'required|alpha_num|min:6|max:50|unique:users,username,'.$user->id,
             'phone' => 'nullable|string|max:150|unique:users,phone,'.$user->id,
             'email' => 'required|email|max:255|unique:users,email,'.$user->id,
             'address' => 'nullable|string|max:190',
             'status' => 'required|integer|string|min:0|max:2',
+            'email_verify' => 'required|integer|string|min:0|max:2',
+            'sms_verify' => 'required|integer|string|min:0|max:2',
+            'kyc_verify' => 'required|integer|string|min:0|max:2',
             'city' => 'nullable|string|max:190',
             'zip' => 'nullable|string|max:190',
         ]);
@@ -113,8 +122,7 @@ class UserController extends Controller
             'status' => $request->status,
             'email_verify' => $request->email_verify,
             'sms_verify' => $request->sms_verify,
-            'ts' => $request->two_fa_status,
-            'tv' => $request->two_fa_verify,
+            'kyc_verify' => $request->kyc_verify,
             'address' => [
                 'address' => $request->address,
                 'country' => $request->country,

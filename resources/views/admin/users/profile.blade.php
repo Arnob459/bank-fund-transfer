@@ -27,62 +27,59 @@
                                         <div class="col-12 ">
 
                                             <div class="row mb-3">
-                                                <div div class="col-md-6 ">
-                                                    <div class=" text-nowrap mb-1">Name: </div>
+                                                <div div class="col-md-4 ">
+                                                    <div class="  mb-1">Name: </div>
                                                 </div>
-                                                <div div class="col-md-6 ">
+                                                <div div class="col-md-8 ">
                                                     <div class=" text-nowrap mb-1" > {{ $user->name }} </div>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <div div class="col-md-6 ">
-                                                    <div class=" text-nowrap mb-1">Username: </div>
+                                                <div div class="col-md-4 ">
+                                                    <div class="  mb-1">Username: </div>
                                                 </div>
-                                                <div div class="col-md-6 ">
-                                                    <div class=" text-nowrap mb-1" > {{ $user->username }} </div>
+                                                <div div class="col-md-8">
+                                                    <div class="  mb-1" > {{ $user->username }} </div>
                                                 </div>
                                             </div> <div class="row mb-3">
-                                                <div div class="col-md-6 ">
-                                                    <div class=" text-nowrap mb-1">Email: </div>
+                                                <div div class="col-md-4 ">
+                                                    <div class="  mb-1">Email: </div>
                                                 </div>
-                                                <div div class="col-md-6 ">
+                                                <div div class="col-md-8 ">
                                                     <div class="  mb-1" > {{ $user->email }} </div>
                                                 </div>
                                             </div> <div class="row mb-3">
-                                                <div div class="col-md-6 ">
-                                                    <div class="card-title text-nowrap mb-1">Mobile: </div>
+                                                <div div class="col-md-4 ">
+                                                    <div class=" mb-1">Mobile: </div>
                                                 </div>
-                                                <div div class="col-md-6 ">
-                                                    <div class=" text-nowrap mb-1" > {{ $user->phone }} </div>
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <div div class="col-md-6 ">
-                                                    <div class=" text-nowrap mb-1">Refferal By: </div>
-                                                </div>
-                                                <div div class="col-md-6 ">
-                                                    @if ($ref)
-                                                    <a href="{{route('admin.user.edit', $ref->id)}}"> {{ $ref->name }} </a>
-                                                    @else
-                                                    sN/A
-                                                    @endif
+                                                <div div class="col-md-8 ">
+                                                    <div class="  mb-1" > {{ $user->phone }} </div>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <div div class="col-md-6 ">
-                                                    <div class=" text-nowrap mb-1">Login As a User : </div>
+                                                <div div class="col-md-4 ">
+                                                    <div class="  mb-1">Account No: </div>
                                                 </div>
-                                                <div div class="col-md-6 ">
+                                                <div div class="col-md-8 ">
+                                                    <div class="  mb-1" > {{ $user->account_number }} </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div div class="col-md-4 ">
+                                                    <div class="  mb-1">Login As a User : </div>
+                                                </div>
+                                                <div div class="col-md-8">
                                                     <a target="_blank" href="{{route('admin.auto.login', $user->id)}}"> Login </a>
 
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <div div class="col-md-6 ">
-                                                    <div class=" text-nowrap mb-1">Status: </div>
+                                                <div div class="col-md-4 ">
+                                                    <div class="  mb-1">Status: </div>
                                                 </div>
-                                                <div div class="col-md-6 ">
-                                                    <div class=" text-nowrap mb-1" >
+                                                <div div class="col-md-8 ">
+                                                    <div class=" mb-1" >
                                                           @if ($user->status == 1)
                                                         <span >Active</span>
                                                         @elseif ($user->status == 0)
@@ -121,7 +118,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-8 ">
-                                                    <h6 class="">Deposit Wallet Balance</h6>
+                                                    <h6 class="">Balance</h6>
                                                     <h6 class="font-extrabold mb-0">{{$gnl->cur_sym}} {{formatter_money($user->balance)}}</h6>
                                                 </div>
                                             </div>
@@ -140,8 +137,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-8 ">
-                                                    <h6 >Bonus Wallet Balance</h6>
-                                                    <h6 class="font-extrabold mb-0">{{$gnl->cur_sym}} {{formatter_money($user->interest_balance)}}</h6>
+                                                    <h6 >Total Requested Amount</h6>
+                                                    <h6 class="font-extrabold mb-0">{{$gnl->cur_sym}} {{formatter_money($request_amount)}}</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -158,85 +155,14 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-8 ">
-                                                    <h6 class="">Total Invest</h6>
-                                                    <h6 class="font-extrabold mb-0">{{$gnl->cur_sym}} {{formatter_money($total_invest)}}</h6>
+                                                    <h6 class="">Total Send Amount</h6>
+                                                    <h6 class="font-extrabold mb-0">{{$gnl->cur_sym}} {{formatter_money($send_amount)}}</h6>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="mb-3 col-md-6">
-                                    <div class="custom-card4 rounded">
-                                        <div class="card-body px-4 py-4-5">
-                                            <div class="row">
-                                                <div class="col-md-4  ">
-                                                    <div class="stats-icon blue mb-2">
-                                                        <i class="fas fa-coins"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-8 ">
-                                                    <h6 class="">Total Bonus Return</h6>
-                                                    <h6 class="font-extrabold mb-0">{{$gnl->cur_sym}} {{formatter_money($total_interest_return)}}</h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="mb-3 col-md-6">
-                                    <div class="custom-card2 rounded">
-                                        <div class="card-body px-4 py-4-5">
-                                            <div class="row">
-                                                <div class="col-md-4  ">
-                                                    <div class="stats-icon blue mb-2">
-                                                        <i class="fas fa-coins"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-8 ">
-                                                    <h6 class="">Total Referral Commission</h6>
-                                                    <h6 class="font-extrabold mb-0">{{$gnl->cur_sym}} {{formatter_money($ref_com)}}</h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="mb-3 col-md-6">
-                                    <div class="custom-card rounded">
-                                        <div class="card-body px-4 py-4-5">
-                                            <div class="row">
-                                                <div class="col-md-4  ">
-                                                    <div class="stats-icon green mb-2">
-                                                        <i class="fas fa-coins"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-8 ">
-                                                    <h6 >Total Deposit</h6>
-                                                    <h6 class="font-extrabold mb-0">{{$gnl->cur_sym}} {{formatter_money($total_deposit)}}</h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="mb-3 col-md-6">
-                                    <div class="custom-card4 rounded">
-                                        <div class="card-body px-4 py-4-5">
-                                            <div class="row">
-                                                <div class="col-md-4 ">
-                                                    <div class="stats-icon green mb-2">
-                                                        <i class="fas fa-coins"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-8 ">
-                                                    <h6 >Total Withdraw</h6>
-                                                    <h6 class="font-extrabold mb-0">{{$gnl->cur_sym}} {{formatter_money($total_Withdrawal)}}</h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
                                 <div class="mb-3 col-md-6">
                                     <div class="custom-card4 rounded">
@@ -267,37 +193,14 @@
 
                                 </div>
 
+                                @if ( $user->nid != null )
                                 <div class="col-sm-4">
-                                    <a href="{{route('admin.report.transaction') . '?user='.$user->id}}"  class="btn btn-primary btn-block me-1 mb-3">View Transections</a>
+                                    <a href=""  class="btn btn-primary btn-block me-1 mb-3">Kyc Data</a>
 
                                 </div>
-                                <div class="col-sm-4 ">
-                                    <a href="{{route('admin.deposit.list') . '?user='.$user->id}}"   class="btn btn-primary btn-block me-1 mb-3">Deposit history</a>
-
-                                </div>
-
-                                <div class="col-sm-4 ">
-                                    <a href="{{route('admin.withdraw.log') . '?user='.$user->id}}"   class="btn btn-primary btn-block me-1 mb-3"> Withdraw history</a>
-
-                                </div>
-
-                                <div class="col-sm-4 ">
-                                    <a href="{{route('admin.report.investment') . '?user='.$user->id}}"   class="btn btn-primary btn-block me-1 mb-3">Investment history</a>
+                                @endif
 
 
-                                </div>
-
-                                <div class="col-sm-4 ">
-                                    <a href="{{route('admin.report.interest') . '?user='.$user->id}}"   class="btn btn-primary btn-block me-1 mb-3">Bonus history</a>
-
-
-                                </div>
-
-                                <div class="col-sm-4  ">
-                                    <a href="{{route('admin.report.referral') . '?user='.$user->id}}"   class="btn btn-primary btn-block me-1 mb-3">Ref. commission history</a>
-
-
-                                </div>
 
 
                             </div>
@@ -411,33 +314,19 @@
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-label">2FA Status </label>
+                                                <label class="form-label">Kyc Verification</label>
                                                 <div class="selectgroup w-100">
-                                                    <input type="radio" class="btn-check " name="two_fa_status" id="on"
-                                                    autocomplete="off" value="1" {{ $user->ts == '1' ? 'checked' : '' }}  >
-                                                <label class="btn btn-outline-success" for="on">On</label>
+                                                    <input type="radio" class="btn-check " name="kyc_verify" id="kyc_verify-on"
+                                                    autocomplete="off" value="1"  @if($user->kyc_verify == 1)    checked=""  @endif  >
+                                                <label class="btn btn-outline-success " for="kyc_verify-on">Verified</label>
 
-                                                <input type="radio" class="btn-check" name="two_fa_status" id="off"
-                                                    autocomplete="off" value="0" {{ $user->ts != '1' ? 'checked' : '' }} >
-                                                <label class="btn btn-outline-danger "  for="off"> Off</label>
+                                                <input type="radio" class="btn-check" name="kyc_verify" id="kyc_verify-off"
+                                                    autocomplete="off" value="0" @if($user->kyc_verify != 1)    checked=""  @endif >
+                                                <label class="btn btn-outline-danger"  for="kyc_verify-off"> Unverified</label>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="form-label">2FA Verification</label>
-                                                <div class="selectgroup w-100">
-                                                    <input type="radio" class="btn-check " name="two_fa_verify" id="2fa-verification-on"
-                                                    autocomplete="off" value="1"  @if($user->tv == 1)    checked=""  @endif  >
-                                                <label class="btn btn-outline-success " for="2fa-verification-on">Verified</label>
-
-                                                <input type="radio" class="btn-check" name="two_fa_verify" id="2fa-verification-off"
-                                                    autocomplete="off" value="0" @if($user->tv != 1)    checked=""  @endif >
-                                                <label class="btn btn-outline-danger"  for="2fa-verification-off"> Unverified</label>
-                                                </div>
-                                            </div>
-                                        </div>
 
                                         <div class="col-6">
                                             <div class="form-group">

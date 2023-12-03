@@ -138,27 +138,47 @@
 
 
                             <div class="form-group col-md-6 mb-3">
-                                <label for="basicInput" class="mb-2">@lang('User Registration Off Message')</label>
+                                <label for="basicInput" class="mb-2">User Registration Off Message</label>
                                 <input type="text"
                                        class="form-control  form-control-lg " id="basicInput"
                                        value="{{$gnl->res_mes}}" name="registration_off_message"
                                        placeholder="User Registration Off Message">
 
 
-                                <span class="text-warning">@lang('If user registration off message is null, there is a default message')</span>
+                                <span class="text-warning">If user registration off message is null, there is a default message</span>
 
                             </div>
 
                             <div class="form-group col-md-6 mb-3">
-                                <label class="mb-2">@lang('User Login Off Message')</label>
+                                <label class="mb-2">User Login Off Message</label>
                                 <input type="text"
                                        class="form-control  form-control-lg "
                                        value="{{$gnl->login_mes}}" name="login_off_message"
                                        placeholder="User Login Off Message">
 
                                 <span
-                                    class="text-warning">@lang('If user login off message is null, there is a default message')</span>
+                                    class="text-warning">If user login off message is null, there is a default message</span>
                             </div>
+
+                            <div class="card-title">Transfer Charges </div>
+
+                            <div class="col-md-6 ">
+                                <label for="basicInput" class="mb-2">Percent Charge </label>
+                                <div class="input-group mb-3">
+                                    <input type="text" name="percent_charge" value="{{formatter_money($gnl->percent_charge)  }}" class="form-control form-control-lg"
+                                        aria-label="percent_charge" aria-describedby="basic-addon1" required >
+                                    <span class="input-group-text" id="basic-addon1">%</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <label for="basicInput" class="mb-2">Fixed Charge </label>
+                                <div class="input-group mb-3">
+                                    <input type="text" name="fixed_charge" value="{{formatter_money($gnl->fixed_charge)  }}" class="form-control form-control-lg"
+                                        aria-label="fixed_charge" aria-describedby="basic-addon1" required>
+                                    <span class="input-group-text" id="basic-addon1">{{ $gnl->cur_sym }}</span>
+                                </div>
+                            </div>
+
                         </div>
 
                        <div class="card-action mt-5">

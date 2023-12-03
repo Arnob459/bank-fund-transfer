@@ -1,5 +1,4 @@
-@extends('frontend.master')
-@section('content')
+
     <!--============= Sign In Section Starts Here =============-->
     <div class="account-section bg_img" data-background="{{ asset('assets/frontend/images/account-bg.jpg') }}">
         <div class="container">
@@ -67,4 +66,3 @@
             </div>
         </div>
     </div>
-@endsection

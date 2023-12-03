@@ -68,6 +68,10 @@ return [
 
         ]
     ],
+    'bank' => [
+        'path' => 'assets/images/banks',
+        'size' => '200x200',
+    ],
 
     'logo_fav' => [
         'path' => 'assets/images/logo',

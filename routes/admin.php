@@ -37,6 +37,16 @@ Route::name('admin.')->group(function() {
           Route::get('/change/password',[AdminController::class,'passwordChange'])->name('password');
           Route::post('password',[AdminController::class,'passwordUpdate'])->name('password.update');
 
+        // Banks
+        Route::get('banks/index', [BankController::class, 'index'])->name('banks.index');
+        Route::get('banks/create', [BankController::class, 'create'])->name('banks.create');
+        Route::post('banks/create', [BankController::class, 'store'])->name('banks.store');
+        Route::get('banks/edit/{id}', [BankController::class, 'edit'])->name('banks.edit');
+        Route::post('banks/update/{id}', [BankController::class, 'update'])->name('banks.update');
+        Route::post('banks/activate', [BankController::class, 'activate'])->name('banks.activate');
+        Route::post('banks/deactivate', [BankController::class, 'deactivate'])->name('banks.deactivate');
+
+
 
           //Manage User
           Route::get('/allusers', [UserController::class, 'Index'])->name('allusers');
@@ -45,6 +55,10 @@ Route::name('admin.')->group(function() {
           Route::get('/blockedusers', [UserController::class, 'blockedUsers'])->name('blockedusers');
           Route::get('/emailunverified', [UserController::class, 'emailUnverifiedUsers'])->name('emailunverified');
           Route::get('/smsunverified', [UserController::class, 'smsUnverifiedUsers'])->name('smsunverified');
+          Route::get('/kycunverified', [UserController::class, 'kycUnverifiedUsers'])->name('kycunverified');
+          Route::get('/kycverified', [UserController::class, 'kycVerifiedUsers'])->name('kycverified');
+
+
 
           Route::get('users/{id}', [UserController::class, 'userEdit'])->name('user.edit');
           Route::post('users/{id}', [UserController::class, 'userUpdate'])->name('user.update');

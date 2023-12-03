@@ -81,13 +81,5 @@ class User extends Authenticatable
             return $this->hasMany(Trx::class);
         }
 
-        public function parent()
-        {
-            return $this->belongsTo(User::class, 'refferal');
-        }
 
-        public function children()
-        {
-            return $this->hasMany(User::class, 'refferal');
-        }
 }

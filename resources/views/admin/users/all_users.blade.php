@@ -5,7 +5,7 @@
                 <section class="section">
                     <div class="card">
                         <div class="card-header">
-                            All Users
+                            {{ $page_title }}
                         </div>
                         <div class="card-body" >
                             <div class="table-responsive">
@@ -15,11 +15,9 @@
                                         <th>Avatar</th>
                                         <th>Name</th>
                                         <th>Username</th>
-                                        <th>Sponson Name</th>
+                                        <th>Account No.</th>
                                         <th>Email</th>
-                                        <th>Phone</th>
-                                        <th>Deposit wallet</th>
-                                        <th>Bonus wallet</th>
+                                        <th>Balance</th>
                                         <th>Status</th>
                                         <th>Actions</th>
 
@@ -42,15 +40,9 @@
                                         </td>
                                         <td>{{ $user->name }}</td>
                                         <td><a href="{{route('admin.user.edit', $user->id)}}"> {{ $user->username }} </a></td>
-                                        <td> @if ($user->parent)
-                                            {{ $user->parent->name }}
-                                        @else
-                                            No Sponsor
-                                        @endif</td>
+                                        <td> {{ $user->account_number }}</td>
                                         <td >{{ $user->email }}</td>
-                                        <td>{{ $user->phone }}</td>
                                         <td>{{$gnl->cur_sym}} {{formatter_money($user->balance)}}</td>
-                                        <td>{{$gnl->cur_sym}} {{formatter_money($user->interest_balance)}}</td>
                                         <td>
                                         @if ($user->status == 1)
                                         <span class="badge bg-success">Active</span>
