@@ -8,7 +8,7 @@
     <div class="sidebar-wrapper  active">
 
             <div class=" d-flex justify-content-center m-4 " >
-                    <a href="{{ route('admin.dashboard') }}"><img height="50vh" src="{{asset('assets/images/logo/'. $gnl->favicon )}}" alt="Logo" srcset=""></a>
+                    <a href="{{ route('admin.dashboard') }}"><img height="50vh" src="{{asset('assets/images/logo/'. $gnl->logo )}}" alt="Logo" srcset=""></a>
             </div>
 
                 <div class="sidebar-toggler  x">
@@ -97,6 +97,80 @@
 
                     </ul>
                 </li>
+
+                <li
+                class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="fas fa-book"></i>
+                    <span>Subscribers</span>
+                </a>
+                <ul class="submenu ">
+                    <li class="submenu-item {{ Route::is('admin.subscribers') ? 'active' : '' }}">
+                        <a href="{{ route('admin.subscriber') }}">Subscribers</a>
+                    </li>
+                    <li class="submenu-item {{ Route::is('admin.subscribers.mail') ? 'active' : '' }}">
+                        <a href="{{ route('admin.subscriber.mail') }}">Mail to Subscribers</a>
+                    </li>
+                </ul>
+            </li>
+
+                <li class="sidebar-item  has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="fas fa-book"></i>
+                        <span>Home Page</span>
+                    </a>
+                    <ul class="submenu ">
+                        <li class="submenu-item {{ Route::is('admin.banner') ? 'active' : '' }}">
+                            <a href="{{ route('admin.banner') }}">Banner</a>
+                        </li>
+                         <li class="submenu-item {{ Route::is('admin.slider') ? 'active' : '' }}">
+                            <a href="{{ route('admin.slider') }}">Slider</a>
+                        </li>
+
+                        <li class="submenu-item {{ Route::is('admin.services') ? 'active' : '' }}">
+                            <a href="{{ route('admin.services') }}">Services</a>
+                        </li>
+
+                       <li class="submenu-item {{ Route::is('admin.about') ? 'active' : '' }}">
+                            <a href="{{ route('admin.about') }}">About Us</a>
+                        </li>
+                        <li class="submenu-item {{ Route::is('admin.counter') ? 'active' : '' }}">
+                            <a href="{{ route('admin.counter') }}">Counter Section</a>
+                        </li>
+                        <li class="submenu-item {{ Route::is('admin.work') ? 'active' : '' }}">
+                            <a href="{{ route('admin.work') }}">How it's Work</a>
+                        </li>
+                         <li class="submenu-item {{ Route::is('admin.faq') ? 'active' : '' }}">
+                            <a href="{{ route('admin.faq') }}">Faq </a>
+                        </li>
+                        <li class="submenu-item {{ Route::is('admin.choose') ? 'active' : '' }}">
+                            <a href="{{ route('admin.choose') }}">Why Choose Us </a>
+                        </li>
+                        <li class="submenu-item {{ Route::is('admin.testimonial') ? 'active' : '' }}">
+                            <a href="{{ route('admin.testimonial') }}">Testimonial</a>
+                        </li>
+                        <li class="submenu-item {{ Route::is('admin.blog') ? 'active' : '' }}">
+                            <a href="{{ route('admin.blog') }}">Blog</a>
+                        </li>
+                        {{-- <li class="submenu-item {{ Route::is('admin.titleSubtitle') ? 'active' : '' }}">
+                            <a href="{{ route('admin.titleSubtitle') }}">Title Subtitle </a>
+                        </li> --}}
+                        <li class="submenu-item {{ Route::is('admin.privacy') ? 'active' : '' }}">
+                            <a href="{{ route('admin.privacy') }}">Privacy </a>
+                        </li>
+                        <li class="submenu-item {{ Route::is('admin.terms') ? 'active' : '' }}">
+                            <a href="{{ route('admin.terms') }}">Terms</a>
+                        </li>
+
+                    </ul>
+                </li>
+                {{-- <li
+                    class="sidebar-item {{ Route::is('admin.language-manage') ? 'active' : '' }} ">
+                    <a href="{{ route('admin.language-manage') }}" class="sidebar-link">
+                        <i class="fas fa-language"></i>
+                        <span>Language Manager </span>
+                    </a>
+                </li> --}}
 
 
 

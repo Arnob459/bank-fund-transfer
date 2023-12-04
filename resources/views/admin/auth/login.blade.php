@@ -18,7 +18,7 @@
     <div class="col-lg-5 col-12">
         <div id="auth-left">
             <div class="auth-logo d-flex justify-content-center">
-                <a href=""><img src="{{ asset('assets/admin/images/logo/login.png') }}" alt="Logo"></a>
+                <a href=""><img src="{{ asset('assets/images/logo/'.$gnl->logo) }}" alt="Logo"></a>
             </div>
             <h1 class="auth-title">Log in.</h1>
 

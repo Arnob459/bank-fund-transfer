@@ -100,7 +100,10 @@ Route::name('admin.')->group(function() {
 
           //End Basic Settings
 
-
+        //Subscribers
+        Route::get('/subscriber', [SubscriberController::class, 'index'])->name('subscriber');
+        Route::get('/subscriber/mail', [SubscriberController::class, 'mail'])->name('subscriber.mail');
+        Route::post('/subscriber/mail', [SubscriberController::class, 'sendMail'])->name('subscriber.mail.send');
           //Home Page
 
           //Banner
