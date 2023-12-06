@@ -49,6 +49,22 @@ use Illuminate\Support\Facades\Route;
                 Route::put('/password', [UserController::class, 'passwordUpdate'])->name('password.update');
                 Route::put('/profile', [UserController::class, 'profileUpdate'])->name('profile.update');
 
+
+                Route::get('send-money', [UserController::class, 'sendMoney'])->name('sendmoney');
+                Route::get('send-money/{slug}/{id}', [UserController::class, 'sendMoneySingle'])->name('sendmoney.single');
+
+                Route::post('/send-money/{id}', [UserController::class, 'sendMoneySubmit'])->name('sendmoney.submit');
+
+                Route::get('/ownbank/send-money', [UserController::class, 'sendMoneyOwnBank'])->name('ownbank.sendmoney');
+                Route::post('/ownbank/send-money', [UserController::class, 'sendMoneySubmitOwnBank'])->name('ownbank.sendmoney.submit');
+
+                Route::get('/ownbank/request-money', [UserController::class, 'requestMoneyOwnBank'])->name('ownbank.requestmoney');
+                Route::post('/ownbank/request-money', [UserController::class, 'requestMoneySubmitOwnBank'])->name('ownbank.requestmoney.submit');
+
+                Route::get('/own-bank/pending-request', [UserController::class, 'PendingRequest'])->name('ownbank.pending.request');
+                Route::post('own-bank/request/approve', [UserController::class, 'requestApprove'] )->name('ownbank.request.approve');
+                Route::post('own-bank/tranrequestsfer/reject', [UserController::class, 'requestReject'] )->name('ownbank.request.reject');
+
                 Route::get('/login/history', [UserController::class, 'loginHistory'])->name('login.history');
 
             });

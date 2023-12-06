@@ -27,12 +27,57 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
+
+                <li
+                class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="fas fa-random"></i>
+                    <span>Transfer/Own Banks</span>
+                </a>
+                <ul class="submenu ">
+
+                    <li class="submenu-item {{ Route::is('admin.ownbank.transfer.pending') ? 'active' : '' }}">
+                        <a href="{{ route('admin.ownbank.transfer.pending') }}">Pending transfers</a>
+                    </li>
+                    <li class="submenu-item {{ Route::is('admin.ownbank.transfer.approved') ? 'active' : '' }}">
+                        <a href="{{ route('admin.ownbank.transfer.approved') }}">Approved transfers</a>
+                    </li>
+                    <li class="submenu-item {{ Route::is('admin.ownbank.transfer.rejected') ? 'active' : '' }}">
+                        <a href="{{ route('admin.ownbank.transfer.rejected') }}">Rejected transfers</a>
+                    </li>
+                    <li class="submenu-item {{ Route::is('admin.ownbank.transfer.log') ? 'active' : '' }}">
+                        <a href="{{ route('admin.ownbank.transfer.log') }}">All transfers</a>
+                    </li>
+                </ul>
+                </li>
                 <li
                 class="sidebar-item {{ Route::is('admin.banks.index') ? 'active' : '' }}">
                 <a href="{{ route('admin.banks.index') }}" class="sidebar-link">
                     <i class="fas fa-university"></i>
-                    <span>Banks</span>
+                    <span>Other Banks</span>
                 </a>
+                </li>
+                <li
+                class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
+                    <i class="fas fa-random"></i>
+                    <span>Transfer/Other Banks</span>
+                </a>
+                <ul class="submenu ">
+
+                    <li class="submenu-item {{ Route::is('admin.transfer.pending') ? 'active' : '' }}">
+                        <a href="{{ route('admin.transfer.pending') }}">Pending transfers</a>
+                    </li>
+                    <li class="submenu-item {{ Route::is('admin.transfer.approved') ? 'active' : '' }}">
+                        <a href="{{ route('admin.transfer.approved') }}">Approved transfers</a>
+                    </li>
+                    <li class="submenu-item {{ Route::is('admin.transfer.rejected') ? 'active' : '' }}">
+                        <a href="{{ route('admin.transfer.rejected') }}">Rejected transfers</a>
+                    </li>
+                    <li class="submenu-item {{ Route::is('admin.transfer.log') ? 'active' : '' }}">
+                        <a href="{{ route('admin.transfer.log') }}">All transfers</a>
+                    </li>
+                </ul>
             </li>
 
                 <li class="sidebar-title">MANAGE USERS</li>
@@ -114,6 +159,7 @@
                 </ul>
             </li>
 
+                <li class="sidebar-title">Home Management</li>
                 <li class="sidebar-item  has-sub">
                     <a href="#" class='sidebar-link'>
                         <i class="fas fa-book"></i>

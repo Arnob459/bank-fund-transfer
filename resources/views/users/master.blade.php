@@ -76,50 +76,18 @@
                     </div>
                     <ul class="dashboard-menu">
 
+                        <li class="nav-item">Request Money
+                        </li>
+                        <li class="nav-item"><a class="nav-link {{  Route::is('user.ownbank.requestmoney') ? 'active' : ''  }}"href="{{route('user.ownbank.requestmoney')}}"><i class="flaticon-atm"></i>Request Money</a>
+                        <li class="nav-item">Send Money
+                        </li>
+                        <li class="nav-item"><a class="nav-link {{  Route::is('user.ownbank.sendmoney') ? 'active' : ''  }}"href="{{route('user.ownbank.sendmoney')}}"><i class="flaticon-atm"></i>Own Bank</a>
+                        </li>
 
-                        <li class="nav-item"><a class="nav-link {{ Route::is('user.home') ? 'active' : '' }}" href="{{ route('user.home') }}"><i class="flaticon-man"></i>Dashboard</a></li>
-                        <li class="nav-item"> <a class="nav-link {{ Route::is('user.plan.index') ? 'active' : '' }}" href="{{ route('user.plan.index') }}" ><i class="flaticon-interest"></i>Investment Plan</a> </li>
-
-                        <li  class="sidebar-item  has-sub">
-                        <a href="#" class='sidebar-link'> <i class="flaticon-exchange"></i> <span > Investment History</span> </a>
-                        <ul class="submenu ">
-                            <li class="nav-item"> <a class="nav-link {{ Route::is('user.invest.history') ? 'active' : '' }}" href="{{route('user.invest.history')}}" ><i class="flaticon-interest"></i>Investment return</a> </li>
-                            <li class="nav-item"> <a class="nav-link {{ Route::is('user.invest.return.history') ? 'active' : '' }}" href="{{ route('user.plan.index') }}" ><i class="flaticon-interest"></i>Investment history</a> </li>
-                        </ul>
+                        <li class="nav-item"><a class="nav-link {{  Route::is('user.sendmoney') ? 'active' : ''  }}"href="{{route('user.sendmoney')}}"><i class="flaticon-atm"></i>Others Bank</a>
                         </li>
 
 
-                        <li class="nav-item"><a class="nav-link {{ Route::is('user.invest.history') ? 'active' : '' }}" href="{{route('user.invest.history')}}"><i class="fas fa-book"></i>Return Log</a></li>
-
-                        <li class="nav-item"><a class="nav-link " href=""><i class="fas fa-coins"></i>Deposit Now</a>
-                        </li>
-
-                        <li class="nav-item"><a class="nav-link {{  Route::is('user.deposit.history') ? 'active' : ''  }}" href="{{route('user.deposit.history')}}"><i class="flaticon-exchange"></i>Deposit History</a>
-                        </li>
-
-                        <li class="nav-item"><a class="nav-link {{  Route::is('user.withdraw') ? 'active' : ''  }}"href="{{route('user.withdraw')}}"><i class="flaticon-atm"></i>Withdraw</a>
-                        </li>
-
-                        <li class="nav-item"><a class="nav-link {{  Route::is('user.withdraw.history') ? 'active' : ''  }}" href="{{route('user.withdraw.history')}}"><i class="flaticon-exchange"></i>Withdraw History</a>
-                        </li>
-
-                        <li class="nav-item"><a class="nav-link {{  Route::is('user.transactions') ? 'active' : ''  }}" href="{{route('user.transactions')}}"><i class="flaticon-deal"></i>Transactions</a>
-                        </li>
-
-                        <li class="nav-item"><a class="nav-link {{ Route::is('user.ref') ? 'active' : '' }}" href="{{ route('user.ref') }}"><i class="fas fa-users"></i>Referral Statistic</a>
-                        </li>
-
-                        <li class="nav-item"><a class="nav-link {{ Route::is('user.ref_com') ? 'active' : '' }}" href="{{ route('user.ref_com') }}"><i class="fas fa-coins"></i>Referral Commissions</a>
-                        </li>
-
-                        <li class="nav-item"><a class="nav-link {{ Route::is('user.profile') ? 'active' : '' }}" href="{{ route('user.profile') }}"><i class="fas fa-user"></i>Profile </a>
-                        </li>
-
-                        <li class="nav-item"><a class="nav-link {{ Route::is('user.support') ? 'active' : '' }}" href="{{ route('user.support') }}"><i class="flaticon-sms"></i>Support </a>
-                        </li>
-
-                        <li class="nav-item"><a class="nav-link " href="{{ route('user.logout') }}"><i class="flaticon-right-arrow"></i>Logout</a>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -142,7 +110,7 @@
                             <div class="mobile-header-content d-lg-flex flex-wrap justify-content-lg-between align-items-center">
                                 <ul class="support-area">
                                     <li>
-                                        <a href="{{ route('user.support') }}"><i class="flaticon-support"></i>Support</a>
+                                        {{-- <a href="{{ route('user.support') }}"><i class="flaticon-support"></i>Support</a> --}}
                                     </li>
                                     <li>
                                         <a href="Mailto:{{$gnl_extra->contact_email}}"><i class="flaticon-email"></i><span class="__cf_email__" data-cfemail="f49d9a929bb49c8d9d8498959a90da979b99">[email&#160;protected]</span> </a>

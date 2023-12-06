@@ -46,7 +46,23 @@ Route::name('admin.')->group(function() {
         Route::post('banks/activate', [BankController::class, 'activate'])->name('banks.activate');
         Route::post('banks/deactivate', [BankController::class, 'deactivate'])->name('banks.deactivate');
 
+        // Transfer to other-banks
+        Route::get('transfer/pending', [TransferController::class, 'pending'] )->name('transfer.pending');
+        Route::get('transfer/approved', [TransferController::class, 'approved'] )->name('transfer.approved');
+        Route::get('transfer/rejected', [TransferController::class, 'rejected'] )->name('transfer.rejected');
+        Route::get('transfer/log', [TransferController::class, 'log'] )->name('transfer.log');
+        Route::get('transfer/{scope}/search', [TransferController::class, 'search'] )->name('transfer.search');
+        Route::post('transfer/approve', [TransferController::class, 'approve'] )->name('transfer.approve');
+        Route::post('transfer/reject', [TransferController::class, 'reject'] )->name('transfer.reject');
 
+        // Transfer to own-banks
+        Route::get('own-bank/transfer/pending', [TransferController::class, 'ownbankPending'] )->name('ownbank.transfer.pending');
+        Route::get('own-bank/transfer/approved', [TransferController::class, 'ownbankApproved'] )->name('ownbank.transfer.approved');
+        Route::get('own-bank/transfer/rejected', [TransferController::class, 'ownbankRejected'] )->name('ownbank.transfer.rejected');
+        Route::get('own-bank/transfer/log', [TransferController::class, 'ownbankLog'] )->name('ownbank.transfer.log');
+        Route::get('own-bank/transfer/{scope}/search', [TransferController::class, 'ownbankSearch'] )->name('ownbank.transfer.search');
+        Route::post('own-bank/transfer/approve', [TransferController::class, 'ownbankApprove'] )->name('ownbank.transfer.approve');
+        Route::post('own-bank/transfer/reject', [TransferController::class, 'ownbankReject'] )->name('ownbank.transfer.reject');
 
           //Manage User
           Route::get('/allusers', [UserController::class, 'Index'])->name('allusers');
