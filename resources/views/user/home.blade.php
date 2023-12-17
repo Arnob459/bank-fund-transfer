@@ -33,8 +33,6 @@
             <div class="text-17 text-light my-3"><i class="fas fa-wallet"></i></div>
             <h3 class="text-9 fw-400">{{ $gnl->cur_sym }} {{ formatter_money(auth()->user()->balance) }} </h3>
             <p class="mb-2 text-muted opacity-8">Available Balance</p>
-            <hr class="mx-n3">
-            <div class="d-flex"><a href="https://harnishdesign.net/demo/html/payyed/withdraw-money.html" class="btn-link me-auto">Withdraw</a> <a href="https://harnishdesign.net/demo/html/payyed/deposit-money.html" class="btn-link ms-auto">Deposit</a></div>
           </div>
           <!-- Available Balance End -->
 
