@@ -43,7 +43,6 @@ class BankController extends Controller
             'percent_charge' => 'required|between:0,100',
             'fixed_charge' => 'required|numeric|gte:0',
             'ud.*'           => 'required',
-            'instruction'    => 'required|string',
         ];
 
         $request->validate($validation_rule, [], ['ud.*' => 'All user data']);
@@ -66,7 +65,6 @@ class BankController extends Controller
             'fixed_charge' => $request->fixed_charge,
             'image' => $filename,
             'status' => 0,
-            'instruction' => $request->instruction,
             'user_data' => $request->ud ? json_encode($request->ud) : json_encode([]),
         ]);
 
@@ -85,7 +83,6 @@ class BankController extends Controller
             'percent_charge' => 'required|between:0,100',
             'fixed_charge' => 'required|numeric|gte:0',
             'ud.*'           => 'required',
-            'instruction'    => 'required|string',
         ];
 
         $request->validate($validation_rule, [], ['ud.*' => 'All user data']);
@@ -111,7 +108,6 @@ class BankController extends Controller
             'fixed_charge' => $request->fixed_charge,
             'image' => $filename,
             'status' => 0,
-            'instruction' => $request->instruction,
             'user_data' => $request->ud ? json_encode($request->ud) : json_encode([]),
         ]);
 

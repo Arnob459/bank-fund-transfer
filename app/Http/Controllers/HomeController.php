@@ -3,6 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+use App\Models\Setting;
+use App\Models\Trx;
+use App\Models\User;
+use App\Models\Transfer;
+use App\Models\Bank;
+use App\Models\Account;
+
 
 class HomeController extends Controller
 {
@@ -23,6 +31,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $data['page_title'] = 'Money Transfer' ;
+        $data['user'] = Auth::user();
+        $data['logs'] = Transfer::where('user_id', Auth::id())->with(['receiver','bank'])->orderBy('id', 'desc')->paginate(config('constants.table.default'));
+        return view('user.home',$data);
     }
 }

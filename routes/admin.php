@@ -64,6 +64,11 @@ Route::name('admin.')->group(function() {
         Route::post('own-bank/transfer/approve', [TransferController::class, 'ownbankApprove'] )->name('ownbank.transfer.approve');
         Route::post('own-bank/transfer/reject', [TransferController::class, 'ownbankReject'] )->name('ownbank.transfer.reject');
 
+        //Request to own-banks
+        Route::get('own-bank/request/pending', [TransferController::class, 'pendingRequest'] )->name('ownbank.request.pending');
+        Route::get('own-bank/request/approved', [TransferController::class, 'approvedRequest'] )->name('ownbank.request.approved');
+        Route::get('own-bank/request/rejected', [TransferController::class, 'rejectedRequest'] )->name('ownbank.request.rejected');
+
           //Manage User
           Route::get('/allusers', [UserController::class, 'Index'])->name('allusers');
           Route::get('/activeusers', [UserController::class, 'activeUsers'])->name('activeusers');

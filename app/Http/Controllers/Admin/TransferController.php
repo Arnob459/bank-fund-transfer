@@ -11,6 +11,30 @@ use App\Models\Transfer;
 
 class TransferController extends Controller
 {
+    public function pendingRequest()
+    {
+        $page_title = 'Pending Requests';
+        $transfers = Transfer::where('status', 2)->where('type', 0)->where('bank_type', 2)->with(['user','receiver'])->latest()->paginate(config('constants.table.default'));
+        $empty_message = 'No Request is pending';
+        return view('admin.transfer.ownbank_requests', compact('page_title', 'transfers', 'empty_message'));
+    }
+
+    public function approvedRequest()
+    {
+        $page_title = 'Approved Requests';
+        $transfers = Transfer::where('status', 1)->where('type', 0)->where('bank_type', 2)->with(['user','receiver'])->latest()->paginate(config('constants.table.default'));
+        $empty_message = 'No Request is approved';
+        return view('admin.transfer.ownbank_requests', compact('page_title', 'transfers', 'empty_message'));
+    }
+
+    public function rejectedRequest()
+    {
+        $page_title = 'Rejected Requests';
+        $transfers = Transfer::where('status', 3)->where('type', 0)->where('bank_type', 2)->with(['user','receiver'])->latest()->paginate(config('constants.table.default'));
+        $empty_message = 'No Request is rejected';
+        return view('admin.transfer.ownbank_requests', compact('page_title', 'transfers', 'empty_message'));
+    }
+
     public function ownbankPending()
     {
         $page_title = 'Pending Transfers';

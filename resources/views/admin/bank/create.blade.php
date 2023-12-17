@@ -133,21 +133,11 @@
                         <br>
                         <br>
                         <div class="row">
+
                             <div class="col-lg-12">
                                 <div class="card outline-dark">
                                     <div class="card-header  d-flex justify-content-between">
-                                        <h5>@lang('Transfer Instruction')</h5>
-                                    </div>
-                                    <div class="form-group">
-                                        <textarea rows="8" class="form-control border-radius-5 nicEdit"
-                                                  name="instruction">{{ old('instruction') }}</textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="card outline-dark">
-                                    <div class="card-header  d-flex justify-content-between">
-                                        <h5>@lang('User data')</h5>
+                                        <h5>User Account information</h5>
                                         <button type="button" class="btn btn-sm btn-outline-light addUserData"><i
                                                 class="fa fa-fw fa-plus"></i>@lang('Add New')
                                         </button>

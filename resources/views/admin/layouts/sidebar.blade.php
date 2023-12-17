@@ -31,6 +31,26 @@
                 <li
                 class="sidebar-item  has-sub">
                 <a href="#" class='sidebar-link'>
+                    <i class="far fa-arrow-alt-circle-left"></i>
+                    <span>Requests</span>
+                </a>
+                <ul class="submenu ">
+
+                    <li class="submenu-item {{ Route::is('admin.ownbank.request.pending') ? 'active' : '' }}">
+                        <a href="{{ route('admin.ownbank.request.pending') }}">Pending transfers</a>
+                    </li>
+                    <li class="submenu-item {{ Route::is('admin.ownbank.transfer.approved') ? 'active' : '' }}">
+                        <a href="{{ route('admin.ownbank.request.approved') }}">Approved transfers</a>
+                    </li>
+                    <li class="submenu-item {{ Route::is('admin.ownbank.transfer.rejected') ? 'active' : '' }}">
+                        <a href="{{ route('admin.ownbank.request.rejected') }}">Rejected transfers</a>
+                    </li>
+                </ul>
+                </li>
+
+                <li
+                class="sidebar-item  has-sub">
+                <a href="#" class='sidebar-link'>
                     <i class="fas fa-random"></i>
                     <span>Transfer/Own Banks</span>
                 </a>

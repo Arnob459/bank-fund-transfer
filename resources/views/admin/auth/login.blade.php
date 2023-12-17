@@ -7,8 +7,7 @@
     <title>{{ $gnl->site_name }}</title>
     <link rel="stylesheet" href="{{ asset('assets/admin/css/main/app.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/admin/css/pages/auth.css') }}">
-    <link rel="shortcut icon" href="{{ asset('assets/admin/images/logo/favicon.svg') }}" type="image/x-icon">
-    <link rel="shortcut icon" href="{{ asset('assets/admin/images/logo/favicon.png') }}" type="image/png">
+    <link rel="shortcut icon" href="{{ asset('assets/images/logo/'.$gnl->favicon) }}" type="image/png">
 </head>
 
 <body>

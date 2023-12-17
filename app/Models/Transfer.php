@@ -27,6 +27,7 @@ class Transfer extends Model
         return $this->belongsTo(Bank::class, 'bank_id');
     }
 
+
     public function scopePending()
     {
         return $this->where('status', 2);

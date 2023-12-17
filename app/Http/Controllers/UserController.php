@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Deposit;
 use App\Lib\GoogleAuthenticator;
 use App\Rules\FileTypeValidate;
 use App\Models\Setting;
@@ -10,6 +9,8 @@ use App\Models\Trx;
 use App\Models\User;
 use App\Models\Transfer;
 use App\Models\Bank;
+use App\Models\Account;
+
 
 use Illuminate\Http\Request;
 use Auth;
@@ -99,28 +100,12 @@ class UserController extends Controller
 
 
 
-
-
-    public function transactions()
-    {
-        $page_title = 'Transactions';
-        $logs = auth()->user()->transactions()->orderBy('id', 'desc')->paginate(config('constants.table.default'));
-        return view('users.transactions', compact('page_title', 'logs'));
-    }
-
-    public function transactionsDetails($trx, $id)
-    {
-        $data['page_title'] = 'Transactions Details';
-        $data['log'] = Trx::where('user_id', auth()->id())->where('id', $id)->where('trx', $trx)->firstOrFail();
-        return view('users.transactions_single', $data);
-    }
-
     public function PendingRequest()
     {
-        $page_title = 'Pending Requests';
-        $requests = Transfer::where('status', 2)->where('type', 0)->where('receiver_id', auth()->user()->id)->latest()->paginate(config('constants.table.default'));
+        $page_title = 'All Requests';
+        $requests = Transfer::where('type', 0)->where('receiver_id', auth()->user()->id)->with(['user','bank'])->latest()->paginate(config('constants.table.default'));
         $empty_message = 'No request is pending';
-        return view('users.request.pending', compact('page_title', 'requests', 'empty_message'));
+        return view('user.request.requests', compact('page_title', 'requests', 'empty_message'));
     }
 
 
@@ -137,15 +122,27 @@ class UserController extends Controller
         $transfer->status = 1;
         $transfer->save();
 
+        if ($transfer->amount > $transfer->final_amount) {
+            $user->balance -= formatter_money($transfer->amount);
 
-        $user->balance -= formatter_money($transfer->final_amount);
+        } else {
+            $user->balance -= formatter_money($transfer->final_amount);
+        }
+
         $user->save();
 
         $sender = User::find($transfer->user_id);
-        $sender->balance += formatter_money($transfer->final_amount);
+        if ($transfer->amount > $transfer->final_amount) {
+            $sender->balance += formatter_money($transfer->amount);
+
+        } else {
+            $sender->balance += formatter_money($transfer->final_amount);
+
+        }
+
         $sender->save();
 
-        return redirect()->route('user.ownbank.pending.request')->with('success', 'Request Marked  as Approved.');
+        return back()->with('success', 'Request Marked  as Approved.');
     }
 
     public function requestReject(Request $request)
@@ -156,14 +153,47 @@ class UserController extends Controller
         $transfer->status = 3;
         $transfer->save();
 
-        return redirect()->route('user.ownbank.pending.request')->with('success', 'Request has been rejected.');
+        return back()->with('success', 'Request has been rejected.');
     }
 
     public function requestMoneyOwnBank()
     {
         $data['page_title'] = "Request Money";
-        return view('users.own_bank.request_money', $data);
+        return view('user.own_bank.request_money', $data);
     }
+
+    public function requestMoneyConfirmOwnBank(Request $request)
+    {
+        $this->validate($request, [
+            'username' => 'required|string|min:6|max:50',
+            'amount' => 'required|numeric|gt:0',
+        ]);
+
+        $username = User::where('username',$request->username)->first();
+
+        if ($username) {
+            $data['username'] = $username;
+        } else {
+            return back()->withErrors('Please input Valid Username');
+
+        }
+
+        $genaral = Setting::first();
+        $charge = $genaral->fixed_charge + ($request->amount * $genaral->percent_charge / 100);
+        $afterCharge = $request->amount - $charge;
+
+        $data['page_title'] = "Confirm Request Money";
+        $data['amount'] = $request->amount;
+        $data['who'] = $request->who;
+        $data['charge'] = $charge;
+        $data['after_charge'] = $afterCharge ;
+
+
+
+
+        return view('user.own_bank.request_money_confirm', $data);
+    }
+
     public function requestMoneySubmitOwnBank(Request $request)
     {
 
@@ -185,7 +215,7 @@ class UserController extends Controller
         $exists = Transfer::where('user_id', $user->id)->where('receiver_id', $username)->where('type', 0)->where('status', 2)->exists();
 
         if ($exists) {
-            return back()->withErrors('You cannot send request again your previous request is still pending');
+            return redirect()->route('user.ownbank.requestmoney')->withErrors('You cannot send request again your previous request is still pending');
         }
 
         $genaral = Setting::first();
@@ -225,7 +255,9 @@ class UserController extends Controller
                 'trx' => $transfer->trx,
                 'type' => 1
             ]);
-            return back()->with('success','Request send Successfully');
+            $data['username'] = $request->username;
+            $data['amount'] = $transfer->amount;
+            return view('user.own_bank.request_money_success', $data);
         }
         if ($request->who == 1) {
 
@@ -261,7 +293,11 @@ class UserController extends Controller
                 'type' => 1
             ]);
 
-            return back()->with('success','Request send Successfully');
+            $data['username'] = $request->username;
+            $data['amount'] = $transfer->amount;
+
+            return view('user.own_bank.request_money_success', $data);
+
         }
 
     }
@@ -269,8 +305,45 @@ class UserController extends Controller
     public function sendMoneyOwnBank()
     {
         $data['page_title'] = "Send Money";
-        return view('users.own_bank.send_money', $data);
+        return view('user.own_bank.send_money', $data);
     }
+
+    public function sendMoneyConfirmOwnBank(Request $request)
+    {
+        $this->validate($request, [
+            'username' => 'required|string|min:6|max:50',
+            'amount' => 'required|numeric|gt:0',
+        ]);
+
+        if (auth()->user()->balance < $request->amount) {
+            return back()->withErrors('Insufficient balance');
+        }
+
+        $username = User::where('username',$request->username)->first();
+
+        if ($username) {
+            $data['username'] = $username;
+        } else {
+            return back()->withErrors('Please input Valid Username');
+
+        }
+
+        $genaral = Setting::first();
+        $charge = $genaral->fixed_charge + ($request->amount * $genaral->percent_charge / 100);
+        $afterCharge = $request->amount - $charge;
+
+        $data['page_title'] = "Confirm Send Money";
+        // $data['username'] = User::where('username',$request->username)->first();
+        $data['amount'] = $request->amount;
+        $data['charge'] = $charge;
+        $data['after_charge'] = $afterCharge ;
+
+
+
+
+        return view('user.own_bank.send_money_confirm', $data);
+    }
+
     public function sendMoneySubmitOwnBank(Request $request)
     {
         $this->validate($request, [
@@ -329,27 +402,90 @@ class UserController extends Controller
             'trx' => $transfer->trx,
             'type' => 1
         ]);
-        return back()->with('success','Send Money Successfully');
+        $data['page_title'] = "Success send money";
+        $data['username'] = $request->username;
+        $data['amount'] = $transfer->final_amount;
+
+
+        return view('user.own_bank.send_money_success', $data);
     }
 
 
-    public function sendMoney()
+    public function account()
     {
-        $data['banks'] = Bank::whereStatus(1)->get();
-        $data['page_title'] = "Others Bank";
-        return view('users.others_bank.send_money', $data);
+        $data['bankData'] = Bank::whereStatus(1)->get();
+        $data['accounts'] = Account::where('user_id',auth()->user()->id)->with(['bank'])->get();
+
+        $data['page_title'] = "Bank Account";
+
+        return view('user.others_bank.account', $data);
+    }
+
+    public function accountStore(Request $request)
+    {
+
+        $validatedData = $request->validate([
+            'bank_id' => 'required|exists:banks,id',
+            'account_type' => 'required|integer|min:0|max:2',
+            'ud.*'         => 'required',
+
+        ]);
+
+        $user_id = auth()->user()->id; // Assuming you have user authentication
+        $bank_id = $validatedData['bank_id'];
+        $account_type = $request->account_type;
+        $user_data = json_encode($request->input('ud')); // Assuming 'user_data' is an array
+
+        Account::create([
+            'user_id' => $user_id,
+            'bank_id' => $bank_id,
+            'user_data' => $user_data,
+            'account_type' => $account_type,
+        ]);
+
+        return back()->with('success', 'Account saved successfully');
     }
 
 
     public function sendMoneySingle($slug, $id)
     {
 
-        $data['bank'] = Bank::where('id', $id)->whereStatus(1)->first();
-        if ($data['bank'] != null) {
-            $data['page_title'] = 'Send Money Via ' . $data['bank']->name;
-            return view('users.others_bank.single', $data);
+        $data['account'] = Account::where('id', $id)->where('user_id',auth()->user()->id)->whereStatus(1)->first();
+
+        if ($data['account'] != null) {
+            $data['page_title'] = 'Send Money Via ' . $data['account']->bank->name;
+
+            return view('user.others_bank.send_money', $data);
         }
-        return back()->withErrors('Invalid Request');
+        return redirect()->route('user.account')->withErrors('Invalid Request');
+
+    }
+
+    public function sendMoneyConfirm(Request $request,$slug, $id)
+    {
+        $this->validate($request, [
+            'amount' => 'required|numeric|gt:0',
+        ]);
+
+        if (auth()->user()->balance < $request->amount) {
+            return back()->withErrors('Insufficient balance');
+        }
+
+        $data['account'] = Account::where('id', $id)->where('user_id',auth()->user()->id)->whereStatus(1)->first();
+
+        if ($data['account'] != null) {
+            $data['page_title'] = 'Confirm Send Money Via ' . $data['account']->bank->name;
+
+            $charge = $data['account']->bank->fixed_charge + ($request->amount * $data['account']->bank->percent_charge / 100);
+            $afterCharge = $request->amount - $charge;
+
+            $data['amount'] = $request->amount;
+            $data['charge'] = $charge;
+            $data['after_charge'] = $afterCharge ;
+
+            return view('user.others_bank.send_money_confirm', $data);
+        }
+        return redirect()->route('user.account')->withErrors('Invalid Request');
 
     }
 
@@ -357,89 +493,80 @@ class UserController extends Controller
     public function sendMoneySubmit(Request $request, $id)
     {
 
-
-
-            $general = Setting::first();
-
-            $bank = Bank::where('id', $id)->where('status', 1)->firstOrFail();
-
         $this->validate($request, [
             'amount' => 'required|numeric|gt:0'
         ]);
 
+        $account = Account::where('id', $id)->where('user_id',auth()->user()->id)->whereStatus(1)->first();
+
+        if ($account != null) {
+
+            if ($request->amount < $account->bank->minimum_limit) {
+                return redirect()->route('user.account')->withErrors('Your Requested Amount is Smaller Than Minimum Amount.');
+            }
 
 
+            if ($request->amount > $account->bank->maximum_limit) {
+                return redirect()->route('user.account')->withErrors( 'Your Requested Amount is Larger Than Maximum Amount.');
+            }
+
+            $user = User::find(auth()->id());
+
+            if (formatter_money($request->amount) > $user->balance) {
+                return redirect()->route('user.account')->withErrors( 'Your Request Amount is Larger Then Your Current Balance.');
+            }
+
+            $charge = $account->bank->fixed_charge + ($request->amount * $account->bank->percent_charge / 100);
+            $afterCharge = $request->amount - $charge;
+
+            $transfer = new Transfer();
+            $transfer->bank_id = $account->bank_id;
+            $transfer->user_id = $user->id;
+            $transfer->trx = getTrx();
+            $transfer->amount = formatter_money($request->amount);
+            $transfer->chart_amount -= formatter_money($request->amount);
+            $transfer->charge = $charge;
+            $transfer->after_charge = $afterCharge;
+            $transfer->final_amount = $afterCharge;
+            $transfer->detail = $account->user_data;
+            $transfer->status = 2;
+            $transfer->save();
 
 
-        if ($request->amount < $bank->minimum_limit) {
-            // $notify[] = ['error', 'Your Requested Amount is Smaller Than Minimum Amount.'];
-            return back()->withErrors('Your Requested Amount is Smaller Than Minimum Amount.');
+            $user->balance = $user->balance - $request->amount;
+            $user->update();
+
+
+            Trx::create([
+                'user_id' => $transfer->user_id,
+                'amount' => $transfer->amount,
+                'post_balance' => $user->balance,
+                'charge' => $transfer->charge,
+                'trx_type' => '-',
+                'remark' => 'send-money',
+                'details' => 'transfer Via ' . $transfer->bank->name,
+                'detail' => $transfer->detail ? json_encode($transfer->detail) : json_encode([]),
+                'trx' => $transfer->trx,
+                'type' => 2
+            ]);
+
+            $data['page_title'] = "Success Send Money";
+            $data['amount'] = $transfer->amount;
+            $data['bank_name'] = $transfer->bank->name;
+
+            return view('user.others_bank.send_money_success', $data);
         }
+        return redirect()->route('user.account')->withErrors('Invalid Request');
 
-
-        if ($request->amount > $bank->maximum_limit) {
-            // $notify[] = ['error', 'Your Requested Amount is Larger Than Maximum Amount.'];
-            return back()->withErrors( 'Your Requested Amount is Larger Than Maximum Amount.');
-        }
-
-        $user = User::find(auth()->id());
-
-        if (formatter_money($request->amount) > $user->balance) {
-            // $notify[] = ['error', 'Your Request Amount is Larger Then Your Current Balance.'];
-            return back()->withErrors( 'Your Request Amount is Larger Then Your Current Balance.');
-        }
-
-        $charge = $bank->fixed_charge + ($request->amount * $bank->percent_charge / 100);
-        $afterCharge = $request->amount - $charge;
-
-
-        $transfer = new Transfer();
-        $transfer->bank_id = $bank->id;
-        $transfer->user_id = $user->id;
-        $transfer->trx = getTrx();
-        $transfer->amount = formatter_money($request->amount);
-        $transfer->chart_amount -= formatter_money($request->amount);
-        $transfer->charge = $charge;
-        $transfer->after_charge = $afterCharge;
-        $transfer->final_amount = $afterCharge;
-        $transfer->detail = $request->ud;
-        $transfer->status = 2;
-        $transfer->save();
-
-
-        $user->balance = $user->balance - $request->amount;
-        $user->update();
-
-
-        Trx::create([
-            'user_id' => $transfer->user_id,
-            'amount' => $transfer->amount,
-            'post_balance' => $user->balance,
-            'charge' => $transfer->charge,
-            'trx_type' => '-',
-            'remark' => 'send-money',
-            'details' => 'transfer Via ' . $transfer->bank->name,
-            'detail' => $transfer->detail ? json_encode($transfer->detail) : json_encode([]),
-            'trx' => $transfer->trx,
-            'type' => 2
-        ]);
-
-
-        return redirect()->route('user.sendmoney')->with('success', 'Send Money Successfully');
     }
 
-    public function withdrawHistory()
-    {
-        $data['page_title'] = "Withdraw Log";
-        $data['withdraws'] = Withdrawal::where('user_id', Auth::id())->where('status', '!=', 0)->with('method')->latest()->paginate(config('constants.table.default'));
-        return view('users.withdraw.log', $data);
-    }
 
-    public function withdrawDetails($trx, $id)
+    public function transections()
     {
-        $data['page_title'] = "Withdraw Log";
-        $data['log'] = Withdrawal::where('id', $id)->where('user_id', auth()->id())->where('trx', $trx)->where('status', '!=', 0)->with('method')->firstOrFail();
-        return view('users.withdraw.withdraw_details', $data);
+        $page_title = 'Transactions';
+        $logs = Transfer::where('user_id', Auth::id())->with(['receiver','bank'])->orderBy('id', 'desc')->paginate(config('constants.table.default'));
+
+        return view('user.transactions', compact('page_title', 'logs'));
     }
 
 
