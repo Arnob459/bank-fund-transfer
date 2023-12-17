@@ -27,6 +27,13 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
+                <li
+                class="sidebar-item {{ Route::is('admin.accounts') ? 'active' : '' }}">
+                <a href="{{ route('admin.accounts') }}" class="sidebar-link">
+                    <i class="fas fa-university"></i>
+                    <span>accounts</span>
+                </a>
+            </li>
 
                 <li
                 class="sidebar-item  has-sub">

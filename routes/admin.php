@@ -37,6 +37,12 @@ Route::name('admin.')->group(function() {
           Route::get('/change/password',[AdminController::class,'passwordChange'])->name('password');
           Route::post('password',[AdminController::class,'passwordUpdate'])->name('password.update');
 
+        //Accounts
+        Route::get('accounts', [AdminController::class, 'accounts'])->name('accounts');
+        Route::post('accounts/activate', [AdminController::class, 'accountActivate'])->name('accounts.activate');
+        Route::post('accounts/deactivate', [AdminController::class, 'accountDectivate'])->name('accounts.deactivate');
+
+
         // Banks
         Route::get('banks/index', [BankController::class, 'index'])->name('banks.index');
         Route::get('banks/create', [BankController::class, 'create'])->name('banks.create');

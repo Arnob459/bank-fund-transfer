@@ -9,12 +9,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Deposit;
-use App\Models\Invest;
 use App\Models\Trx;
 use App\Models\User;
 use App\Models\UserLogin;
-use App\Models\Withdrawal;
+use App\Models\Account;
 
 class AdminController extends Controller
 {
@@ -99,25 +97,34 @@ class AdminController extends Controller
 
         return back()->with('success', 'Password Changed Successfully');
     }
+    public function accounts()
+    {
+        $page_title = 'Pending Accounts';
+        $accounts = Account::with(['user','bank'])->latest()->paginate(config('constants.table.default'));
+        $empty_message = 'No accounts is pending';
+        return view('admin.account.accounts', compact('page_title', 'accounts', 'empty_message'));
+    }
+
+    public function accountActivate(Request $request)
+    {
+        $request->validate(['id' => 'required|integer']);
+
+        $bank = Account::where('id', $request->id)->first();
+
+        $bank->update(['status' => 1]);
+
+        return back()->with('success', ' Account has been activated.');
+    }
+
+    public function accountDectivate(Request $request)
+    {
+        $request->validate(['id' => 'required|integer']);
+
+        $bank = Account::where('id', $request->id)->first();
+
+        $bank->update(['status' => 2]);
+
+        return back()->with('success', 'Account has been deactivated.');
+    }
 
 }
-
-
-function month()
-{
-    return [
-        1 => 'January',
-        2 => 'February',
-        3 => 'March',
-        4 => 'April',
-        5 => 'May',
-        6 => 'June',
-        7 => 'July',
-        8 => 'August',
-        9 => 'September',
-        10 => 'October',
-        11 => 'November',
-        12 => 'December'
-    ];
-}
-

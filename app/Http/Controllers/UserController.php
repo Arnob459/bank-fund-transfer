@@ -24,26 +24,58 @@ class UserController extends Controller
     public function profile()
     {
         $page_title = 'Profile';
-        return view('users.profile.index', compact('page_title'));
+        $user = Auth::user();
+        return view('user.profile.index', compact('page_title','user'));
     }
     public function profileEdit()
     {
         $page_title = 'Profile Edit';
-        return view('users.profile.profile_edit', compact('page_title'));
+        return view('user.profile.profile_edit', compact('page_title'));
     }
 
     public function profileUpdate(Request $request)
     {
         $request->validate([
             'name' => 'required|max:160',
-            'email' => 'required',
-            'phone' => 'required|max:20',
             'address' => 'nullable|max:160',
             'city' => 'nullable|max:160',
             'state' => 'nullable|max:160',
             'zip' => 'nullable|max:160',
             'country' => 'nullable|max:160',
-            'avatar' => ['nullable', 'image', new FileTypeValidate(['jpeg', 'jpg', 'png'])],
+        ]);
+
+        auth()->user()->update([
+            'name' => $request->name,
+            'address' => [
+                'address' => $request->address,
+                'city' => $request->city,
+                'state' => $request->state,
+                'zip' => $request->zip,
+                'country' => $request->country,
+            ]
+        ]);
+        return back()->with('success', 'Your profile has been updated');
+    }
+
+    public function contactUpdate(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|unique:users',
+            'phone' => 'required|max:20|unique:users',
+        ]);
+
+        auth()->user()->update([
+            'email' => $request->email,
+            'phone' => $request->phone,
+
+        ]);
+        return back()->with('success', 'Your profile has been updated');
+    }
+
+    public function avatarUpdate(Request $request)
+    {
+        $request->validate([
+            'avatar' => 'image|mimes:jpg,jpeg,png',
         ]);
 
         $filename = auth()->user()->avatar;
@@ -53,26 +85,14 @@ class UserController extends Controller
                 $size = config('constants.user.profile.size');
                 $filename = upload_image($request->avatar, $path, $size, $filename);
             } catch (\Exception $exp) {
-                // $notify[] = ['success', 'Image could not be uploaded'];
                 return back()->withErrors( 'Image could not be uploaded');
             }
         }
 
         auth()->user()->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
             'avatar' => $filename,
-            'address' => [
-                'address' => $request->address,
-                'city' => $request->city,
-                'state' => $request->state,
-                'zip' => $request->zip,
-                'country' => $request->country,
-            ]
         ]);
-        // $notify[] = ['success', 'Your profile has been updated'];
-        return back()->with('success', 'Your profile has been updated');
+        return back()->with('success', 'Your Avatar has been updated');
     }
 
     public function changePass()
@@ -419,6 +439,16 @@ class UserController extends Controller
         $data['page_title'] = "Bank Account";
 
         return view('user.others_bank.account', $data);
+    }
+
+    public function destroy($id)
+    {
+        $data = Account::find($id);
+        if (!$data) {
+            return redirect()->back()->with('success', ' Deleted successfully');
+        }
+        $data->delete();
+        return redirect()->back()->with('success', ' Deleted successfully');
     }
 
     public function accountStore(Request $request)

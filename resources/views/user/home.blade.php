@@ -22,8 +22,8 @@
                 <input type="file" class="custom-file-input" id="customFile">
               </div>
             </div>
-            <p class="text-3 fw-500 mb-2">Hello, {{ auth()->user()->name }}</p>
-            <p class="mb-2"><a href="https://harnishdesign.net/demo/html/payyed/settings-profile.html" class="text-5 text-light" data-bs-toggle="tooltip" title="Edit Profile"><i class="fas fa-edit"></i></a></p>
+            <p class="text-3 fw-500 mb-2">Hello, {{ auth()->user()->username }}</p>
+            <p class="mb-2"><a href="{{ route('user.profile') }}" class="text-5 text-light" data-bs-toggle="tooltip" title="Edit Profile"><i class="fas fa-edit"></i></a></p>
           </div>
           <!-- Profile Details End -->
 

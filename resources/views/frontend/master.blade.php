@@ -17,22 +17,24 @@
 
 <!-- Stylesheet
 ============================================= -->
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend2/css/bootstrap.min.css') }}" />
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend2/fontawesome/css/all.min.css') }}" />
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend2/css/owl.carousel.min.css') }}" />
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend2/css/stylesheet.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/css/bootstrap.min.css') }}" />
+{{-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/fontawesome/css/all.min.css') }}" /> --}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
+
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/css/owl.carousel.min.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/css/stylesheet.css') }}" />
 <!-- Colors Css -->
 <link id="color-switcher" type="text/css" rel="stylesheet" href="#" />
 </head>
 @yield('content')
 
 <!-- Script -->
-<script src="{{ asset('assets/frontend2/jquery/jquery.min.js') }}" ></script>
-<script src="{{ asset('assets/frontend2/js/bootstrap.bundle.min.js') }}" ></script>
-<script src="{{ asset('assets/frontend2/js/owl.carousel.min.js') }}" ></script>
+<script src="{{ asset('assets/frontend/jquery/jquery.min.js') }}" ></script>
+<script src="{{ asset('assets/frontend/js/bootstrap.bundle.min.js') }}" ></script>
+<script src="{{ asset('assets/frontend/js/owl.carousel.min.js') }}" ></script>
 <!-- Style Switcher -->
-<script src="{{ asset('assets/frontend2/js/switcher.min.js') }}" ></script>
-<script src="{{ asset('assets/frontend2/js/theme.js') }}" ></script>
+<script src="{{ asset('assets/frontend/js/switcher.min.js') }}" ></script>
+<script src="{{ asset('assets/frontend/js/theme.js') }}" ></script>
 </body>
 
 <!-- Mirrored from harnishdesign.net/demo/html/payyed/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 12 Dec 2023 11:01:45 GMT -->

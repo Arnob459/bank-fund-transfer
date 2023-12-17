@@ -125,7 +125,7 @@ class TransferController extends Controller
     public function approved()
     {
         $page_title = 'Approved Transfers';
-        $transfers = Transfer::where('status', 1)->with(['user','bank'])->latest()->paginate(config('constants.table.default'));
+        $transfers = Transfer::where('status', 1)->where('type', 1)->where('bank_type', 1)->with(['user','bank'])->latest()->paginate(config('constants.table.default'));
         $empty_message = 'No transfer is approved';
         return view('admin.transfer.transfers', compact('page_title', 'transfers', 'empty_message'));
     }
@@ -133,7 +133,7 @@ class TransferController extends Controller
     public function rejected()
     {
         $page_title = 'Rejected transfers';
-        $transfers = Transfer::where('status', 3)->with(['user','bank'])->latest()->paginate(config('constants.table.default'));
+        $transfers = Transfer::where('status', 3)->where('type', 1)->where('bank_type', 1)->with(['user','bank'])->latest()->paginate(config('constants.table.default'));
         $empty_message = 'No transfer is rejected';
         return view('admin.transfer.transfers', compact('page_title', 'transfers', 'empty_message'));
     }

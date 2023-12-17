@@ -46,11 +46,9 @@
                                     <td class="budget font-weight-bold">{{ formatter_money($transfer->final_amount) }} {{$gnl->cur_sym}} </td>
                                     @if(request()->routeIs('admin.transfer.pending'))
                                         <td>
-                                            @php
-                                                 $details = json_encode($transfer->detail);
-                                            @endphp
 
-                                            <button class="btn btn-primary viewBtn" data-detail="{{$details}}" data-amount="{{ formatter_money($transfer->final_amount) }} {{$transfer->currency}}" data-method="{{$transfer->bank->name}}"><i class="fa fa-fw fa-desktop"></i></button>
+
+                                            <button class="btn btn-primary viewBtn" data-detail="{{$transfer->detail}}" data-amount="{{ formatter_money($transfer->final_amount) }} {{$transfer->currency}}" data-method="{{$transfer->bank->name}}"><i class="fa fa-fw fa-desktop"></i></button>
                                             <button class="btn btn-success approveBtn"  data-id="{{ $transfer->id }}" data-amount="{{ formatter_money($transfer->final_amount) }} {{$transfer->currency}}"><i class="fa fa-fw fa-check"></i></button>
                                             <button class="btn btn-danger rejectBtn" data-id="{{ $transfer->id }}" data-amount="{{ formatter_money($transfer->final_amount) }} {{$transfer->currency}}"><i class="fa fa-fw fa-ban"></i></button>
 
@@ -70,11 +68,9 @@
 
 
                                     @if(request()->routeIs('admin.transfer.approved') || request()->routeIs('admin.transfer.rejected'))
-                                        @php
-                                            $details = json_encode($transfer->detail);
-                                        @endphp
+
                                         <td>
-                                            <button class="btn btn-primary detailsBtn" data-detail="{{$details}}" data-amount="{{ formatter_money($transfer->final_amount) }} {{$transfer->currency}}" data-method="{{$transfer->bank->name}}" data-admin_details="{{$transfer->admin_feedback}}"><i class="fa fa-fw fa-desktop"></i></button>
+                                            <button class="btn btn-primary detailsBtn" data-detail="{{$transfer->detail}}" data-amount="{{ formatter_money($transfer->final_amount) }} {{$transfer->currency}}" data-method="{{$transfer->bank->name}}" data-admin_details="{{$transfer->admin_feedback}}"><i class="fa fa-fw fa-desktop"></i></button>
                                         </td>
                                     @endif
                                 </tr>
@@ -213,6 +209,7 @@
             var modal = $('#viewModal');
             modal.find('.transfer-amount').text($(this).data('amount'));
             modal.find('.transfer-method').text($(this).data('bank'));
+
             var details =  Object.entries($(this).data('detail'));
 
             var list = [];
@@ -227,10 +224,12 @@
             var modal = $('#detailsModal');
             modal.find('.transfer-amount').text($(this).data('amount'));
             modal.find('.transfer-method').text($(this).data('bank'));
+
             var details =  Object.entries($(this).data('detail'));
+
             var list = [];
             details.map( function(item,i) {
-                list[i] = ` <li class="list-group-item">${item[0].replace('_'," ")} : ${item[1]}</li>`
+                list[i] = ` <li class="list-group-item">${item[0]} : ${item[1]}</li>`
             });
             modal.find('.transfer-detail').html(list);
             modal.find('.admin-detail').text($(this).data('admin_details'));

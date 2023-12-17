@@ -230,6 +230,15 @@
             </div>
             <!-- Transaction Item Details Modal End -->
             @endforeach
+            @if (count($requests) == 0)
+            <div class="transaction-list">
+                <div class="transaction-item px-4 py-3" >
+                  <div class=" align-items-center ">
+                    <div class=" text-center"> <span class="d-block text-4 fw-300">No Requests</span> </div>
+                  </div>
+                </div>
+              </div>
+            @endif
 
 
             <!-- Pagination

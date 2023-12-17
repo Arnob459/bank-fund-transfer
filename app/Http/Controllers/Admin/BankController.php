@@ -122,8 +122,7 @@ class BankController extends Controller
 
         $bank->update(['status' => 1]);
 
-        $notify[] = ['success', $bank->name . ' has been activated.'];
-        return back()->withNotify($notify);
+        return back()->with('success', $bank->name . ' has been activated.');
     }
 
     public function deactivate(Request $request)
@@ -134,7 +133,6 @@ class BankController extends Controller
 
         $bank->update(['status' => 0]);
 
-        $notify[] = ['success', $bank->name . ' has been deactivated.'];
-        return back()->withNotify($notify);
+        return back()->with('success', $bank->name . ' has been deactivated.');
     }
 }

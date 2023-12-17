@@ -31,7 +31,7 @@
                   </div>
                 </div>
               </div>
-              <div class="account-card-overlay rounded"> @if ($account->status == 1 )<a href="#" data-bs-target="#bank-account-details{{$account->id}}" data-bs-toggle="modal" class="text-light btn-link mx-2"><span class="me-1"><i class="fas fa-share"></i></span>send money</a>@endif <a href="#" class="text-light btn-link mx-2"><span class="me-1"><i class="fas fa-minus-circle"></i></span>Delete</a> </div>
+              <div class="account-card-overlay rounded"> @if ($account->status == 1 )<a href="#" data-bs-target="#bank-account-details{{$account->id}}" data-bs-toggle="modal" class="text-light btn-link mx-2"><span class="me-1"><i class="fas fa-share"></i></span>send money</a>@endif <a href="#" data-bs-target="#bank-account-delete{{$account->id}}" data-bs-toggle="modal"  class="text-light btn-link mx-2"><span class="me-1"><i class="fas fa-minus-circle"></i></span>Delete</a> </div>
 
             </div>
           </div>
@@ -75,7 +75,7 @@
                     <li class="text-muted">Approved <span class="text-success text-3"><i class="fas fa-check-circle"></i></span></li>
                   </ul>
 
-                  <div class="d-grid"><a href="{{ route('user.sendmoney.single', [slug(__($account->bank->name)) , $account->id]) }}" class="btn btn-sm btn-outline-success shadow-none"><span class="me-1"><i class="fas fa-minus-circle"></i></span>Send Money</a></div>
+                  <div class="d-grid"><a href="{{ route('user.sendmoney.single', [slug(__($account->bank->name)) , $account->id]) }}" class="btn btn-sm btn-outline-success shadow-none"><span class="me-1"><i class="fas fa-share"></i></span>Send Money</a></div>
                 </div>
               </div>
             </div>
@@ -83,6 +83,64 @@
         </div>
       </div>
     </div>
+
+        {{-- //delete --}}
+        <div id="bank-account-delete{{$account->id}}" class="modal fade" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered transaction-details" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <div class="row g-0">
+                  <div class="col-sm-5 d-flex justify-content-center bg-primary rounded-start py-4">
+                    <div class="my-auto text-center">
+                      <img  src="{{ asset('assets/images/banks/'.$account->bank->image) }}" alt="" style="max-width: 50px; max-height: 50px;">
+                      <h3 class="text-6 text-white my-3">{{ $account->bank->name }}</h3>
+                      <div class="text-4 text-white my-4">{{ $account->bank->routing_number }}</div>
+                    </div>
+                  </div>
+                  <div class="col-sm-7">
+                    <h5 class="text-5 fw-400 m-3">Bank Account Details
+                      <button type="button" class="btn-close text-2 float-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </h5>
+                    <hr>
+                    <div class="px-3 mb-3">
+                      <ul class="list-unstyled">
+                        <li class="fw-500">Account Type:</li>
+                        @if ($account->type == 0)
+                        <li class="text-muted">Personal</li>
+                          @else
+                        <li class="text-muted">Business</li>
+                        @endif
+                      </ul>
+                      @foreach(json_decode($account->user_data) as $key => $data)
+                      <ul class="list-unstyled">
+                        <li class="fw-500">{{ $key }}</li>
+                        <li class="text-muted">{{ $data }}</li>
+                      </ul>
+                      @endforeach
+                      @if ($account->status == 1)
+
+                      <ul class="list-unstyled">
+                        <li class="fw-500">Status:</li>
+                        <li class="text-muted">Approved <span class="text-success text-3"><i class="fas fa-check-circle"></i></span></li>
+                      </ul>
+                      @endif
+
+                      <ul class="list-unstyled">
+                        <form method="POST" action="{{ route('user.account.destroy', $account->id) }}">
+                            @csrf
+                            @method('DELETE')
+                            <div class="d-grid"><button type="submit" class="btn btn-sm btn-outline-danger shadow-none"><span class="me-1"><i class="fas fa-minus-circle"></i></span>Delete</button></div>
+                        </form>
+                     </ul>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         @endforeach
 
         <div class="col-12 col-md-4"> <a href="" data-bs-target="#add-new-bank-account" data-bs-toggle="modal" class="account-card-new d-flex align-items-center rounded h-100 p-3 mb-4 mb-lg-0">

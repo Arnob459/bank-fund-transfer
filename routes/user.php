@@ -48,9 +48,15 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/change-password', [UserController::class, 'changePass'])->name('change.password');
                 Route::put('/password', [UserController::class, 'passwordUpdate'])->name('password.update');
                 Route::put('/profile', [UserController::class, 'profileUpdate'])->name('profile.update');
+                Route::put('/contact', [UserController::class, 'contactUpdate'])->name('contact.update');
+
+                Route::put('/avatar', [UserController::class, 'avatarUpdate'])->name('avatar.update');
+
 
                 Route::get('/other-bank/account', [UserController::class, 'account'])->name('account');
                 Route::post('/other-bank/account', [UserController::class, 'accountStore'])->name('account.store');
+                Route::delete('/other-bank/counter/account/{id}', [UserController::class, 'destroy'])->name('account.destroy');
+
 
 
                 Route::get('/other-bank/send-money', [UserController::class, 'sendMoney'])->name('sendmoney');
