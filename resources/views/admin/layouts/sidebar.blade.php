@@ -81,7 +81,7 @@
                 class="sidebar-item {{ Route::is('admin.banks.index') ? 'active' : '' }}">
                 <a href="{{ route('admin.banks.index') }}" class="sidebar-link">
                     <i class="fas fa-university"></i>
-                    <span>Other Banks</span>
+                    <span> Banks</span>
                 </a>
                 </li>
                 <li

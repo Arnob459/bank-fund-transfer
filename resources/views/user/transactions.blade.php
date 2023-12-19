@@ -11,41 +11,40 @@
         ============================================= -->
         <aside class="col-lg-3">
 
-          <!-- Profile Details
-          =============================== -->
-          <div class="bg-white shadow-sm rounded text-center p-3 mb-4">
-            <div class="profile-thumb mt-3 mb-4"> <img class="rounded-circle" src="https://harnishdesign.net/demo/html/payyed/images/profile-thumb.jpg" alt="">
-              <div class="profile-thumb-edit bg-primary text-white" data-bs-toggle="tooltip" title="Change Profile Picture"> <i class="fas fa-camera position-absolute"></i>
-                <input type="file" class="custom-file-input" id="customFile">
+            <!-- Profile Details
+            =============================== -->
+            <div class="bg-white shadow-sm rounded text-center p-3 mb-4">
+              <div class="profile-thumb mt-3 mb-4"> <img class="rounded-circle" src="https://harnishdesign.net/demo/html/payyed/images/profile-thumb.jpg" alt="">
+                <div class="profile-thumb-edit bg-primary text-white" data-bs-toggle="tooltip" title="Change Profile Picture"> <i class="fas fa-camera position-absolute"></i>
+                  <input type="file" class="custom-file-input" id="customFile">
+                </div>
               </div>
+              <p class="text-3 fw-500 mb-2">Hello, {{ auth()->user()->username }}</p>
+              <p class="mb-2"><a href="{{ route('user.profile') }}" class="text-5 text-light" data-bs-toggle="tooltip" title="Edit Profile"><i class="fas fa-edit"></i></a></p>
             </div>
-            <p class="text-3 fw-500 mb-2">{{ auth()->user()->name }}</p>
-            <p class="mb-2"><a href="settings-profile.html" class="text-5 text-light" data-bs-toggle="tooltip" title="Edit Profile"><i class="fas fa-edit"></i></a></p>
-          </div>
-          <!-- Profile Details End -->
+            <!-- Profile Details End -->
 
-          <!-- Available Balance
-          =============================== -->
-          <div class="bg-white shadow-sm rounded text-center p-3 mb-4">
-            <div class="text-17 text-light my-3"><i class="fas fa-wallet"></i></div>
-            <h3 class="text-9 fw-400">{{ $gnl->cur_sym }}{{ formatter_money(auth()->user()->balance)  }}</h3>
-            <p class="mb-2 text-muted opacity-8">Available Balance</p>
-            <hr class="mx-n3">
-          </div>
-          <!-- Available Balance End -->
+            <!-- Available Balance
+            =============================== -->
+            <div class="bg-white shadow-sm rounded text-center p-3 mb-4">
+              <div class="text-17 text-light my-3"><i class="fas fa-wallet"></i></div>
+              <h3 class="text-9 fw-400">{{ $gnl->cur_sym }} {{ formatter_money(auth()->user()->balance) }} </h3>
+              <p class="mb-2 text-muted opacity-8">Available Balance</p>
+            </div>
+            <!-- Available Balance End -->
 
-          <!-- Need Help?
-          =============================== -->
-          <div class="bg-white shadow-sm rounded text-center p-3 mb-4">
-            <div class="text-17 text-light my-3"><i class="fas fa-comments"></i></div>
-            <h3 class="text-5 fw-400 my-4">Need Help?</h3>
-            <p class="text-muted opacity-8 mb-4">Have questions or concerns regrading your account?<br>
-              Our experts are here to help!.</p>
-            <div class="d-grid"><a href="#" class="btn btn-primary">Chate with Us</a></div>
-		  </div>
-          <!-- Need Help? End -->
+            <!-- Need Help?
+            =============================== -->
+            <div class="bg-white shadow-sm rounded text-center p-3 mb-4">
+              <div class="text-17 text-light my-3"><i class="fas fa-comments"></i></div>
+              <h3 class="text-5 fw-400 my-4">Need Help?</h3>
+              <p class="text-muted opacity-8 mb-4">Have questions or concerns regrading your account?<br>
+                Our experts are here to help!.</p>
+              <div class="d-grid"><a href="#" class="btn btn-primary">Chate with Us</a></div>
+            </div>
+            <!-- Need Help? End -->
 
-        </aside>
+          </aside>
         <!-- Left Panel End -->
 
         <!-- Middle Panel
@@ -67,47 +66,7 @@
                     <span class="icon-inside"><i class="fas fa-calendar-alt"></i></span>
 					</div>
 				  </div>
-                  <!-- All Filters Link
-                  ========================= -->
-                  <div class="col-auto d-flex align-items-center me-auto form-group" data-bs-toggle="collapse"> <a class="btn-link" data-bs-toggle="collapse" href="#allFilters" aria-expanded="false" aria-controls="allFilters">All Filters<i class="fas fa-sliders-h text-3 ms-1"></i></a> </div>
 
-				  <!-- Statements Link
-                  ========================= -->
-                  <div class="col-auto d-flex align-items-center ms-auto">
-                    <div class="dropdown"> <a class="text-muted btn-link" href="#" role="button" id="statements" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-file-download text-3 me-1"></i>Statements</a>
-                      <div class="dropdown-menu dropdown-menu-end" aria-labelledby="statements"> <a class="dropdown-item" href="#">CSV</a> <a class="dropdown-item" href="#">PDF</a> </div>
-                    </div>
-                  </div>
-
-                  <!-- All Filters collapse
-                  ================================ -->
-                  <div class="col-12 collapse" id="allFilters">
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" id="allTransactions" name="allFilters" checked>
-                      <label class="form-check-label" for="allTransactions">All Transactions</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" id="paymentsSend" name="allFilters">
-                      <label class="form-check-label" for="paymentsSend">Payments Send</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" id="paymentsReceived" name="allFilters">
-                      <label class="form-check-label" for="paymentsReceived">Payments Received</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" id="refunds" name="allFilters">
-                      <label class="form-check-label" for="refunds">Refunds</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" id="withdrawal" name="allFilters">
-                      <label class="form-check-label" for="withdrawal">Withdrawal</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" id="deposit" name="allFilters">
-                      <label class="form-check-label" for="deposit">Deposit</label>
-                    </div>
-                  </div>
-                  <!-- All Filters collapse End -->
                 </div>
               </form>
             </div>
@@ -123,8 +82,8 @@
             <div class="transaction-title py-2 px-4">
               <div class="row">
                 <div class="col-2 col-sm-1 text-center"><span class="">Date</span></div>
-                <div class="col col-sm-7">Description</div>
-                <div class="col-auto col-sm-2 d-none d-sm-block text-center">Status</div>
+                <div class="col col-sm-5">Description</div>
+                <div class="col-auto col-sm-4 d-none d-sm-block text-center">Status</div>
                 <div class="col-3 col-sm-2 text-end">Amount</div>
               </div>
             </div>
@@ -140,19 +99,19 @@
               <div class="transaction-item px-4 py-3" data-bs-toggle="modal" data-bs-target="#transaction-detail{{ $item->id }}">
                 <div class="row align-items-center flex-row">
                   <div class="col-2 col-sm-1 text-center"> <span class="d-block text-4 fw-300">{{ \Carbon\Carbon::parse($item->created_at)->format('j M ') }}</span> </div>
-                  <div class="col col-sm-7"> <span class="d-block text-4">@if ($item->bank_type == 1){{ $item->bank->name }} @else{{ $item->receiver->username }}@endif</span>
+                  <div class="col col-sm-5"> <span class="d-block text-4">@if ($item->bank_type == 1){{ $item->bank->name }} @else{{ $item->receiver->username }}@endif</span>
                  <span class="text-muted">@if ($item->type == 0)
                      Request from {{ $item->receiver->username }}
                  @else
                      Send to @if ($item->bank_type == 1){{ $item->bank->name }}@else {{ $item->receiver->username }} @endif
                  @endif</span> </div>
                  @if ($item->status == 2)
-                  <div class="col-auto col-sm-2 d-none d-sm-block text-center text-3"> <span class="text-warning" data-bs-toggle="tooltip" title="In Progress"><i class="fas fa-ellipsis-h"></i></span> </div>
-                @elseif ($item->status == 1)
-                <div class="col-auto col-sm-2 d-none d-sm-block text-center text-3"> <span class="text-success" data-bs-toggle="tooltip" title="Completed"><i class="fas fa-check-circle"></i></span> </div>
-                 @else
-                 <div class="col-auto col-sm-2 d-none d-sm-block text-center text-3"> <span class="text-danger" data-bs-toggle="tooltip" title="Cancelled"><i class="fas fa-times-circle"></i></span> </div>
-                 @endif
+                 <div class="col-auto col-sm-4 d-none d-sm-block text-center text-3"> <span class="badge bg-warning text-dark text-0 fw-500 rounded-pill px-2 mb-0 ">in Process</span>  <span class="text-warning" data-bs-toggle="tooltip" title="In Progress"><i class="fas fa-ellipsis-h"></i></span> </div>
+               @elseif ($item->status == 1)
+               <div class="col-auto col-sm-4 d-none d-sm-block text-center text-3"> <span class="badge bg-success text-dark text-0 fw-500 rounded-pill px-2 mb-0 ">Completed</span> <span class="text-success" data-bs-toggle="tooltip" title="Completed"><i class="fas fa-check-circle"></i></span> </div>
+                @else
+                <div class="col-auto col-sm-4 d-none d-sm-block text-center text-3"> <span class="badge bg-danger text-dark text-0 fw-500 rounded-pill px-2 mb-0 ">Cancelled</span> <span class="text-danger" data-bs-toggle="tooltip" title="Cancelled"><i class="fas fa-times-circle"></i></span> </div>
+                @endif
                   <div class="col-3 col-sm-2 text-end text-4"> <span class="text-nowrap"> {{ $gnl->cur_sym }}{{ formatter_money($item->amount) }}</span> <span class="text-2 text-uppercase">{{ $gnl->cur}}</span> </div>
                 </div>
               </div>

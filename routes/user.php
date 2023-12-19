@@ -45,7 +45,6 @@ use Illuminate\Support\Facades\Route;
                 Route::get('/profile', [UserController::class, 'profile'])->name('profile');
                 Route::get('/profile-edit', [UserController::class, 'profileEdit'])->name('profile.edit');
 
-                Route::get('/change-password', [UserController::class, 'changePass'])->name('change.password');
                 Route::put('/password', [UserController::class, 'passwordUpdate'])->name('password.update');
                 Route::put('/profile', [UserController::class, 'profileUpdate'])->name('profile.update');
                 Route::put('/contact', [UserController::class, 'contactUpdate'])->name('contact.update');

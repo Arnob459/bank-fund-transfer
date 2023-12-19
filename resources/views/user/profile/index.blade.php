@@ -19,8 +19,8 @@
                   <input type="file" class="custom-file-input" id="customFile">
                 </div>
               </div>
-              <p class="text-3 fw-500 mb-2">Hello, {{ auth()->user()->name }}</p>
-              <p class="mb-2"><a href="https://harnishdesign.net/demo/html/payyed/settings-profile.html" class="text-5 text-light" data-bs-toggle="tooltip" title="Edit Profile"><i class="fas fa-edit"></i></a></p>
+              <p class="text-3 fw-500 mb-2">Hello, {{ auth()->user()->username }}</p>
+              <p class="mb-2"><a href="{{ route('user.profile') }}" class="text-5 text-light" data-bs-toggle="tooltip" title="Edit Profile"><i class="fas fa-edit"></i></a></p>
             </div>
             <!-- Profile Details End -->
 
@@ -191,6 +191,46 @@
             </div>
           </div>
           <!-- Email Addresses End -->
+
+                    <!-- Password
+          ============================================= -->
+          <div class="bg-white shadow-sm rounded p-4 mb-4">
+            <h3 class="text-5 fw-400 d-flex align-items-center mb-4">Password<a href="#change-password" data-bs-toggle="modal" class="ms-auto text-2 text-uppercase btn-link"><span class="me-1"><i class="fas fa-edit"></i></span>Change</a></h3>
+            <hr class="mx-n4 mb-4">
+            <p class="text-3">Create or update your password. - <span class="text-muted">Last changed: {{ \Carbon\Carbon::parse($user->updated_at)->format('j M Y') }}</span></p>
+          </div>
+          <!-- Edit Details Modal
+          ================================== -->
+          <div id="change-password" class="modal fade " role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title fw-400">Change Password</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                  <form id="changePassword" action="{{route('user.password.update')}}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    {{method_field('put')}}
+                    <div class="mb-3">
+                      <label for="existingPassword" class="form-label">Confirm Current Password</label>
+                      <input type="password" class="form-control" data-bv-field="existingpassword" name="old_password" id="existingPassword" required placeholder="Enter Current Password">
+                    </div>
+                    <div class="mb-3">
+                      <label for="newPassword" class="form-label">New Password</label>
+                      <input type="password" class="form-control" data-bv-field="newpassword" name="password" id="newPassword" required placeholder="Enter New Password">
+                    </div>
+                    <div class="mb-3">
+                      <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                      <input type="password" class="form-control" data-bv-field="confirmgpassword" name="password_confirmation" id="confirmPassword" required placeholder="Enter Confirm New Password">
+                    </div>
+                    <div class="d-grid mt-4"><button class="btn btn-primary" type="submit">Update Password</button></div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Password End -->
 
 
 

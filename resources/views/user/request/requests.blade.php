@@ -11,47 +11,46 @@
         ============================================= -->
         <aside class="col-lg-3">
 
-          <!-- Profile Details
-          =============================== -->
-          <div class="bg-white shadow-sm rounded text-center p-3 mb-4">
-            <div class="profile-thumb mt-3 mb-4"> <img class="rounded-circle" src="https://harnishdesign.net/demo/html/payyed/images/profile-thumb.jpg" alt="">
-              <div class="profile-thumb-edit bg-primary text-white" data-bs-toggle="tooltip" title="Change Profile Picture"> <i class="fas fa-camera position-absolute"></i>
-                <input type="file" class="custom-file-input" id="customFile">
+            <!-- Profile Details
+            =============================== -->
+            <div class="bg-white shadow-sm rounded text-center p-3 mb-4">
+              <div class="profile-thumb mt-3 mb-4"> <img class="rounded-circle" src="https://harnishdesign.net/demo/html/payyed/images/profile-thumb.jpg" alt="">
+                <div class="profile-thumb-edit bg-primary text-white" data-bs-toggle="tooltip" title="Change Profile Picture"> <i class="fas fa-camera position-absolute"></i>
+                  <input type="file" class="custom-file-input" id="customFile">
+                </div>
               </div>
+              <p class="text-3 fw-500 mb-2">Hello, {{ auth()->user()->username }}</p>
+              <p class="mb-2"><a href="{{ route('user.profile') }}" class="text-5 text-light" data-bs-toggle="tooltip" title="Edit Profile"><i class="fas fa-edit"></i></a></p>
             </div>
-            <p class="text-3 fw-500 mb-2">{{ auth()->user()->name }}</p>
-            <p class="mb-2"><a href="settings-profile.html" class="text-5 text-light" data-bs-toggle="tooltip" title="Edit Profile"><i class="fas fa-edit"></i></a></p>
-          </div>
-          <!-- Profile Details End -->
+            <!-- Profile Details End -->
 
-          <!-- Available Balance
-          =============================== -->
-          <div class="bg-white shadow-sm rounded text-center p-3 mb-4">
-            <div class="text-17 text-light my-3"><i class="fas fa-wallet"></i></div>
-            <h3 class="text-9 fw-400">{{ $gnl->cur_sym }}{{ formatter_money(auth()->user()->balance)  }}</h3>
-            <p class="mb-2 text-muted opacity-8">Available Balance</p>
-            <hr class="mx-n3">
-          </div>
-          <!-- Available Balance End -->
+            <!-- Available Balance
+            =============================== -->
+            <div class="bg-white shadow-sm rounded text-center p-3 mb-4">
+              <div class="text-17 text-light my-3"><i class="fas fa-wallet"></i></div>
+              <h3 class="text-9 fw-400">{{ $gnl->cur_sym }} {{ formatter_money(auth()->user()->balance) }} </h3>
+              <p class="mb-2 text-muted opacity-8">Available Balance</p>
+            </div>
+            <!-- Available Balance End -->
 
-          <!-- Need Help?
-          =============================== -->
-          <div class="bg-white shadow-sm rounded text-center p-3 mb-4">
-            <div class="text-17 text-light my-3"><i class="fas fa-comments"></i></div>
-            <h3 class="text-5 fw-400 my-4">Need Help?</h3>
-            <p class="text-muted opacity-8 mb-4">Have questions or concerns regrading your account?<br>
-              Our experts are here to help!.</p>
-            <div class="d-grid"><a href="#" class="btn btn-primary">Chate with Us</a></div>
-		  </div>
-          <!-- Need Help? End -->
+            <!-- Need Help?
+            =============================== -->
+            <div class="bg-white shadow-sm rounded text-center p-3 mb-4">
+              <div class="text-17 text-light my-3"><i class="fas fa-comments"></i></div>
+              <h3 class="text-5 fw-400 my-4">Need Help?</h3>
+              <p class="text-muted opacity-8 mb-4">Have questions or concerns regrading your account?<br>
+                Our experts are here to help!.</p>
+              <div class="d-grid"><a href="#" class="btn btn-primary">Chate with Us</a></div>
+            </div>
+            <!-- Need Help? End -->
 
-        </aside>
+          </aside>
         <!-- Left Panel End -->
 
         <!-- Middle Panel
         ============================================= -->
         <div class="col-lg-9">
-          <h2 class="fw-400 mb-3">Transactions</h2>
+          <h2 class="fw-400 mb-3">Requests</h2>
 
           <!-- Filter
           ============================================= -->
@@ -67,47 +66,7 @@
                     <span class="icon-inside"><i class="fas fa-calendar-alt"></i></span>
 					</div>
 				  </div>
-                  <!-- All Filters Link
-                  ========================= -->
-                  <div class="col-auto d-flex align-items-center me-auto form-group" data-bs-toggle="collapse"> <a class="btn-link" data-bs-toggle="collapse" href="#allFilters" aria-expanded="false" aria-controls="allFilters">All Filters<i class="fas fa-sliders-h text-3 ms-1"></i></a> </div>
 
-				  <!-- Statements Link
-                  ========================= -->
-                  <div class="col-auto d-flex align-items-center ms-auto">
-                    <div class="dropdown"> <a class="text-muted btn-link" href="#" role="button" id="statements" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-file-download text-3 me-1"></i>Statements</a>
-                      <div class="dropdown-menu dropdown-menu-end" aria-labelledby="statements"> <a class="dropdown-item" href="#">CSV</a> <a class="dropdown-item" href="#">PDF</a> </div>
-                    </div>
-                  </div>
-
-                  <!-- All Filters collapse
-                  ================================ -->
-                  <div class="col-12 collapse" id="allFilters">
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" id="allTransactions" name="allFilters" checked>
-                      <label class="form-check-label" for="allTransactions">All Transactions</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" id="paymentsSend" name="allFilters">
-                      <label class="form-check-label" for="paymentsSend">Payments Send</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" id="paymentsReceived" name="allFilters">
-                      <label class="form-check-label" for="paymentsReceived">Payments Received</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" id="refunds" name="allFilters">
-                      <label class="form-check-label" for="refunds">Refunds</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" id="withdrawal" name="allFilters">
-                      <label class="form-check-label" for="withdrawal">Withdrawal</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" id="deposit" name="allFilters">
-                      <label class="form-check-label" for="deposit">Deposit</label>
-                    </div>
-                  </div>
-                  <!-- All Filters collapse End -->
                 </div>
               </form>
             </div>
@@ -117,7 +76,7 @@
           <!-- All Transactions
           ============================================= -->
           <div class="bg-white shadow-sm rounded py-4 mb-4">
-            <h3 class="text-5 fw-400 d-flex align-items-center px-4 mb-4">All Transactions</h3>
+            <h3 class="text-5 fw-400 d-flex align-items-center px-4 mb-4">All Requests</h3>
             <!-- Title
             =============================== -->
             <div class="transaction-title py-2 px-4">
@@ -180,7 +139,7 @@
                           <ul class="list-unstyled">
                             <li class="mb-2">Request Amount
                                 <span class="float-end text-3">{{ $gnl->cur_sym }}{{ formatter_money($request->amount) }}</span></li>
-                            <li class="mb-2">Fee @if ($request->amount > $request->final_amount ) ({{ $request->user->username }} will pay the fee) @endif  <span class="float-end text-3">-{{ $gnl->cur_sym }}{{ formatter_money($request->charge) }}</span></li>
+                            <li class="mb-2">Fee @if ($request->amount > $request->final_amount ) ({{ $request->user->username }} will pay the fee) @endif  <span class="float-end text-3">{{ $gnl->cur_sym }}{{ formatter_money($request->charge) }}</span></li>
                           </ul>
                           <hr class="mb-2">
                           <p class="d-flex align-items-center fw-500 mb-0">Total Amount <span class="text-3 ms-auto">{{ $gnl->cur_sym }} @if ($request->amount > $request->final_amount ) {{ formatter_money($request->amount) }} @else {{ formatter_money($request->final_amount) }} @endif </span></p>

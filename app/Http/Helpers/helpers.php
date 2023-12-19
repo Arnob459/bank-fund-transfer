@@ -22,7 +22,7 @@ function slug($string)
 
 function getAccount()
 {
-    $characters = 'ABCDEFGHJKMNOPQRSTUVWXYZ123456789';
+    $characters = '1234567890';
     $charactersLength = strlen($characters);
     $randomString = '';
     for ($i = 0; $i < 16; $i++) {

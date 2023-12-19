@@ -22,8 +22,8 @@
 
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/css/owl.carousel.min.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/css/stylesheet.css') }}" />
-{{-- <link rel="stylesheet" href="{{ asset('assets/admin/fontawesome-5.15.4/css/all.min.css') }}"> --}}
-
+<!-- Colors Css -->
+<link id="color-switcher" type="text/css" rel="stylesheet" href="#" />
 
 </head>
 @if(session()->has('toastr'))
@@ -63,8 +63,8 @@
                 <li class="{{ Route::is('user.home') ? 'active' : '' }}"><a href="{{ route('user.home') }}">Dashboard</a></li>
                 <li class="{{ Route::is('user.transections') ? 'active' : '' }}"><a href="{{ route('user.transections') }}">Transactions</a></li>
                 <li class="{{ Str::startsWith(request()->route()->getName(), 'user.ownbank') ? 'active' : '' }}"><a href="{{ route('user.ownbank.sendmoney') }}">Send/Request</a></li>
-                <li><a href="https://harnishdesign.net/demo/html/payyed/help.html">Help</a></li>
-                <li class="{{ Route::is('user.account') ? 'active' : '' }}"><a href="{{ route('user.account') }}">Other Accounts</a></li>
+                <li><a href="{{ route('index') }}">Help</a></li>
+                <li class="{{ Route::is('user.account') ? 'active' : '' }}"><a href="{{ route('user.account') }}">Accounts</a></li>
                 <li class="{{ Route::is('user.requests') ? 'active' : '' }}"><a href="{{ route('user.requests') }}">Requests</a></li>
 
 
@@ -88,27 +88,14 @@
                   <li><a class="dropdown-item" href="#">Türkçe</a></li>
                 </ul>
               </li>
-              <li class="dropdown notifications"> <a class="dropdown-toggle" href="#"><span class="text-5"><i class="far fa-bell"></i></span><span class="count">3</span></a>
-                <ul class="dropdown-menu">
-                  <li class="text-center text-3 py-2">Notifications (3)</li>
-                  <li class="dropdown-divider mx-n3"></li>
-                  <li><a class="dropdown-item" href="#"><i class="fas fa-bell"></i>A new digital FIRC document is available for you to download<span class="text-1 text-muted d-block">22 Jul 2021</span></a></li>
-                  <li><a class="dropdown-item" href="#"><i class="fas fa-bell"></i>Updates to our privacy policy. Please read.<span class="text-1 text-muted d-block">04 March 2021</span></a></li>
-                  <li><a class="dropdown-item" href="#"><i class="fas fa-bell"></i>Update about Payyed fees<span class="text-1 text-muted d-block">18 Feb 2021</span></a></li>
-                  <li class="dropdown-divider mx-n3"></li>
-                  <li><a class="dropdown-item text-center text-primary px-0" href="https://harnishdesign.net/demo/html/payyed/notifications.html">See all Notifications</a></li>
-                </ul>
-              </li>
+
               <li class="dropdown profile ms-2"> <a class="px-0 dropdown-toggle" href="#"><img class="rounded-circle" src="https://harnishdesign.net/demo/html/payyed/images/profile-thumb-sm.jpg" alt=""></a>
                 <ul class="dropdown-menu">
                   <li class="text-center text-3 py-2">Hi, {{ auth()->user()->name }}</li>
                   <li class="dropdown-divider mx-n3"></li>
                   <li><a class="dropdown-item" href="https://harnishdesign.net/demo/html/payyed/settings-profile.html"><i class="fas fa-user"></i>My Profile</a></li>
-                  <li><a class="dropdown-item" href="https://harnishdesign.net/demo/html/payyed/settings-Security.html"><i class="fas fa-shield-alt"></i>Security</a></li>
-                  <li><a class="dropdown-item" href="https://harnishdesign.net/demo/html/payyed/settings-payment-methods.html"><i class="fas fa-credit-card"></i>Payment Methods</a></li>
-                  <li><a class="dropdown-item" href="https://harnishdesign.net/demo/html/payyed/settings-notifications.html"><i class="fas fa-bell"></i>Notifications</a></li>
                   <li class="dropdown-divider mx-n3"></li>
-                  <li><a class="dropdown-item" href="https://harnishdesign.net/demo/html/payyed/help.html"><i class="fas fa-life-ring"></i>Need Help?</a></li>
+                  <li><a class="dropdown-item" href="{{ route('index') }}"><i class="fas fa-life-ring"></i>Need Help?</a></li>
                   <li><a class="dropdown-item" href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i>Sign Out</a></li>
                 </ul>
               </li>

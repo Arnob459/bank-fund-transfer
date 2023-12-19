@@ -66,6 +66,11 @@ class User extends Authenticatable
             return $this->hasMany(UserLogin::class);
         }
 
+        public function account()
+            {
+                return $this->hasMany(Account::class);
+            }
+
 
         public function transfers()
         {

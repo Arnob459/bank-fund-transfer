@@ -93,8 +93,8 @@
             <div class="transaction-title py-2 px-4">
               <div class="row fw-00">
                 <div class="col-2 col-sm-1 text-center"><span class="">Date</span></div>
-                <div class="col col-sm-7">Description</div>
-                <div class="col-auto col-sm-2 d-none d-sm-block text-center">Status</div>
+                <div class="col col-sm-5">Description</div>
+                <div class="col-auto col-sm-4 d-none d-sm-block text-center">Status</div>
                 <div class="col-3 col-sm-2 text-end">Amount</div>
               </div>
             </div>
@@ -107,18 +107,18 @@
               <div class="transaction-item px-4 py-3" data-bs-toggle="modal" data-bs-target="#transaction-detail{{ $item->id }}">
                 <div class="row align-items-center flex-row">
                   <div class="col-2 col-sm-1 text-center"> <span class="d-block text-4 fw-300">{{ \Carbon\Carbon::parse($item->created_at)->format('j M ') }}</span> </div>
-                  <div class="col col-sm-7"> <span class="d-block text-4">@if ($item->bank_type == 1){{ $item->bank->name }} @else{{ $item->receiver->username }}@endif</span>
+                  <div class="col col-sm-5"> <span class="d-block text-4">@if ($item->bank_type == 1){{ $item->bank->name }} @else{{ $item->receiver->username }}@endif</span>
                  <span class="text-muted">@if ($item->type == 0)
                      Request from {{ $item->receiver->username }}
                  @else
                      Send to @if ($item->bank_type == 1){{ $item->bank->name }}@else {{ $item->receiver->username }} @endif
                  @endif</span> </div>
                  @if ($item->status == 2)
-                  <div class="col-auto col-sm-2 d-none d-sm-block text-center text-3"> <span class="text-warning" data-bs-toggle="tooltip" title="In Progress"><i class="fas fa-ellipsis-h"></i></span> </div>
+                  <div class="col-auto col-sm-4 d-none d-sm-block text-center text-3"> <span class="badge bg-warning text-dark text-0 fw-500 rounded-pill px-2 mb-0 ">in Process</span>  <span class="text-warning" data-bs-toggle="tooltip" title="In Progress"><i class="fas fa-ellipsis-h"></i></span> </div>
                 @elseif ($item->status == 1)
-                <div class="col-auto col-sm-2 d-none d-sm-block text-center text-3"> <span class="text-success" data-bs-toggle="tooltip" title="Completed"><i class="fas fa-check-circle"></i></span> </div>
+                <div class="col-auto col-sm-4 d-none d-sm-block text-center text-3"> <span class="badge bg-success text-dark text-0 fw-500 rounded-pill px-2 mb-0 ">Completed</span> <span class="text-success" data-bs-toggle="tooltip" title="Completed"><i class="fas fa-check-circle"></i></span> </div>
                  @else
-                 <div class="col-auto col-sm-2 d-none d-sm-block text-center text-3"> <span class="text-danger" data-bs-toggle="tooltip" title="Cancelled"><i class="fas fa-times-circle"></i></span> </div>
+                 <div class="col-auto col-sm-4 d-none d-sm-block text-center text-3"> <span class="badge bg-danger text-dark text-0 fw-500 rounded-pill px-2 mb-0 ">Cancelled</span> <span class="text-danger" data-bs-toggle="tooltip" title="Cancelled"><i class="fas fa-times-circle"></i></span> </div>
                  @endif
                   <div class="col-3 col-sm-2 text-end text-4"> <span class="text-nowrap"> {{ $gnl->cur_sym }}{{ formatter_money($item->amount) }}</span> <span class="text-2 text-uppercase">{{ $gnl->cur}}</span> </div>
                 </div>

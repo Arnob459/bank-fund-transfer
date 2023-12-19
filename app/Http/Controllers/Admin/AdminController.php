@@ -13,6 +13,8 @@ use App\Models\Trx;
 use App\Models\User;
 use App\Models\UserLogin;
 use App\Models\Account;
+use App\Models\Transfer;
+
 
 class AdminController extends Controller
 {
@@ -30,6 +32,36 @@ class AdminController extends Controller
     public function dashboard()
     {
         $data['page_title'] = 'Dashboard';
+
+        $data['page_title'] = 'Dashboard';
+        $data['total_user'] = User::count();
+        $data['active_user'] = User::where('status', 1)->where('email_verify', 1)->where('sms_verify', 1)->count();
+        $data['pending_user'] = User::where('status', 2)->count();
+        $data['block_user'] = User::where('status', 0)->count();
+        $data['email_verify'] = User::where('email_verify', 1)->count();
+        $data['email_unverify'] = User::where('email_verify', 0)->count();
+        $data['sms_verify'] = User::where('sms_verify', 1)->count();
+        $data['sms_unverify'] = User::where('sms_verify', 0)->count();
+        $data['kyc_verify'] = User::where('kyc_verify', 1)->count();
+        $data['kyc_unverify'] = User::where('kyc_verify', 0)->count();
+        $data['balance'] = User::sum('balance') + 0;
+
+        $data['total_accounts'] = Account::count();
+        $data['pending_accounts'] = Account::where('status', 0)->count();
+        $data['active_accounts'] = Account::where('status', 1)->count();
+        $data['reject_accounts'] = Account::where('status', 2)->count();
+
+        $data['total_requests'] = Transfer::where('type', 0)->count();
+        $data['pending_requests'] = Transfer::where('type', 0)->where('status', 2)->count();
+        $data['active_requests'] = Transfer::where('type', 0)->where('status', 1)->count();
+        $data['reject_requests'] = Transfer::where('type', 0)->where('status', 3)->count();
+
+        $data['total_send_money'] = Transfer::where('type', 1)->count();
+        $data['pending_send_money'] = Transfer::where('type', 1)->where('status', 2)->count();
+        $data['active_send_money'] = Transfer::where('type', 1)->where('status', 1)->count();
+        $data['reject_send_money'] = Transfer::where('type', 1)->where('status', 3)->count();
+
+
 
 
 

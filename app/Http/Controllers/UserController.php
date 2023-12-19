@@ -95,11 +95,6 @@ class UserController extends Controller
         return back()->with('success', 'Your Avatar has been updated');
     }
 
-    public function changePass()
-    {
-        $page_title = 'Password Change';
-        return view('users.profile.password', compact('page_title'));
-    }
 
     public function passwordUpdate(Request $request)
     {
@@ -433,8 +428,10 @@ class UserController extends Controller
 
     public function account()
     {
-        $data['bankData'] = Bank::whereStatus(1)->get();
-        $data['accounts'] = Account::where('user_id',auth()->user()->id)->with(['bank'])->get();
+        $primary_bank_id = Bank::whereStatus(1)->where('primary',1)->pluck('id')->first();
+        $data['bankData'] = Bank::whereStatus(1)->where('primary',0)->get();
+        $data['accounts'] = Account::where('user_id',auth()->user()->id)->whereNot('bank_id', $primary_bank_id)->with(['bank'])->get();
+        $data['primary_bank_account'] = Account::where('user_id',auth()->user()->id)->where('bank_id', $primary_bank_id)->with(['bank'])->first();
 
         $data['page_title'] = "Bank Account";
 

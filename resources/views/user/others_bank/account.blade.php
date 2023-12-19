@@ -9,6 +9,30 @@
       <h3 class="text-5 fw-400 mb-4">Bank Accounts <span class="text-muted text-4">(for Transfer Money)</span></h3>
       <hr class="mb-4 mx-n4">
       <div class="row g-3">
+
+        <div class="col-12 col-md-4">
+            <div class="account-card account-card-primary text-white rounded">
+              <div class="row g-0">
+                <div class="col-3 d-flex justify-content-center p-3">
+                  <div class="my-auto text-center">
+                    <img  src="{{ asset('assets/images/banks/'.$primary_bank_account->bank->image) }}" alt="" style="max-width: 50px; max-height: 50px;">
+                    <p class="badge bg-warning text-dark text-0 fw-500 rounded-pill px-2 mb-0">Primary</p>
+                  </div>
+                </div>
+                <div class="col-9 border-start">
+                <div class="py-4 my-2 ps-4">
+                    <p class="text-4 fw-500 mb-1">{{ $primary_bank_account->bank->name }}</p>
+                    <p class="text-4 opacity-9 mb-1">{{ $primary_bank_account->user->name }}</p>
+
+                    <p class="text-4 opacity-9 mb-1">{{ $primary_bank_account->account_number }}</p>
+                    <p class="m-0">Approved <span class="text-3"><i class="fas fa-check-circle"></i></span></p>
+                  </div>
+                </div>
+              </div>
+              <div class="account-card-overlay rounded"> <a href="#" data-bs-target="#bank-account-details" data-bs-toggle="modal" class="text-light btn-link mx-2"><span class="me-1"><i class="fas fa-share"></i></span>More Details</a> <a href="#" class="text-light btn-link mx-2"><span class="me-1"><i class="fas fa-minus-circle"></i></span>Delete</a> </div>
+            </div>
+          </div>
+
         @foreach ($accounts as $account)
         <div class="col-12 col-md-4">
             <div class="account-card account-card-primary text-white rounded">
@@ -16,17 +40,32 @@
                 <div class="col-3 d-flex justify-content-center p-3">
                   <div class="my-auto text-center">
                     <img  src="{{ asset('assets/images/banks/'.$account->bank->image) }}" alt="" style="max-width: 50px; max-height: 50px;">
-                    @if ($account->status == 1 )
-                    <p class="badge bg-warning text-dark text-0 fw-500 rounded-pill px-2 mb-0">Approved</p>
-                    @endif
+
                   </div>
                 </div>
                 <div class="col-9 border-start">
                 <div class="py-4 my-2 ps-4">
                     <p class="text-4 fw-500 mb-1">{{ $account->bank->name }}</p>
+                    @php
+                    $iteration = 0;
+                    @endphp
                     @foreach(json_decode($account->user_data) as $data)
                     <p class="text-4 opacity-9 mb-1">{{$data}}</p>
+                    @php
+                    $iteration++;
+                    if ($iteration >= 2) {
+                        break;
+                    }
+                    @endphp
+
                     @endforeach
+                    @if ($account->status == 1 )
+                    <p class="m-0">Approved <span class="text-3"><i class="fas fa-check-circle"></i></span></p>
+                    @elseif ($account->status == 0 )
+                    <p class="m-0">Pending <span class="text-3"><i class="fas fa-ellipsis-h"></i></span></p>
+                    @else
+                    <p class="m-0">Rejected <span class="text-3"><i class="fas fa-times-circle"></i></span></p>
+                    @endif
 
                   </div>
                 </div>
@@ -63,11 +102,13 @@
                     <li class="text-muted">Business</li>
                     @endif
                   </ul>
-                  @foreach(json_decode($account->user_data) as $key => $data)
+
+                  @foreach(json_decode($account->user_data, true) as $key => $data)
                   <ul class="list-unstyled">
-                    <li class="fw-500">{{ $key }}</li>
-                    <li class="text-muted">{{ $data }}</li>
+                      <li class="fw-500">{{ $key }}</li>
+                      <li class="text-muted">{{ $data }}</li>
                   </ul>
+
                   @endforeach
 
                   <ul class="list-unstyled">
