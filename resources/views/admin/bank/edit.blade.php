@@ -73,7 +73,7 @@
                                         <input type="text" name="processing_time" placeholder="Processing time"
                                                class="form-control form-control border-radius-5"
                                                value="{{ $bank->processing_time }}" required/></div>
-                                </div>
+                                    </div>
                                 <hr>
                                 <div class="row">
                                     <div class="col-lg-6">
@@ -132,6 +132,7 @@
                         </div>
                         <br>
                         <br>
+                        @if ($bank->primary == 0)
                         <div class="row">
 
                             <div class="col-lg-12">
@@ -164,6 +165,8 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
+
                         <div class="card-action">
                             <button class="btn btn-success btn-block">@lang('Submit')</button>
                         </div>

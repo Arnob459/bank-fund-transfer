@@ -25,7 +25,7 @@ class BankController extends Controller
 
     public function edit($id)
     {
-        $page_title = 'Edit New Banks';
+        $page_title = 'Edit Bank';
         $bank = Bank::findOrfail($id);
         return view('admin.bank.edit', compact('page_title', 'bank'));
     }

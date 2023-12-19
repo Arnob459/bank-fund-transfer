@@ -64,10 +64,6 @@
                 <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Username:</p>
                 <p class="col-sm-9 text-3">{{ $user->username }}</p>
               </div>
-              <div class="row gx-3 align-items-center">
-                <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Account Number:</p>
-                <p class="col-sm-9 text-3">{{ $user->account_number }}</p>
-              </div>
 
             <div class="row gx-3 align-items-baseline">
               <p class="col-sm-3 text-muted text-sm-end mb-0 mb-sm-3">Address:</p>
@@ -97,14 +93,11 @@
                         <label for="firstName" class="form-label">Full Name</label>
                         <input type="text" value="{{ $user->name }}" name="name" class="form-control" data-bv-field="firstName" id="firstName" required placeholder="Full Name">
                       </div>
-                      <div class="col-12 col-sm-6">
+                      <div class="col-12 col-sm-12">
                         <label for="username" class="form-label">username</label>
                         <input type="text" value="{{ $user->username }}"  class="form-control" data-bv-field="username" id="username" readonly placeholder="username">
                       </div>
-                      <div class="col-12 col-sm-6">
-                        <label for="account_number" class="form-label">Account Number</label>
-                        <input type="text" value="{{ $user->account_number }}"  class="form-control" data-bv-field="account_number" id="account_number" readonly  placeholder="Full Name">
-                      </div>
+
 
 					  </div>
 

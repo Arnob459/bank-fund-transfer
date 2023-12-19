@@ -237,6 +237,25 @@
 
                     </ul>
                 </li>
+
+                <li class="sidebar-item  has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="fas fa-envelope"></i>
+                        <span>Email Manager</span>
+                    </a>
+                    <ul class="submenu ">
+                        <li class="submenu-item {{ Route::is('admin.global-template') ? 'active' : '' }}">
+                            <a href="{{ route('admin.global-template') }}">Global Templete</a>
+                        </li>
+                        <li class="submenu-item {{ Route::is('admin.email-template') ? 'active' : '' }}">
+                            <a href="{{ route('admin.email-template') }}">Email Templetes</a>
+                        </li>
+                         <li class="submenu-item {{ Route::is('admin.email-template-setting') ? 'active' : '' }}">
+                            <a href="{{ route('admin.email-template-setting') }}">Email Configure</a>
+                        </li>
+
+                    </ul>
+                </li>
                 {{-- <li
                     class="sidebar-item {{ Route::is('admin.language-manage') ? 'active' : '' }} ">
                     <a href="{{ route('admin.language-manage') }}" class="sidebar-link">

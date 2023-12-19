@@ -34,7 +34,8 @@
                                             <img src="{{asset('assets/images/banks/'.$bank->image)}}" alt="..." class="avatar-img rounded-circle">
                                         </div>
                                     </td>
-                                    <td>{{ $bank->name }}</td>
+                                    <td>{{ $bank->name }} @if ($bank->primary == 1)
+                                    <span class="badge rounded-pill bg-primary">@lang('primary')</span>@endif  </td>
                                     <td>
                                         @if($bank->status == 1)
                                         <span class="badge rounded-pill bg-success">@lang('active')</span>
