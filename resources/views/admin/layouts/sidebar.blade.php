@@ -59,7 +59,7 @@
                 class="sidebar-item  has-sub">
                 <a href="#" class='sidebar-link'>
                     <i class="fas fa-random"></i>
-                    <span>Transfer/Own Banks</span>
+                    <span>Send Money</span>
                 </a>
                 <ul class="submenu ">
 
@@ -77,13 +77,34 @@
                     </li>
                 </ul>
                 </li>
-                <li
-                class="sidebar-item {{ Route::is('admin.banks.index') ? 'active' : '' }}">
+                <li class="sidebar-item {{ Route::is('admin.banks.index') ? 'active' : '' }}">
                 <a href="{{ route('admin.banks.index') }}" class="sidebar-link">
                     <i class="fas fa-university"></i>
                     <span> Banks</span>
                 </a>
                 </li>
+
+                <li class="sidebar-item {{ Route::is('admin.branches') ? 'active' : '' }}">
+                <a href="{{ route('admin.branches') }}" class="sidebar-link">
+                    <i class="fas fa-code-branch"></i>
+                    <span> Branch</span>
+                </a>
+                </li>
+
+                <li class="sidebar-item {{ Route::is('admin.card.types') ? 'active' : '' }}">
+                    <a href="{{ route('admin.card.types') }}" class="sidebar-link">
+                        <i class="fas fa-credit-card"></i>
+                        <span> Card Type</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item {{ Route::is('admin.cards') ? 'active' : '' }}">
+                    <a href="{{ route('admin.cards') }}" class="sidebar-link">
+                        <i class="fas fa-address-card"></i>
+                        <span> Cards</span>
+                    </a>
+                </li>
+
                 <li
                 class="sidebar-item  has-sub">
                 <a href="#" class='sidebar-link'>

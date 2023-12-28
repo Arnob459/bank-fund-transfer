@@ -5,7 +5,7 @@ use App\Models\User;
 use App\Models\EmailTemplate;
 use App\Models\SmsTemplate;
 use App\Models\Plugin;
-
+use Carbon\Carbon;
 
 
 function get_image($image, $clean = '')
@@ -29,6 +29,31 @@ function getAccount()
         $randomString .= $characters[rand(0, $charactersLength - 1)];
     }
     return $randomString;
+}
+
+function getCardNumber()
+{
+    $characters = '1234567890';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < 16; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+
+    $formattedNumber = implode('-', str_split($randomString, 4));
+
+    return $formattedNumber;
+}
+
+function getExpiryDate()
+{
+    $currentDate = Carbon::now();
+
+    $expiryDate = $currentDate->addYears(5);
+
+    $formattedExpiryDate = $expiryDate->format('Y-m-d');
+
+    return $formattedExpiryDate;
 }
 
 

@@ -139,7 +139,7 @@
                       success: function (data) {
 
                   if (data.username == query ){
-                       $("#search-results").html('Username: ' + data.name);
+                       $("#search-results").html('Name: ' + data.name);
                   }
                   else{
                       $("#search-results").html(data.status);

@@ -15,7 +15,6 @@
                                         <th>Avatar</th>
                                         <th>Name</th>
                                         <th>Username</th>
-                                        <th>Account No.</th>
                                         <th>Email</th>
                                         <th>Balance</th>
                                         <th>Status</th>
@@ -40,7 +39,6 @@
                                         </td>
                                         <td>{{ $user->name }}</td>
                                         <td><a href="{{route('admin.user.edit', $user->id)}}"> {{ $user->username }} </a></td>
-                                        <td> {{ $user->account_number }}</td>
                                         <td >{{ $user->email }}</td>
                                         <td>{{$gnl->cur_sym}} {{formatter_money($user->balance)}}</td>
                                         <td>

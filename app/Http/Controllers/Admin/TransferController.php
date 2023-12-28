@@ -79,7 +79,6 @@ class TransferController extends Controller
         $request->validate(['id' => 'required|integer']);
         $transfer = Transfer::where('id',$request->id)->where('status',2)->firstOrFail();
         $transfer->status = 1;
-        $transfer->admin_feedback = $request->details;
         $transfer->save();
         $user = User::find($transfer->receiver_id);
         $user->balance += formatter_money($transfer->final_amount);

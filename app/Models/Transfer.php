@@ -27,6 +27,11 @@ class Transfer extends Model
         return $this->belongsTo(Bank::class, 'bank_id');
     }
 
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class, 'branch_id');
+    }
+
 
     public function scopePending()
     {

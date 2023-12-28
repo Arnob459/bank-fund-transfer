@@ -131,9 +131,9 @@ class AdminController extends Controller
     }
     public function accounts()
     {
-        $page_title = 'Pending Accounts';
-        $accounts = Account::with(['user','bank'])->latest()->paginate(config('constants.table.default'));
-        $empty_message = 'No accounts is pending';
+        $page_title = 'All Accounts';
+        $accounts = Account::with(['user','bank','branch'])->latest()->paginate(config('constants.table.default'));
+        $empty_message = 'No accounts is created';
         return view('admin.account.accounts', compact('page_title', 'accounts', 'empty_message'));
     }
 
@@ -141,9 +141,8 @@ class AdminController extends Controller
     {
         $request->validate(['id' => 'required|integer']);
 
-        $bank = Account::where('id', $request->id)->first();
-
-        $bank->update(['status' => 1]);
+        $account = Account::where('id', $request->id)->first();
+        $account->update(['status' => 1]);
 
         return back()->with('success', ' Account has been activated.');
     }
@@ -152,11 +151,11 @@ class AdminController extends Controller
     {
         $request->validate(['id' => 'required|integer']);
 
-        $bank = Account::where('id', $request->id)->first();
+        $account = Account::where('id', $request->id)->first();
 
-        $bank->update(['status' => 2]);
+        $account->update(['status' => 2]);
 
-        return back()->with('success', 'Account has been deactivated.');
+        return back()->with('success', 'Account Request has been Rejected.');
     }
 
 }

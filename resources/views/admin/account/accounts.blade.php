@@ -16,8 +16,7 @@
                                 <th scope="col">Date</th>
                                 <th scope="col">Bank </th>
                                 <th scope="col">Username</th>
-
-                                <th scope="col">@lang('Status')</th>
+                                <th scope="col">Status</th>
                                 <th scope="col">Details</th>
                                 <th scope="col">Action</th>
 
@@ -65,9 +64,35 @@
                                                             <li class="text-muted">{{ $account->bank->name }}</li>
                                                           </ul>
 
+                                                          @if ($account->branch_id == 0)
+                                                          <ul class="list-unstyled">
+                                                            <li class="fw-500">Branch</li>
+                                                            <li class="text-muted">Main Branch</li>
+                                                          </ul>
+                                                          @else
+
+                                                          <ul class="list-unstyled">
+                                                            <li class="fw-500">Branch</li>
+                                                            <li class="text-muted">{{ $account->branch->name }}</li>
+                                                          </ul>
+
+                                                          <ul class="list-unstyled">
+                                                            <li class="fw-500">Routing Number</li>
+                                                            <li class="text-muted">{{ $account->branch->routing_number }}</li>
+                                                          </ul>
+
+                                                          @endif
+
+
+
                                                           <ul class="list-unstyled">
                                                             <li class="fw-500">Username</li>
                                                             <li class="text-muted">{{ $account->user->username }}</li>
+                                                          </ul>
+
+                                                          <ul class="list-unstyled">
+                                                            <li class="fw-500">Account No</li>
+                                                            <li class="text-muted">{{ $account->account_number }}</li>
                                                           </ul>
 
                                                           <ul class="list-unstyled">
@@ -81,12 +106,7 @@
                                                             @endif
                                                           </ul>
 
-                                                        @foreach(json_decode($account->user_data) as $key => $data)
-                                                        <ul class="list-unstyled">
-                                                          <li class="fw-500">{{ $key }}</li>
-                                                          <li class="text-muted">{{ $data }}</li>
-                                                        </ul>
-                                                        @endforeach
+
 
                                                     </div>
                                                     <div class="modal-footer">

@@ -9,14 +9,17 @@ use App\Models\Trx;
 use App\Models\User;
 use App\Models\Transfer;
 use App\Models\Bank;
+use App\Models\Branch;
 use App\Models\Account;
-
+use App\Models\CardType;
+use App\Models\Card;
 
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\Hash;
 use Session;
 use Validator;
+
 
 class UserController extends Controller
 {
@@ -181,7 +184,7 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'username' => 'required|string|min:6|max:50',
-            'amount' => 'required|numeric|gt:0',
+            'amount' => 'required|numeric|gt:0||lt:10000000000000000.00',
         ]);
 
         $username = User::where('username',$request->username)->first();
@@ -214,7 +217,7 @@ class UserController extends Controller
 
         $this->validate($request, [
             'username' => 'required|string|min:6|max:50',
-            'amount' => 'required|numeric|gt:0',
+            'amount' => 'required|numeric|gt:0||lt:10000000000000000.00',
         ]);
         $username = User::where('username',$request->username)->pluck('id')->first();
             if ($username) {
@@ -317,14 +320,21 @@ class UserController extends Controller
 
     }
 
-    public function sendMoneyOwnBank()
+    public function sendMoneyOwnBank(Request $request)
     {
         $data['page_title'] = "Send Money";
         return view('user.own_bank.send_money', $data);
     }
 
+    public function sendMoneyOwnBankC()
+    {
+        return redirect()->route('user.ownbank.sendmoney');
+    }
+
+
     public function sendMoneyConfirmOwnBank(Request $request)
     {
+
         $this->validate($request, [
             'username' => 'required|string|min:6|max:50',
             'amount' => 'required|numeric|gt:0',
@@ -354,13 +364,14 @@ class UserController extends Controller
         $data['after_charge'] = $afterCharge ;
 
 
-
-
         return view('user.own_bank.send_money_confirm', $data);
     }
 
     public function sendMoneySubmitOwnBank(Request $request)
     {
+        if (session()->has('form_submitted')) {
+            // Handle the case where the form has already been submitted
+            // Redirect back or show an error message
         $this->validate($request, [
             'username' => 'required|string|min:6|max:50',
             'amount' => 'required|numeric|gt:0',
@@ -424,12 +435,19 @@ class UserController extends Controller
 
         return view('user.own_bank.send_money_success', $data);
     }
+    session(['form_submitted' => true]);
+    }
+
 
 
     public function account()
     {
         $primary_bank_id = Bank::whereStatus(1)->where('primary',1)->pluck('id')->first();
         $data['bankData'] = Bank::whereStatus(1)->where('primary',0)->get();
+        $data['branches'] = Branch::whereStatus(1)->get();
+        $data['card_types'] = CardType::whereStatus(1)->get();
+        $data['cards'] = Card::where('user_id',auth()->user()->id)->with(['user','cardType'])->get();
+
         $data['accounts'] = Account::where('user_id',auth()->user()->id)->whereNot('bank_id', $primary_bank_id)->with(['bank'])->get();
         $data['primary_bank_account'] = Account::where('user_id',auth()->user()->id)->where('bank_id', $primary_bank_id)->with(['bank'])->first();
 
@@ -448,29 +466,81 @@ class UserController extends Controller
         return redirect()->back()->with('success', ' Deleted successfully');
     }
 
+    public function cardDestroy($id)
+    {
+        $data = Card::find($id);
+        if (!$data) {
+            return redirect()->back()->with('success', ' Deleted successfully');
+        }
+        $data->delete();
+        return redirect()->back()->with('success', ' Deleted successfully');
+    }
+
+    public function cardStore(Request $request)
+    {
+        $validatedData = $request->validate([
+            'card_type_id' => 'required|exists:card_types,id',
+            'options' => 'required|integer|min:0|max:2',
+
+        ]);
+
+        $exists = Card::where('user_id',auth()->user()->id)->where('card_type_id',$validatedData['card_type_id'])->where('status',0)->first();
+
+        if ($exists) {
+            return back()->withErrors( 'Previous request is still pending');
+        } else {
+            $user_id = auth()->user()->id;
+            $card_type_id = $validatedData['card_type_id'];
+            $type = $request->options;
+
+            Card::create([
+                'user_id' => $user_id,
+                'card_type_id' => $card_type_id,
+                'type' => $type,
+                'card_number' => getCardNumber(),
+                'expiry_date' => getExpiryDate(),
+
+            ]);
+
+            return back()->with('success', 'Card Request send successfully');
+        }
+    }
+
+
     public function accountStore(Request $request)
     {
 
         $validatedData = $request->validate([
             'bank_id' => 'required|exists:banks,id',
+            'branch_id' => 'required|exists:branches,id',
             'account_type' => 'required|integer|min:0|max:2',
-            'ud.*'         => 'required',
+            // 'ud.*'         => 'required',
 
         ]);
 
-        $user_id = auth()->user()->id; // Assuming you have user authentication
-        $bank_id = $validatedData['bank_id'];
-        $account_type = $request->account_type;
-        $user_data = json_encode($request->input('ud')); // Assuming 'user_data' is an array
+        $exists = Account::where('user_id',auth()->user()->id)->where('bank_id',$validatedData['bank_id'])->where('status',0)->first();
 
-        Account::create([
-            'user_id' => $user_id,
-            'bank_id' => $bank_id,
-            'user_data' => $user_data,
-            'account_type' => $account_type,
-        ]);
+        if ($exists) {
+            return back()->withErrors( 'Previous request is still pending');
+        } else {
+            $user_id = auth()->user()->id; // Assuming you have user authentication
+            $bank_id = $validatedData['bank_id'];
+            $branch_id = $validatedData['branch_id'];
+            $account_type = $request->account_type;
+            // $user_data = json_encode($request->input('ud')); // Assuming 'user_data' is an array
 
-        return back()->with('success', 'Account saved successfully');
+            Account::create([
+                'user_id' => $user_id,
+                'bank_id' => $bank_id,
+                'branch_id' => $branch_id,
+                'account_type' => $account_type,
+                'account_number' => getAccount(),
+            ]);
+
+            return back()->with('success', 'Account Request send successfully');
+        }
+
+
     }
 
 

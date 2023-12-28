@@ -150,8 +150,7 @@
                     <input type="hidden" name="id">
                     <div class="modal-body">
                         <p>@lang('Have you Sent ')<span class="font-weight-bold transfer-amount text-success"></span>?</p>
-                        <p class="transfer-detail"></p>
-                        <textarea name="details" class="form-control pt-3" rows="3" placeholder="Provide the Details. eg: Transaction number" required=""></textarea>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-warning" data-bs-dismiss="modal">@lang('Close')</button>

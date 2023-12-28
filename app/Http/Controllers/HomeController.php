@@ -33,6 +33,7 @@ class HomeController extends Controller
     {
         $data['page_title'] = 'Money Transfer' ;
         $data['user'] = Auth::user();
+        $data['account'] = Account::where('user_id', Auth::id())->where('status', 1)->count();
         $data['logs'] = Transfer::where('user_id', Auth::id())->with(['receiver','bank'])->orderBy('id', 'desc')->paginate(config('constants.table.default'));
         return view('user.home',$data);
     }

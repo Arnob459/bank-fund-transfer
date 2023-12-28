@@ -68,7 +68,7 @@
 
             <div class="row g-3 align-items-center">
               <p class="col-sm-4 text-muted text-sm-end fw-500 mb-0 mb-sm-3">Requested Amount:</p>
-              <p class="col-sm-8 text-4 fw-500">{{ $amount }} {{ $gnl->cur }}</p>
+              <p class="col-sm-8 text-4 fw-500">  {{  $amount }} {{ $gnl->cur }}</p>
             </div>
 
             <div class="row g-3 align-items-center">

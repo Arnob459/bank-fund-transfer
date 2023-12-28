@@ -56,7 +56,8 @@
           <!-- Profile Completeness
           =============================== -->
           <div class="bg-white shadow-sm rounded p-4 mb-4">
-            <h3 class="text-5 fw-400 d-flex align-items-center mb-4">Profile Completeness<span class="border text-success rounded-pill fw-500 text-2 px-3 py-1 ms-2">50%</span></h3>
+            <h3 class="text-5 fw-400 d-flex align-items-center mb-4">Profile Completeness<span class="border text-success rounded-pill fw-500 text-2 px-3 py-1 ms-2">
+                @if ($account > 1) 75%  @else   50%     @endif</span></h3>
             <hr class="mb-4 mx-n4">
             <div class="row gy-4 profile-completeness">
               <div class="col-sm-6 col-md-3">
@@ -69,16 +70,27 @@
                   <p class="mb-0">Email Added</p>
                 </div>
               </div>
+
               <div class="col-sm-6 col-md-3">
                 <div class="position-relative border rounded text-center px-3 py-4"> <span class="d-block text-10 text-light mt-2 mb-3"><i class="fas fa-credit-card"></i></span> <span class="text-5 d-block text-light mt-4 mb-3"><i class="far fa-circle "></i></span>
                   <p class="mb-0"><a class="btn-link stretched-link" href="#">Add Card</a></p>
                 </div>
               </div>
+              @if ($account > 1)
+              <div class="col-sm-6 col-md-3">
+                <div class="position-relative border rounded text-center px-3 py-4"> <span class="d-block text-10 text-light mt-2 mb-3"><i class="fas fa-university"></i></span> <span class="text-5 d-block text-success mt-4 mb-3"><i class="fas fa-check-circle "></i></span>
+                  <p class="mb-0"><a class="btn-link stretched-link" href="#">Add Bank Account</a></p>
+                </div>
+              </div>
+              @else
               <div class="col-sm-6 col-md-3">
                 <div class="position-relative border rounded text-center px-3 py-4"> <span class="d-block text-10 text-light mt-2 mb-3"><i class="fas fa-university"></i></span> <span class="text-5 d-block text-light mt-4 mb-3"><i class="far fa-circle "></i></span>
                   <p class="mb-0"><a class="btn-link stretched-link" href="#">Add Bank Account</a></p>
                 </div>
               </div>
+              @endif
+
+
             </div>
           </div>
           <!-- Profile Completeness End -->

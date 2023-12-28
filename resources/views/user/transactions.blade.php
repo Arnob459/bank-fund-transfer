@@ -81,10 +81,10 @@
             =============================== -->
             <div class="transaction-title py-2 px-4">
               <div class="row">
-                <div class="col-2 col-sm-1 text-center"><span class="">Date</span></div>
-                <div class="col col-sm-5">Description</div>
+                <div class="col-2 col-sm-2 text-center"><span class="">Date</span></div>
+                <div class="col col-sm-3">Description</div>
                 <div class="col-auto col-sm-4 d-none d-sm-block text-center">Status</div>
-                <div class="col-3 col-sm-2 text-end">Amount</div>
+                <div class="col col-sm-2 text-end">Amount</div>
               </div>
             </div>
             <!-- Title End -->
@@ -98,8 +98,8 @@
 
               <div class="transaction-item px-4 py-3" data-bs-toggle="modal" data-bs-target="#transaction-detail{{ $item->id }}">
                 <div class="row align-items-center flex-row">
-                  <div class="col-2 col-sm-1 text-center"> <span class="d-block text-4 fw-300">{{ \Carbon\Carbon::parse($item->created_at)->format('j M ') }}</span> </div>
-                  <div class="col col-sm-5"> <span class="d-block text-4">@if ($item->bank_type == 1){{ $item->bank->name }} @else{{ $item->receiver->username }}@endif</span>
+                  <div class="col-2 col-sm-2 text-center"> <span class="d-block text-4 fw-300">{{ \Carbon\Carbon::parse($item->created_at)->format('j M Y H:i:s') }}</span> </div>
+                  <div class="col col-sm-3"> <span class="d-block text-4">@if ($item->bank_type == 1){{ $item->bank->name }} @else{{ $item->receiver->username }}@endif</span>
                  <span class="text-muted">@if ($item->type == 0)
                      Request from {{ $item->receiver->username }}
                  @else
@@ -112,7 +112,7 @@
                 @else
                 <div class="col-auto col-sm-4 d-none d-sm-block text-center text-3"> <span class="badge bg-danger text-dark text-0 fw-500 rounded-pill px-2 mb-0 ">Cancelled</span> <span class="text-danger" data-bs-toggle="tooltip" title="Cancelled"><i class="fas fa-times-circle"></i></span> </div>
                 @endif
-                  <div class="col-3 col-sm-2 text-end text-4"> <span class="text-nowrap"> {{ $gnl->cur_sym }}{{ formatter_money($item->amount) }}</span> <span class="text-2 text-uppercase">{{ $gnl->cur}}</span> </div>
+                  <div class="col col-sm-2 text-end text-4"> <span class="text-nowrap"> {{ $gnl->cur_sym }}{{ formatter_money($item->amount) }}</span> <span class="text-2 text-uppercase">{{ $gnl->cur}}</span> </div>
                 </div>
               </div>
 
@@ -132,7 +132,7 @@
                           <div class="text-17 text-white my-3"><i class="fas fa-building"></i></div>
                           <h3 class="text-4 text-white fw-400 my-3">@if ($item->bank_type == 1){{ $item->bank->name }} @else{{ $item->receiver->username }}@endif</h3>
                           <div class="text-8 fw-500 text-white my-4">{{ $gnl->cur_sym }}{{ formatter_money($item->amount) }}</div>
-                          <p class="text-white">{{ \Carbon\Carbon::parse($item->created_at)->format('j M Y') }}</p>
+                          <p class="text-white">{{ \Carbon\Carbon::parse($item->created_at)->format('j M Y H:i:s') }}</p>
                         </div>
                       </div>
                       <div class="col-sm-7">
@@ -169,6 +169,13 @@
                           @endforeach
                             @endif
                           </ul>
+                          @if ($item->status == 3)
+                          <ul class="list-unstyled">
+                            <li class="fw-500">Admin Feedback:</li>
+                            <li class="text-muted">{{ $item->admin_feedback }}</li>
+                          </ul>
+                          @endif
+
                           <ul class="list-unstyled">
                             <li class="fw-500">Status:</li>
                             @if ($item->status == 2)

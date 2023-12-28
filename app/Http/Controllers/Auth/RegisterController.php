@@ -97,6 +97,7 @@ class RegisterController extends Controller
        $account = new Account();
         $account->user_id = $user->id;
         $account->bank_id = $bank->id;
+        $account->branch_id = 0;
         $account->account_type = 0;
         $account->status = 1;
         $account->account_number = getAccount();

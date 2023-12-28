@@ -42,6 +42,24 @@ Route::name('admin.')->group(function() {
         Route::post('accounts/activate', [AdminController::class, 'accountActivate'])->name('accounts.activate');
         Route::post('accounts/deactivate', [AdminController::class, 'accountDectivate'])->name('accounts.deactivate');
 
+        //Branch
+        Route::get('branches', [BranchController::class, 'branches'])->name('branches');
+        Route::post('branches/store', [BranchController::class, 'branchStore'])->name('branch.store');
+        Route::post('branches/activate', [BranchController::class, 'branchActivate'])->name('branch.activate');
+        Route::post('branches/deactivate', [BranchController::class, 'branchDectivate'])->name('branch.deactivate');
+
+        //Card Type
+        Route::get('card-types', [CardController::class, 'cardTypes'])->name('card.types');
+        Route::get('card-types/create', [CardController::class, 'cardTypeCreate'])->name('card.type.create');
+        Route::post('card-types/store', [CardController::class, 'cardTypeStore'])->name('card.type.store');
+        Route::post('card-types/activate', [CardController::class, 'cardTypeActivate'])->name('card.type.activate');
+        Route::post('card-types/deactivate', [CardController::class, 'cardTypeDectivate'])->name('card.type.deactivate');
+
+        //Card Holder
+        Route::get('cards', [CardController::class, 'cards'])->name('cards');
+        Route::post('cards/activate', [CardController::class, 'cardActivate'])->name('card.activate');
+        Route::post('cards/deactivate', [CardController::class, 'cardDectivate'])->name('card.deactivate');
+
 
         // Banks
         Route::get('banks/index', [BankController::class, 'index'])->name('banks.index');

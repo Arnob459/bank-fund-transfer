@@ -53,7 +53,7 @@
 
             <!-- Send Money Confirm
             ============================================= -->
-            <form id="form-send-money" method="POST" action="{{ route('user.ownbank.sendmoney.submit') }}">
+            <form  id="myForm" method="POST" action="{{ route('user.ownbank.sendmoney.submit') }}">
                 @csrf
                 <input type="hidden" name="username" value="{{ $username->username }}">
                 <input type="hidden" name="amount"  value="{{$amount}}">
@@ -71,7 +71,7 @@
               <p class="mb-1">Total fees <span class="text-3 float-end">{{ $charge }} {{ $gnl->cur }}</span></p>
               <hr>
               <p class="text-4 fw-500">Total<span class="float-end">{{ $amount }} {{ $gnl->cur }}</span></p>
-              <div class="d-grid"><button type="submit" class="btn btn-primary">Send Money</button></div>
+              <div class="d-grid"><button type="submit" id="submitButton" class="btn btn-primary">Send Money</button></div>
             </form>
             <!-- Send Money Confirm end -->
           </div>
@@ -82,3 +82,16 @@
   <!-- Content end -->
 
 @endsection
+
+@push('js')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var form = document.getElementById('myForm');
+        var submitButton = document.getElementById('submitButton');
+
+        form.addEventListener('submit', function () {
+            submitButton.disabled = true;
+        });
+    });
+</script>
+@endpush

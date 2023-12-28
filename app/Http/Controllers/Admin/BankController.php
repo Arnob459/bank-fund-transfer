@@ -107,7 +107,6 @@ class BankController extends Controller
             'percent_charge' => $request->percent_charge,
             'fixed_charge' => $request->fixed_charge,
             'image' => $filename,
-            'status' => 0,
             'user_data' => $request->ud ? json_encode($request->ud) : json_encode([]),
         ]);
 

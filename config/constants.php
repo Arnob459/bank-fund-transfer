@@ -97,9 +97,9 @@ return [
 
     ],
 
-    'seo' => [
-        'path' => 'assets/images/seo',
-        'size' => '600x315',
+    'card' => [
+        'path' => 'assets/images/card',
+        'size' => '48x30',
     ],
 
     'plugin' => [

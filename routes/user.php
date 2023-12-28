@@ -51,10 +51,12 @@ use Illuminate\Support\Facades\Route;
 
                 Route::put('/avatar', [UserController::class, 'avatarUpdate'])->name('avatar.update');
 
-
-                Route::get('/other-bank/account', [UserController::class, 'account'])->name('account');
-                Route::post('/other-bank/account', [UserController::class, 'accountStore'])->name('account.store');
-                Route::delete('/other-bank/counter/account/{id}', [UserController::class, 'destroy'])->name('account.destroy');
+                //Account and Card
+                Route::get('/account', [UserController::class, 'account'])->name('account');
+                Route::post('/account', [UserController::class, 'accountStore'])->name('account.store');
+                Route::delete('/account/{id}', [UserController::class, 'destroy'])->name('account.destroy');
+                Route::post('/card', [UserController::class, 'cardStore'])->name('card.store');
+                Route::delete('/card/{id}', [UserController::class, 'cardDestroy'])->name('card.destroy');
 
 
 
@@ -66,9 +68,13 @@ use Illuminate\Support\Facades\Route;
                 Route::post('/other-bank/send-money/{id}', [UserController::class, 'sendMoneySubmit'])->name('sendmoney.submit');
                 //send/request
                 Route::get('/send-money', [UserController::class, 'sendMoneyOwnBank'])->name('ownbank.sendmoney');
+                Route::get('/send-money-confirm', [UserController::class, 'sendMoneyOwnBankC'])->name('ownbank.sendmoneyc');
+
                 Route::post('/send-money-confirm', [UserController::class, 'sendMoneyConfirmOwnBank'])->name('ownbank.sendmoney.confirm');
 
                 Route::post('/send-money', [UserController::class, 'sendMoneySubmitOwnBank'])->name('ownbank.sendmoney.submit');
+
+
 
                 Route::get('/request-money', [UserController::class, 'requestMoneyOwnBank'])->name('ownbank.requestmoney');
                 Route::post('/request-money-confirm', [UserController::class, 'requestMoneyConfirmOwnBank'])->name('ownbank.requestmoney.Confirm');
@@ -80,8 +86,8 @@ use Illuminate\Support\Facades\Route;
 
 
                 Route::get('/requests', [UserController::class, 'PendingRequest'])->name('requests');
-                Route::post('own-bank/request/approve', [UserController::class, 'requestApprove'] )->name('request.approve');
-                Route::post('own-bank/request/reject', [UserController::class, 'requestReject'] )->name('request.reject');
+                Route::post('/request/approve', [UserController::class, 'requestApprove'] )->name('request.approve');
+                Route::post('/request/reject', [UserController::class, 'requestReject'] )->name('request.reject');
 
                 Route::get('/login/history', [UserController::class, 'loginHistory'])->name('login.history');
 
