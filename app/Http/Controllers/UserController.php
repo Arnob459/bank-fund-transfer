@@ -137,7 +137,7 @@ class UserController extends Controller
             return back()->withErrors( 'Insufficient Balance');
 
         }
-        $transfer->status = 1;
+        $transfer->status = 4;
         $transfer->save();
 
         if ($transfer->amount > $transfer->final_amount) {
@@ -149,18 +149,7 @@ class UserController extends Controller
 
         $user->save();
 
-        $sender = User::find($transfer->user_id);
-        if ($transfer->amount > $transfer->final_amount) {
-            $sender->balance += formatter_money($transfer->amount);
-
-        } else {
-            $sender->balance += formatter_money($transfer->final_amount);
-
-        }
-
-        $sender->save();
-
-        return back()->with('success', 'Request Marked  as Approved.');
+        return back()->with('success', 'Request accepted wait for admin approval.');
     }
 
     public function requestReject(Request $request)
@@ -169,6 +158,7 @@ class UserController extends Controller
         $request->validate(['id' => 'required|integer']);
         $transfer = Transfer::where('id',$request->id)->where('status',2)->firstOrFail();
         $transfer->status = 3;
+        $transfer->admin_feedback = 'Receiver Rejected ';
         $transfer->save();
 
         return back()->with('success', 'Request has been rejected.');

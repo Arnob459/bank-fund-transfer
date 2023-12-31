@@ -13,16 +13,16 @@
                         <table  class="table  table-hover" >
                             <thead>
                             <tr>
-                                <th scope="col">Date</th>
-                                <th scope="col">Trx Number</th>
-                                <th scope="col">Sender</th>
-                                <th scope="col">Receiver</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Charge</th>
-                                <th scope="col">After Charge</th>
-                                <th scope="col">Payable</th>
+                                <th >Date</th>
+                                <th >Trx Number</th>
+                                <th >Sender</th>
+                                <th >Receiver</th>
+                                <th >Amount</th>
+                                <th >Charge</th>
+                                <th >After Charge</th>
+                                <th >Payable</th>
 
-                                <th scope="col">Status</th>
+                                <th >Status</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -32,11 +32,11 @@
                                     <td class="font-weight-bold">{{ strtoupper($transfer->trx) }}</td>
                                     <td><a href="{{route('admin.user.edit', $transfer->user_id)}}">{{ $transfer->user->username }}</a></td>
                                     <td><a href="{{route('admin.user.edit', $transfer->receiver_id)}}">{{ $transfer->receiver->username }}</a></td>
-                                    <td class="budget font-weight-bold">{{ $transfer->amount +0 }} {{$gnl->cur_sym}}</td>
-                                    <td class="budget text-danger">{{$gnl->cur_sym}} {{ formatter_money($transfer->charge) }}</td>
+                                    <td class="budget font-weight-bold">{{$gnl->cur_sym}}{{ $transfer->amount +0 }} </td>
+                                    <td class="budget text-danger">{{$gnl->cur_sym}}{{ formatter_money($transfer->charge) }}</td>
                                     <td class="budget">{{$gnl->cur_sym}} {{ formatter_money($transfer->after_charge) }}</td>
 
-                                    <td class="budget font-weight-bold">{{ formatter_money($transfer->final_amount) }} {{$gnl->cur_sym}} </td>
+                                    <td class="budget font-weight-bold">{{$gnl->cur_sym}}{{ formatter_money($transfer->final_amount) }}  </td>
 
                                     <td>
                                         @if($transfer->status == 2)

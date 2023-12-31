@@ -44,13 +44,16 @@
                 <ul class="submenu ">
 
                     <li class="submenu-item {{ Route::is('admin.ownbank.request.pending') ? 'active' : '' }}">
-                        <a href="{{ route('admin.ownbank.request.pending') }}">Pending transfers</a>
+                        <a href="{{ route('admin.ownbank.request.pending') }}">Pending Requests</a>
                     </li>
-                    <li class="submenu-item {{ Route::is('admin.ownbank.transfer.approved') ? 'active' : '' }}">
-                        <a href="{{ route('admin.ownbank.request.approved') }}">Approved transfers</a>
+                    <li class="submenu-item {{ Route::is('admin.ownbank.request.approved') ? 'active' : '' }}">
+                        <a href="{{ route('admin.ownbank.request.approved') }}">Approved Requests</a>
                     </li>
-                    <li class="submenu-item {{ Route::is('admin.ownbank.transfer.rejected') ? 'active' : '' }}">
-                        <a href="{{ route('admin.ownbank.request.rejected') }}">Rejected transfers</a>
+                    <li class="submenu-item {{ Route::is('admin.ownbank.request.rejected') ? 'active' : '' }}">
+                        <a href="{{ route('admin.ownbank.request.rejected') }}">Rejected Requests</a>
+                    </li>
+                    <li class="submenu-item {{ Route::is('admin.ownbank.request.log') ? 'active' : '' }}">
+                        <a href="{{ route('admin.ownbank.request.log') }}">All Requests</a>
                     </li>
                 </ul>
                 </li>

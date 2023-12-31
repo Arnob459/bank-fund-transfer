@@ -13,22 +13,22 @@
                         <table  class="table  table-hover" >
                             <thead>
                             <tr>
-                                <th scope="col">@lang('Date')</th>
-                                <th scope="col">@lang('Trx Number')</th>
-                                <th scope="col">@lang('Username')</th>
-                                <th scope="col">@lang('bank')</th>
-                                <th scope="col">@lang('Amount')</th>
-                                <th scope="col">@lang('Charge')</th>
-                                <th scope="col">@lang('After Charge')</th>
-                                <th scope="col">@lang('Payable')</th>
+                                <th >@lang('Date')</th>
+                                <th >@lang('Trx Number')</th>
+                                <th >@lang('Username')</th>
+                                <th >@lang('bank')</th>
+                                <th >@lang('Amount')</th>
+                                <th >@lang('Charge')</th>
+                                <th >@lang('After Charge')</th>
+                                <th >@lang('Payable')</th>
                                 @if(request()->routeIs('admin.transfer.pending'))
-                                    <th scope="col">@lang('Action')</th>
+                                    <th >@lang('Action')</th>
                                 @elseif(request()->routeIs('admin.transfer.log') || request()->routeIs('admin.transfer.search')  || request()->routeIs('admin.users.transfer'))
-                                    <th scope="col">@lang('Status')</th>
+                                    <th >@lang('Status')</th>
                                 @endif
 
                                 @if(request()->routeIs('admin.transfer.approved') || request()->routeIs('admin.transfer.rejected'))
-                                    <th scope="col">@lang('Info')</th>
+                                    <th >@lang('Info')</th>
                                 @endif
                             </tr>
                             </thead>

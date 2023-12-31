@@ -89,9 +89,13 @@ Route::name('admin.')->group(function() {
         Route::post('own-bank/transfer/reject', [TransferController::class, 'ownbankReject'] )->name('ownbank.transfer.reject');
 
         //Request to own-banks
-        Route::get('own-bank/request/pending', [TransferController::class, 'pendingRequest'] )->name('ownbank.request.pending');
-        Route::get('own-bank/request/approved', [TransferController::class, 'approvedRequest'] )->name('ownbank.request.approved');
-        Route::get('own-bank/request/rejected', [TransferController::class, 'rejectedRequest'] )->name('ownbank.request.rejected');
+        Route::get('request/pending', [TransferController::class, 'pendingRequest'] )->name('ownbank.request.pending');
+        Route::get('request/approved', [TransferController::class, 'approvedRequest'] )->name('ownbank.request.approved');
+        Route::get('request/rejected', [TransferController::class, 'rejectedRequest'] )->name('ownbank.request.rejected');
+        Route::get('request/log', [TransferController::class, 'requestLog'] )->name('ownbank.request.log');
+        Route::get('request/{scope}/search', [TransferController::class, 'requestSearch'] )->name('ownbank.request.search');
+        Route::post('request/approve', [TransferController::class, 'requestApprove'] )->name('ownbank.request.approve');
+        Route::post('request/reject', [TransferController::class, 'requestReject'] )->name('ownbank.request.reject');
 
           //Manage User
           Route::get('/allusers', [UserController::class, 'Index'])->name('allusers');

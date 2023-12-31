@@ -21,13 +21,13 @@
                                 <th >Charge</th>
                                 <th >After Charge</th>
                                 <th >Payable</th>
-                                @if(request()->routeIs('admin.ownbank.transfer.pending'))
+                                @if(request()->routeIs('admin.ownbank.request.pending'))
                                     <th >Action</th>
-                                @elseif(request()->routeIs('admin.ownbank.transfer.log') || request()->routeIs('admin.ownbank.transfer.search')  || request()->routeIs('admin.ownbank.users.transfer'))
+                                @elseif(request()->routeIs('admin.ownbank.request.log') || request()->routeIs('admin.ownbank.request.search')  || request()->routeIs('admin.ownbank.users.request'))
                                     <th >Status</th>
                                 @endif
 
-                                @if(request()->routeIs('admin.ownbank.transfer.approved') || request()->routeIs('admin.ownbank.transfer.rejected'))
+                                @if(request()->routeIs('admin.ownbank.request.approved') || request()->routeIs('admin.ownbank.request.rejected'))
                                     <th >Info</th>
                                 @endif
                             </tr>
@@ -44,7 +44,7 @@
                                     <td class="budget">{{$gnl->cur_sym}} {{ formatter_money($transfer->after_charge) }}</td>
 
                                     <td class="budget font-weight-bold">{{ formatter_money($transfer->final_amount) }} {{$gnl->cur_sym}} </td>
-                                    @if(request()->routeIs('admin.ownbank.transfer.pending'))
+                                    @if(request()->routeIs('admin.ownbank.request.pending'))
                                         <td>
 
 
@@ -54,20 +54,22 @@
 
 
                                         </td>
-                                    @elseif(request()->routeIs('admin.ownbank.transfer.log') || request()->routeIs('admin.transfer.search') || request()->routeIs('admin.users.transfer'))
+                                    @elseif(request()->routeIs('admin.ownbank.request.log') || request()->routeIs('admin.transfer.search') || request()->routeIs('admin.users.transfer'))
                                         <td>
-                                            @if($transfer->status == 2)
+                                            @if($transfer->status == 4)
                                                 <span class="badge bg-warning">@lang('Pending')</span>
                                             @elseif($transfer->status == 1)
                                                 <span class="badge bg-success">@lang('Approved')</span>
                                             @elseif($transfer->status == 3)
                                                 <span class="badge bg-danger">@lang('Rejected')</span>
+                                            @else
+                                                <span class="badge bg-primary">requested</span>
                                             @endif
                                         </td>
                                     @endif
 
 
-                                    @if(request()->routeIs('admin.ownbank.transfer.approved') || request()->routeIs('admin.ownbank.transfer.rejected'))
+                                    @if(request()->routeIs('admin.ownbank.request.approved') || request()->routeIs('admin.ownbank.request.rejected'))
 
                                         <td>
                                             <button class="btn btn-primary detailsBtn" data-sender="{{$transfer->user->username }}" data-amount="{{ formatter_money($transfer->final_amount) }} {{$transfer->currency}}" data-method="{{$transfer->receiver->username}}" data-admin_details="{{$transfer->admin_feedback}}"><i class="fa fa-fw fa-desktop"></i></button>
@@ -98,18 +100,18 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">@lang('View transfer Details')</h5>
+                    <h5 class="modal-title">View transfer Details</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p> <span class="font-weight-bold transfer-sender"></span> wants to Send <span class="font-weight-bold transfer-amount">-</span> to <span class="font-weight-bold transfer-method">-</span> </p>
+                    <p> <span class="font-weight-bold transfer-sender"></span> requested <span class="font-weight-bold transfer-amount">-</span> from <span class="font-weight-bold transfer-method">-</span> </p>
 
-                    <p class="mt-3"> @lang('ADMIN RESPONSE WAS'): <br> <span class="admin-detail"></span></p>
+                    <p class="mt-3"> ADMIN RESPONSE WAS: <br> <span class="admin-detail"></span></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-warning" data-bs-dismiss="modal">@lang('Close')</button>
+                    <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -126,7 +128,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p> <span class="font-weight-bold transfer-sender"></span> wants to Send <span class="font-weight-bold transfer-amount">-</span> to <span class="font-weight-bold transfer-method">-</span> </p>
+                    <p> <span class="font-weight-bold transfer-sender"></span> requested  <span class="font-weight-bold transfer-amount">-</span> from <span class="font-weight-bold transfer-method">-</span> including Charges </p>
 
                 </div>
                 <div class="modal-footer">
@@ -140,12 +142,12 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">@lang('Approve transferal Confirmation')</h5>
+                    <h5 class="modal-title">@lang('Approve request Confirmation')</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('admin.ownbank.transfer.approve') }}" method="POST">
+                <form action="{{ route('admin.ownbank.request.approve') }}" method="POST">
                     @csrf
                     <input type="hidden" name="id">
                     <div class="modal-body">
@@ -166,12 +168,12 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">@lang('Reject transferal Confirmation')</h5>
+                    <h5 class="modal-title">@lang('Reject request Confirmation')</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('admin.ownbank.transfer.reject') }}" method="POST">
+                <form action="{{ route('admin.ownbank.request.reject') }}" method="POST">
                     @csrf
                     <input type="hidden" name="id">
                     <div class="modal-body">

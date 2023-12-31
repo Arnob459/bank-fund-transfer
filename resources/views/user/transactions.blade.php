@@ -105,7 +105,7 @@
                  @else
                      Send to @if ($item->bank_type == 1){{ $item->bank->name }}@else {{ $item->receiver->username }} @endif
                  @endif</span> </div>
-                 @if ($item->status == 2)
+                 @if ($item->status == 2 || $item->status == 4)
                  <div class="col-auto col-sm-4 d-none d-sm-block text-center text-3"> <span class="badge bg-warning text-dark text-0 fw-500 rounded-pill px-2 mb-0 ">in Process</span>  <span class="text-warning" data-bs-toggle="tooltip" title="In Progress"><i class="fas fa-ellipsis-h"></i></span> </div>
                @elseif ($item->status == 1)
                <div class="col-auto col-sm-4 d-none d-sm-block text-center text-3"> <span class="badge bg-success text-dark text-0 fw-500 rounded-pill px-2 mb-0 ">Completed</span> <span class="text-success" data-bs-toggle="tooltip" title="Completed"><i class="fas fa-check-circle"></i></span> </div>
@@ -178,7 +178,7 @@
 
                           <ul class="list-unstyled">
                             <li class="fw-500">Status:</li>
-                            @if ($item->status == 2)
+                            @if ($item->status == 2 || $item->status == 4)
                             <li class="text-muted">in Process<span class="text-warning text-3 ms-1"><i class="fas fa-ellipsis-h"></i></span></li>
                           @elseif ($item->status == 1)
                           <li class="text-muted">Completed<span class="text-success text-3 ms-1"><i class="fas fa-check-circle"></i></span></li>

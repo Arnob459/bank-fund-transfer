@@ -100,7 +100,7 @@
                   <div class="col-2 col-sm-1 text-center"> <span class="d-block text-4 fw-300">{{ \Carbon\Carbon::parse($request->created_at)->format('j M ') }}</span> </div>
                   <div class="col col-sm-7"> <span class="d-block text-4">{{ $request->user->username }}</span>
                  <span class="text-muted">Request from {{ $request->user->username }}</span> </div>
-                 @if ($request->status == 2)
+                 @if ($request->status == 2 || $request->status == 4)
                   <div class="col-auto col-sm-2 d-none d-sm-block text-center text-3"> <span class="text-warning" data-bs-toggle="tooltip" title="Pending"><i class="fas fa-ellipsis-h"></i></span> </div>
                 @elseif ($request->status == 1)
                 <div class="col-auto col-sm-2 d-none d-sm-block text-center text-3"> <span class="text-success" data-bs-toggle="tooltip" title="Completed"><i class="fas fa-check-circle"></i></span> </div>
@@ -152,7 +152,7 @@
 
                           <ul class="list-unstyled">
                             <li class="fw-500">Status:</li>
-                            @if ($request->status == 2)
+                            @if ($request->status == 2 || $request->status == 4 )
                             <li class="text-muted">Pending<span class="text-warning text-3 ms-1"><i class="fas fa-ellipsis-h"></i></span></li>
                           @elseif ($request->status == 1)
                           <li class="text-muted">Completed<span class="text-success text-3 ms-1"><i class="fas fa-check-circle"></i></span></li>

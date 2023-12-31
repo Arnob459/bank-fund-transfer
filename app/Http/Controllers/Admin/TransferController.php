@@ -14,9 +14,9 @@ class TransferController extends Controller
     public function pendingRequest()
     {
         $page_title = 'Pending Requests';
-        $transfers = Transfer::where('status', 2)->where('type', 0)->where('bank_type', 2)->with(['user','receiver'])->latest()->paginate(config('constants.table.default'));
+        $transfers = Transfer::where('status', 4)->where('type', 0)->where('bank_type', 2)->with(['user','receiver'])->latest()->paginate(config('constants.table.default'));
         $empty_message = 'No Request is pending';
-        return view('admin.transfer.ownbank_requests', compact('page_title', 'transfers', 'empty_message'));
+        return view('admin.transfer.requests', compact('page_title', 'transfers', 'empty_message'));
     }
 
     public function approvedRequest()
@@ -24,7 +24,7 @@ class TransferController extends Controller
         $page_title = 'Approved Requests';
         $transfers = Transfer::where('status', 1)->where('type', 0)->where('bank_type', 2)->with(['user','receiver'])->latest()->paginate(config('constants.table.default'));
         $empty_message = 'No Request is approved';
-        return view('admin.transfer.ownbank_requests', compact('page_title', 'transfers', 'empty_message'));
+        return view('admin.transfer.requests', compact('page_title', 'transfers', 'empty_message'));
     }
 
     public function rejectedRequest()
@@ -32,7 +32,75 @@ class TransferController extends Controller
         $page_title = 'Rejected Requests';
         $transfers = Transfer::where('status', 3)->where('type', 0)->where('bank_type', 2)->with(['user','receiver'])->latest()->paginate(config('constants.table.default'));
         $empty_message = 'No Request is rejected';
-        return view('admin.transfer.ownbank_requests', compact('page_title', 'transfers', 'empty_message'));
+        return view('admin.transfer.requests', compact('page_title', 'transfers', 'empty_message'));
+    }
+
+    public function requestLog(Request $request)
+    {
+        if ($request->user){
+            $user = User::findOrFail($request->user);
+            $page_title = 'Requests History | ' .$user->username;
+            $transfers = Transfer::where('user_id', $user->id)->where('status', '!=', 0)->where('type', 0)->where('bank_type', 2)->with(['user','receiver'])->latest()->paginate(config('constants.table.default'));
+            $empty_message = 'No Requests history';
+            return view('admin.transfer.requests', compact('page_title', 'transfers', 'empty_message'));
+        }
+        $page_title = 'Request History';
+        $transfers = Transfer::where('status', '!=', 0)->where('type', 0)->where('bank_type', 2)->with(['user','receiver'])->latest()->paginate(config('constants.table.default'));
+        $empty_message = 'No Request history';
+        return view('admin.transfer.requests', compact('page_title', 'transfers', 'empty_message'));
+    }
+
+    public function requestApprove(Request $request)
+    {
+        $request->validate(['id' => 'required|integer']);
+        $transfer = Transfer::where('id',$request->id)->where('status',4)->firstOrFail();
+        $transfer->status = 1;
+        $transfer->save();
+        $sender = User::find($transfer->user_id);
+        if ($transfer->amount > $transfer->final_amount) {
+            $sender->balance += formatter_money($transfer->amount);
+
+        } else {
+            $sender->balance += formatter_money($transfer->final_amount);
+
+        }
+
+        $sender->save();
+
+        return redirect()->route('admin.ownbank.request.pending')->with('success', 'transfer Marked  as Approved.');
+    }
+
+    public function requestReject(Request $request)
+    {
+        $general = Setting::first();
+        $request->validate(['id' => 'required|integer']);
+        $transfer = Transfer::where('id',$request->id)->where('status',4)->firstOrFail();
+        $transfer->status = 3;
+        $transfer->admin_feedback = $request->details;
+        $transfer->save();
+
+        $user = User::find($transfer->receiver_id);
+        if ($transfer->amount > $transfer->final_amount) {
+            $user->balance += formatter_money($transfer->amount);
+
+        } else {
+            $user->balance += formatter_money($transfer->final_amount);
+        }
+        $user->save();
+
+        Trx::create([
+            'user_id' => $transfer->receiver_id,
+            'amount' => $transfer->amount,
+            'post_balance' => $user->balance,
+            'charge' => 0,
+            'trx_type' => '+',
+            'remark' => 'transfer_refund',
+            'details' => formatter_money($transfer->amount) . ' ' . $general->cur . ' Refunded from Request Rejection',
+            'trx' => getTrx(),
+            'type' => 1,
+        ]);
+
+        return redirect()->route('admin.ownbank.request.pending')->with('success', 'transfer has been rejected.');
     }
 
     public function ownbankPending()
