@@ -30,11 +30,48 @@ class UserController extends Controller
         $user = Auth::user();
         return view('user.profile.index', compact('page_title','user'));
     }
-    public function profileEdit()
+
+
+
+
+    public function kycUpdate(Request $request)
     {
-        $page_title = 'Profile Edit';
-        return view('user.profile.profile_edit', compact('page_title'));
+        $request->validate([
+            'nid' => 'required|image|mimes:jpeg,png,jpg|max:2024',
+            'passport' => 'required|image|mimes:jpeg,png,jpg|max:2024',
+        ]);
+
+        if ($request->hasFile('nid')) {
+            try {
+                $path = config('constants.nid.path');
+                $size = config('constants.nid.size');
+                $old_image = null;
+                $filename = upload_image($request->nid, $path, $size,$old_image);
+            } catch (\Exception $exp) {
+                return back()->withWarning('Image could not be uploaded');
+            }
+        }
+
+        if ($request->hasFile('passport')) {
+            try {
+                $path = config('constants.passport.path');
+                $size = config('constants.passport.size');
+                $old_image = null;
+                $filename2 = upload_image($request->passport, $path, $size,$old_image);
+            } catch (\Exception $exp) {
+                return back()->withWarning('Image could not be uploaded');
+            }
+        }
+
+        auth()->user()->update([
+            'nid' => $filename,
+            'passport' => $filename2,
+            'kyc_verify' => 2,
+
+        ]);
+        return back()->with('success', 'Kyc information submitted successfully');
     }
+
 
     public function profileUpdate(Request $request)
     {
@@ -45,16 +82,32 @@ class UserController extends Controller
             'state' => 'nullable|max:160',
             'zip' => 'nullable|max:160',
             'country' => 'nullable|max:160',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2024',
+
         ]);
+
+        $filename = auth()->user()->avatar;
+        if ($request->hasFile('avatar')) {
+            try {
+                $path = config('constants.user.profile.path');
+                $size = config('constants.user.profile.size');
+                $filename = upload_image($request->avatar, $path, $size, $filename);
+            } catch (\Exception $exp) {
+                return back()->withErrors( 'Image could not be uploaded');
+            }
+        }
 
         auth()->user()->update([
             'name' => $request->name,
+            'avatar' => $filename,
+
             'address' => [
                 'address' => $request->address,
                 'city' => $request->city,
                 'state' => $request->state,
                 'zip' => $request->zip,
                 'country' => $request->country,
+
             ]
         ]);
         return back()->with('success', 'Your profile has been updated');

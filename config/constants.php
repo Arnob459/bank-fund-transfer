@@ -73,6 +73,16 @@ return [
         'size' => '200x200',
     ],
 
+    'nid' => [
+        'path' => 'assets/images/profile',
+        'size' => '700x700',
+    ],
+
+    'passport' => [
+        'path' => 'assets/images/profile',
+        'size' => '700x700',
+    ],
+
     'logo_fav' => [
         'path' => 'assets/images/logo',
     ],
@@ -81,7 +91,7 @@ return [
     'user' => [
         'profile' => [
             'path' => 'assets/images/users',
-            'size' => '512x512',
+            'size' => '100x100',
         ]
     ],
     'table' => [

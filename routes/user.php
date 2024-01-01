@@ -43,13 +43,16 @@ use Illuminate\Support\Facades\Route;
 
                 //user profile
                 Route::get('/profile', [UserController::class, 'profile'])->name('profile');
-                Route::get('/profile-edit', [UserController::class, 'profileEdit'])->name('profile.edit');
 
                 Route::put('/password', [UserController::class, 'passwordUpdate'])->name('password.update');
                 Route::put('/profile', [UserController::class, 'profileUpdate'])->name('profile.update');
                 Route::put('/contact', [UserController::class, 'contactUpdate'])->name('contact.update');
 
                 Route::put('/avatar', [UserController::class, 'avatarUpdate'])->name('avatar.update');
+
+                Route::put('/kyc-verification', [UserController::class, 'kycUpdate'])->name('kyc.update');
+
+
 
                 //Account and Card
                 Route::get('/account', [UserController::class, 'account'])->name('account');

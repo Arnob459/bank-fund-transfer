@@ -14,10 +14,16 @@
             <!-- Profile Details
             =============================== -->
             <div class="bg-white shadow-sm rounded text-center p-3 mb-4">
-              <div class="profile-thumb mt-3 mb-4"> <img class="rounded-circle" src="https://harnishdesign.net/demo/html/payyed/images/profile-thumb.jpg" alt="">
-                <div class="profile-thumb-edit bg-primary text-white" data-bs-toggle="tooltip" title="Change Profile Picture"> <i class="fas fa-camera position-absolute"></i>
-                  <input type="file" class="custom-file-input" id="customFile">
-                </div>
+              <div class="profile-thumb mt-3 mb-4">
+                @if (auth()->user()->avatar == null)
+                <img class="rounded-circle" src="{{asset('assets/images/users/2.jpg')}}" alt="">
+                @else
+                <img class="rounded-circle" src="{{asset('assets/images/users/'.auth()->user()->avatar)}}" alt="">
+            @endif
+            @if (auth()->user()->kyc_verify == 1)
+            <div class="profile-thumb-edit bg-primary text-white" data-bs-toggle="tooltip" title="Verified"> <i class="fas fa-check position-absolute"></i>
+            </div>
+            @endif
               </div>
               <p class="text-3 fw-500 mb-2">Hello, {{ auth()->user()->username }}</p>
               <p class="mb-2"><a href="{{ route('user.profile') }}" class="text-5 text-light" data-bs-toggle="tooltip" title="Edit Profile"><i class="fas fa-edit"></i></a></p>

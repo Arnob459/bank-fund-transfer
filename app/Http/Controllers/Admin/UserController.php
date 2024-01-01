@@ -136,6 +136,71 @@ class UserController extends Controller
         return back()->with('success', " updated successfully");
     }
 
+    public function kyc($id){
+
+        $data['user'] = User::findOrfail($id);
+        $data['page_title'] = 'USER: ' .$data['user']->username;
+
+        return view('admin.users.kyc',$data);
+    }
+
+    public function kycUpdate(Request $request ,$id){
+
+        $user = User::findOrFail($id);
+
+
+        $request->validate([
+            'nid' => 'nullable|image|mimes:jpeg,png,jpg|max:2024',
+            'passport' => 'nullable|image|mimes:jpeg,png,jpg|max:2024',
+        ]);
+
+        $filename =  $user->nid;
+        $filename2 =  $user->passport;
+
+
+
+        if ($request->hasFile('nid')) {
+            try {
+                $path = config('constants.nid.path');
+                $size = config('constants.nid.size');
+                $old_image = null;
+                $filename = upload_image($request->nid, $path, $size,$old_image);
+            } catch (\Exception $exp) {
+                return back()->withWarning('Image could not be uploaded');
+            }
+        }
+
+        if ($request->hasFile('passport')) {
+            try {
+                $path = config('constants.passport.path');
+                $size = config('constants.passport.size');
+                $old_image = null;
+                $filename2 = upload_image($request->passport, $path, $size,$old_image);
+            } catch (\Exception $exp) {
+                return back()->withWarning('Image could not be uploaded');
+            }
+        }
+
+        $user->update([
+            'nid' => $filename,
+            'passport' => $filename2,
+            'kyc_verify' => 1,
+        ]);
+
+        return back()->with('success', " Approved successfully");
+    }
+
+    public function kycReject(Request $request ,$id){
+
+        $user = User::findOrFail($id);
+        $user->update([
+            'kyc_verify' => 2,
+        ]);
+
+        return back()->with('success', " Rejected successfully");
+    }
+
+
     public function addBalance(Request $request, $id)
     {
         $request->validate(['amount' => 'required|numeric|gt:0']);
@@ -163,6 +228,8 @@ class UserController extends Controller
             return back()->with('success', $general->cur_sym . $amount . ' has been added to ' . $user->username . ' balance');
 
     }
+
+
 
     public function subBalance(Request $request, $id)
     {

@@ -17,10 +17,18 @@
           <!-- Profile Details
           =============================== -->
           <div class="bg-white shadow-sm rounded text-center p-3 mb-4">
-            <div class="profile-thumb mt-3 mb-4"> <img class="rounded-circle" src="https://harnishdesign.net/demo/html/payyed/images/profile-thumb.jpg" alt="">
-              <div class="profile-thumb-edit bg-primary text-white" data-bs-toggle="tooltip" title="Change Profile Picture"> <i class="fas fa-camera position-absolute"></i>
-                <input type="file" class="custom-file-input" id="customFile">
-              </div>
+            <div class="profile-thumb mt-3 mb-4">
+                  @if ($user->avatar == null)
+                <img class="rounded-circle" src="{{asset('assets/images/users/2.jpg')}}" alt="">
+                @else
+                <img class="rounded-circle" src="{{asset('assets/images/users/'.$user->avatar)}}" alt="">
+            @endif
+
+            @if ($user->kyc_verify == 1)
+            <div class="profile-thumb-edit bg-primary text-white" data-bs-toggle="tooltip" title="Verified"> <i class="fas fa-check position-absolute"></i>
+            </div>
+            @endif
+
             </div>
             <p class="text-3 fw-500 mb-2">Hello, {{ auth()->user()->username }}</p>
             <p class="mb-2"><a href="{{ route('user.profile') }}" class="text-5 text-light" data-bs-toggle="tooltip" title="Edit Profile"><i class="fas fa-edit"></i></a></p>
@@ -52,6 +60,47 @@
         <!-- Middle Panel
         ============================================= -->
         <div class="col-lg-9">
+            @if ($user->kyc_verify != 1)
+
+            <div class="bg-white shadow-sm rounded p-4 mb-4">
+                <h3 class="text-5 fw-400 d-flex align-items-center mb-4">Please provide Kyc Information <a href="#edit-personal-details" data-bs-toggle="modal" class="ms-auto text-2 text-uppercase btn-link"><span class="me-1"><i class="fas fa-edit"></i></span>Upload</a></h3>
+
+            </div>
+            <div id="edit-personal-details" class="modal fade " role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title fw-400">Kyc Details</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-4">
+                      <form id="personaldetails" action="{{route('user.kyc.update')}}" method="post" enctype="multipart/form-data">
+                        @csrf
+                            {{method_field('put')}}
+
+                        <div class="row g-3">
+                          <div class="col-12 col-sm-12">
+                            <label for="firstName" class="form-label">NID</label>
+                            <input type="file"  name="nid" class="form-control" data-bv-field="firstName" id="nid" required accept="image/*">
+                          </div>
+                          <div class="col-12 col-sm-12">
+                            <label for="passport" class="form-label">Passport </label>
+                            <input type="file" name="passport"   class="form-control" data-bv-field="passport" id="passport" required  accept="image/*">
+                          </div>
+                          </div>
+
+                          <div class="row g-3">
+                          <div class="col-12 mt-4 d-grid"><button class="btn btn-primary" type="submit">Submit</button></div>
+                        </div>
+
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            @endif
+
 
           <!-- Profile Completeness
           =============================== -->

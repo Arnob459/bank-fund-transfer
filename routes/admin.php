@@ -114,6 +114,11 @@ Route::name('admin.')->group(function() {
           Route::post('addbalance/{id}', [UserController::class, 'addBalance'])->name('user.addbalance');
           Route::post('subbalance/{id}', [UserController::class, 'subBalance'])->name('user.subbalance');
 
+          Route::get('user/kyc/{id}', [UserController::class, 'kyc'])->name('kyc');
+          Route::post('user/kyc/{id}', [UserController::class, 'kycUpdate'])->name('kyc.update');
+          Route::post('user/kyc/reject/{id}', [UserController::class, 'kycReject'])->name('kyc.reject');
+
+
         //Basic Settings
 
           //Basic

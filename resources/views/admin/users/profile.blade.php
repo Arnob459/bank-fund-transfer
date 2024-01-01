@@ -35,10 +35,10 @@
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <div div class="col-md-4 ">
+                                                <div div class="col-md-5">
                                                     <div class="  mb-1">Username: </div>
                                                 </div>
-                                                <div div class="col-md-8">
+                                                <div div class="col-md-6">
                                                     <div class="  mb-1" > {{ $user->username }} </div>
                                                 </div>
                                             </div> <div class="row mb-3">
@@ -56,20 +56,12 @@
                                                     <div class="  mb-1" > {{ $user->phone }} </div>
                                                 </div>
                                             </div>
-                                            <div class="row mb-3">
-                                                <div div class="col-md-4 ">
-                                                    <div class="  mb-1">Account No: </div>
-                                                </div>
-                                                <div div class="col-md-8 ">
-                                                    <div class="  mb-1" > {{ $user->account_number }} </div>
 
-                                                </div>
-                                            </div>
                                             <div class="row mb-3">
-                                                <div div class="col-md-4 ">
+                                                <div div class="col-md-7 ">
                                                     <div class="  mb-1">Login As a User : </div>
                                                 </div>
-                                                <div div class="col-md-8">
+                                                <div div class="col-md-4">
                                                     <a target="_blank" href="{{route('admin.auto.login', $user->id)}}"> Login </a>
 
                                                 </div>
@@ -193,9 +185,9 @@
 
                                 </div>
 
-                                @if ( $user->nid != null )
-                                <div class="col-sm-4">
-                                    <a href=""  class="btn btn-primary btn-block me-1 mb-3">Kyc Data</a>
+                                @if ( $user->kyc_verify != 0 )
+                                <div class="col-md-12">
+                                    <a href="{{route('admin.kyc.update', $user->id)}}"  class="btn btn-primary btn-block me-1 mb-3">Kyc Data</a>
 
                                 </div>
                                 @endif
@@ -448,12 +440,12 @@
         .btn-outline-danger {
 
             height: 40px;
-            width: 140px;
+            width: 120px;
             }
         .btn-outline-success {
 
             height: 40px;
-            width: 140px;
+            width: 120px;
             }
     </style>
 
