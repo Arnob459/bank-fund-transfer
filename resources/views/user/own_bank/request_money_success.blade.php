@@ -53,8 +53,8 @@
               <p class="text-success text-8 fw-500 lh-1">Success!</p>
               <p class="lead">Transactions Complete</p>
             </div>
-            <p class="text-3 mb-4">You've successfully <span class="text-4 fw-500">{{ $gnl->cur_sym }}{{ $amount }}</span> Request Money to <span class="fw-500">{{ $username }}</span>, See transaction details under <a class="btn-link" href="#">Activity</a>.</p>
-            <a class="text-3 d-inline-block btn-link mt-4" href="#"><i class="fas fa-print"></i> Print</a> </div>
+            <p class="text-3 mb-4">You've successfully <span class="text-4 fw-500">{{ $gnl->cur_sym }}{{ $amount }}</span> Request Money to <span class="fw-500">{{ $username }}</span>, See transaction details under <a class="btn-link" href="{{ route('user.transections') }}">Transections</a>.</p>
+            </div>
           <!-- Request Money Success end -->
         </div>
       </div>

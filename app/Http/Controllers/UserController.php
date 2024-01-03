@@ -32,8 +32,6 @@ class UserController extends Controller
     }
 
 
-
-
     public function kycUpdate(Request $request)
     {
         $request->validate([
@@ -707,6 +705,13 @@ class UserController extends Controller
         $logs = Transfer::where('user_id', Auth::id())->with(['receiver','bank'])->orderBy('id', 'desc')->paginate(config('constants.table.default'));
 
         return view('user.transactions', compact('page_title', 'logs'));
+    }
+
+    public function notification()
+    {
+        $page_title = 'Notifications';
+        $notification = Trx::where('user_id', auth()->user()->id)->where('remark', 'admin_added')->orWhere('remark', 'admin_subtract')->latest()->get();
+        return view('user.notifications', compact('page_title','notification'));
     }
 
 

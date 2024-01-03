@@ -89,7 +89,27 @@
                 </ul>
               </li>
 
-              <li class="dropdown profile ms-2"> <a class="px-0 dropdown-toggle" href="#"><img class="rounded-circle" src="https://harnishdesign.net/demo/html/payyed/images/profile-thumb-sm.jpg" alt=""></a>
+              <li class="dropdown notifications"> <a class="dropdown-toggle" href="#"><span class="text-5"><i class="far fa-bell"></i></span></a>
+                <ul class="dropdown-menu">
+                  <li class="text-center text-3 py-2">Notifications</li>
+                  <li class="dropdown-divider mx-n3"></li>
+                  @foreach ($notifications as $notification)
+                  <li><a class="dropdown-item" href="#"><i class="fas fa-bell"></i>{{ $notification->details }} Amount: {{formatter_money($notification->amount) }} {{ $gnl->cur_sym }}<span class="text-1 text-muted d-block">{{ $notification->created_at }}</span></a></li>
+                  @endforeach
+
+                  <li class="dropdown-divider mx-n3"></li>
+                  <li><a class="dropdown-item text-center text-primary px-0" href="{{ route('user.notifications') }}">See all Notifications</a></li>
+                </ul>
+              </li>
+
+              <li class="dropdown profile ms-2"> <a class="px-0 dropdown-toggle" href="#">
+                @if (auth()->user()->avatar == null)
+                <img class="avatar-img rounded-circle" src="{{asset('assets/images/users/2.jpg')}}" alt="" height="40px">
+                @else
+                <img class="avatar-img rounded-circle" src="{{asset('assets/images/users/'.auth()->user()->avatar)}}" alt="" height="40px">
+                @endif
+
+            </a>
                 <ul class="dropdown-menu">
                   <li class="text-center text-3 py-2">Hi, {{ auth()->user()->name }}</li>
                   <li class="dropdown-divider mx-n3"></li>

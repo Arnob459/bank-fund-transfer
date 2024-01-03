@@ -16,6 +16,6 @@ class Card extends Model
 
     public function cardType()
     {
-        return $this->belongsTo(cardType::class);
+        return $this->belongsTo(CardType::class);
     }
 }

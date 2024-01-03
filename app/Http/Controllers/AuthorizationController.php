@@ -21,7 +21,7 @@ class AuthorizationController extends Controller
 
     public function authorizeForm()
     {
-        $view = 'users.authorize';
+        $view = 'user.authorize';
         if (auth()->check()) {
             $user = auth()->user();
             if (!$user->status) {

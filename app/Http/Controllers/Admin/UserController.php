@@ -224,6 +224,13 @@ class UserController extends Controller
                 'trx' => $trx
             ]);
 
+            notify($user, 'BAL_ADD', [
+                'trx' => $trx,
+                'amount' => $amount,
+                'currency' => $general->cur,
+                'post_balance' => $user->balance +0,
+            ]);
+
             $user->save();
             return back()->with('success', $general->cur_sym . $amount . ' has been added to ' . $user->username . ' balance');
 
@@ -254,7 +261,7 @@ class UserController extends Controller
             'trx_type' => '-',
             'type' => '1',
             'remark' => 'admin_subtract',
-            'details' => 'Added Balance Via Admin',
+            'details' => 'Subtract Balance Via Admin',
             'trx' => $trx
         ]);
 

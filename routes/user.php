@@ -49,8 +49,10 @@ use Illuminate\Support\Facades\Route;
                 Route::put('/contact', [UserController::class, 'contactUpdate'])->name('contact.update');
 
                 Route::put('/avatar', [UserController::class, 'avatarUpdate'])->name('avatar.update');
-
                 Route::put('/kyc-verification', [UserController::class, 'kycUpdate'])->name('kyc.update');
+
+                Route::get('/notifications', [UserController::class, 'notification'])->name('notifications');
+
 
 
 
