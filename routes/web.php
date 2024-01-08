@@ -14,7 +14,13 @@ use App\Http\Controllers\CheckUsernameController;
 |
 */
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\MyCustomEmail;
 
+Route::get('/send-email', function () {
+    Mail::to('marketiah.info@gmail.com')->send(new MyCustomEmail());
+    return "Email sent successfully!";
+});
 
 Route::get('/', [App\Http\Controllers\FrontendController::class, 'index'])->name('index');
 

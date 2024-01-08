@@ -27,7 +27,7 @@
                 <div class="col-md-8">
                     <div class="form-group">
                         <label for="basicInput" class="mb-2"> Subtitle</label>
-                        <input type="text" name="choose_subtitle" class="form-control form-control-lg" id="basicInput" value="{{$choose->sub_title?? ''}}"   placeholder="Enter Choose us subtitle"  >
+                        <input type="text" name="choose_subtitle" class="form-control form-control-lg" id="basicInput" value="{{$choose->sub_title}}" required  placeholder="Enter Choose us subtitle"  >
                     </div>
                 </div>
                 <hr>

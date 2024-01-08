@@ -23,6 +23,8 @@ class ChooseUsController extends Controller
      {
          $this->validate($request, [
              'choose_title' => 'required|string|max:255',
+             'choose_subtitle' => 'required|string|max:255',
+
          ]);
 
          $data = Title::where('key_value', 'choose')->first();
