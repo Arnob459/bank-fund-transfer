@@ -15,19 +15,61 @@
                   <p class="text-4">{{ $card->card_number }}</p>
                   <p class="d-flex align-items-center"> <span class="account-card-expire text-uppercase d-inline-block opacity-7 me-2">Valid<br>
                     thru<br>
-                    </span> <span class="text-4 opacity-9">{{ $card->expiry_date }}</span> @if ($card->status == 0)
+                    </span> <span class="text-4 opacity-9">{{ \Carbon\Carbon::parse($card->expiry_date)->format('m/y') }}</span> @if ($card->status == 0)
                     <span class="badge bg-warning text-dark text-0 fw-500 rounded-pill px-2 ms-auto">pending</span>
                     @elseif ($card->status == 2)
                     <span class="badge bg-danger text-dark text-0 fw-500 rounded-pill px-2 ms-auto">Inactive</span>
                     @endif </p>
-                  <p class="d-flex align-items-center m-0"> <span class="text-uppercase fw-500">{{ $card->user->name }}</span> <img class="ms-auto" src="{{ asset('assets/images/card/'.$card->cardType->image) }}"  title=""> </p>
-                  <div class="account-card-overlay rounded">  <a href="#" data-bs-target="#edit-card-details{{ $card->card_number }}" data-bs-toggle="modal" class="text-light btn-link mx-2"><span class="me-1"><i class="fas fa-minus-circle"></i></span>Delete</a> </div>
+                  <p class="d-flex align-items-center m-0"> <span class="text-uppercase fw-500">{{ $card->card_holder }}</span> <img class="ms-auto" src="{{ asset('assets/images/card/'.$card->cardType->image) }}"  title=""> </p>
+                  <div class="account-card-overlay rounded"> <a href="#" data-bs-target="#edit-card-details{{ $card->id }}" data-bs-toggle="modal" class="text-light btn-link mx-2"><span class="me-1"><i class="fas fa-edit"></i></span>Edit</a>  <a href="#" data-bs-target="#delete-card-details{{ $card->id }}" data-bs-toggle="modal" class="text-light btn-link mx-2"><span class="me-1"><i class="fas fa-minus-circle"></i></span>Delete</a> </div>
                 </div>
               </div>
 
                         <!-- Edit Card Details Modal
           ================================== -->
-          <div id="edit-card-details{{ $card->card_number }}" class="modal fade" role="dialog" aria-hidden="true">
+          <div id="edit-card-details{{ $card->id }}" class="modal fade" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title fw-400">Edit Card</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+
+                    <form id="updateCard" method="POST" action="{{ route('user.card.update', $card->id) }}">
+                        @csrf
+                    <div class="mb-3">
+                      <label for="edircardNumber" class="form-label">Card Number</label>
+                      <div class="input-group">
+                        <span class="input-group-text"><img class="ms-auto" src="{{ asset('assets/images/card/'.$card->cardType->image) }}" alt="visa" title=""></span>
+                        <input type="text" class="form-control" data-bv-field="edircardNumber" id="edircardNumber" disabled value="{{ $card->card_number }}" placeholder="Card Number">
+                      </div>
+                    </div>
+                    <div class="row g-3 mb-3">
+                      <div class="col-lg-6">
+                          <label for="editexpiryDate" class="form-label">Expiry Date</label>
+                          <input id="editexpiryDate" type="month" class="form-control" data-bv-field="editexpiryDate" name="expiry_date"  value="{{ \Carbon\Carbon::parse($card->expiry_date)->format('Y-m') }}" placeholder="MM/YY">
+                      </div>
+                      <div class="col-lg-6">
+                        <label for="editcvvNumber" class="form-label">CVV <span class="text-info ms-1" data-bs-toggle="tooltip" title="For Visa/Mastercard, the three-digit CVV number is printed on the signature panel on the back of the card immediately after the card's account number. For American Express, the four-digit CVV number is printed on the front of the card above the card account number."><i class="fas fa-question-circle"></i></span></label>
+                        <input id="editcvvNumber" type="password" class="form-control" data-bv-field="editcvvNumber" name="cvv" required value="{{ $card->cvv }}" placeholder="CVV (3 digits)">
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <label for="editcardHolderName" class="form-label">Card Holder Name</label>
+                    <input type="text" class="form-control" data-bv-field="editcardHolderName" id="editcardHolderName" name="card_holder" value="{{ $card->card_holder }}" placeholder="Card Holder Name">
+                  </div>
+
+                    <div class="d-grid mt-4"><button class="btn btn-success" type="submit">Update</button></div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+                                  <!-- Delete Card Details Modal
+          ================================== -->
+          <div id="delete-card-details{{ $card->id }}" class="modal fade" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -43,20 +85,7 @@
                         <input type="text" class="form-control" data-bv-field="edircardNumber" id="edircardNumber" disabled value="{{ $card->card_number }}" placeholder="Card Number">
                       </div>
                     </div>
-                    <div class="row g-3 mb-3">
-                      <div class="col-lg-6">
-                          <label for="editexpiryDate" class="form-label">Expiry Date</label>
-                          <input id="editexpiryDate" type="text" class="form-control" data-bv-field="editexpiryDate" disabled value="{{ $card->expiry_date }}" placeholder="MM/YY">
-                      </div>
-                      <div class="col-lg-6">
-                          <label for="editcvvNumber" class="form-label">Status </label>
-                          <input id="editcvvNumber" type="text" class="form-control" data-bv-field="editcvvNumber" disabled  @if ($card->status == 0)value="Pending" @elseif ($card->status == 1)value="Active" @else value="Inactive"@endif  >
-                      </div>
-                    </div>
-                    <div class="mb-3">
-                      <label for="editcardHolderName" class="form-label">Card Holder Name</label>
-                      <input type="text" class="form-control" data-bv-field="editcardHolderName" id="editcardHolderName" disabled value="{{ $card->user->name }}" >
-                    </div>
+
                     <form id="updateCard" method="POST" action="{{ route('user.card.destroy', $card->id) }}">
                         @csrf
                         @method('DELETE')
@@ -96,20 +125,37 @@
                       <label class="btn btn-outline-secondary btn-sm shadow-none w-100" for="option2">Credit</label>
                     </div>
                     <div class="row g-3">
-					<div class="col-12">
-                      <label for="cardType" class="form-label">Card Type</label>
-                      <select id="cardType" class="form-select" required name="card_type_id">
-                        <option value="">Select Card Type</option>
+                        <div class="col-12">
+                            <label for="cardType" class="form-label">Card Type</label>
+                            <select id="cardType" class="form-select" required name="card_type_id">
+                              <option value="">Select Card Type</option>
 
-                        @foreach ($card_types as $type)
-                        <option value="{{ $type->id }}">{{ $type->name }}</option>
+                              @foreach ($card_types as $type)
+                              <option value="{{ $type->id }}">{{ $type->name }}</option>
 
-                        @endforeach
-                      </select>
-                    </div>
+                              @endforeach
+                            </select>
+                          </div>
+                        <div class="col-12">
+                            <label for="cardNumber" class="form-label">Card Number</label>
+                            <input type="text" class="form-control" data-bv-field="cardnumber" id="cardNumber" required name="card_number" placeholder="Card Number">
+                          </div>
+                          <div class="col-lg-6">
+                             <label for="expiryDate" class="form-label">Expiry Date</label>
+                             <input id="expiryDate" type="month" class="form-control" data-bv-field="expiryDate" required name="expiry_date" placeholder="MM/YY">
+                          </div>
+                          <div class="col-lg-6">
+                             <label for="cvvNumber" class="form-label">CVV <span class="text-info ms-1" data-bs-toggle="tooltip" title="For Visa/Mastercard, the three-digit CVV number is printed on the signature panel on the back of the card immediately after the card's account number. For American Express, the four-digit CVV number is printed on the front of the card above the card account number."><i class="fas fa-question-circle"></i></span></label>
+                             <input id="cvvNumber" type="password" class="form-control" data-bv-field="cvvnumber" required name="cvv" placeholder="CVV (3 digits)">
+                          </div>
+                          <div class="col-12">
+                            <label for="cardHolderName" class="form-label">Card Holder Name</label>
+                            <input type="text" class="form-control" data-bv-field="cardholdername" id="cardHolderName" required name="card_holder" placeholder="Card Holder Name">
+                          </div>
+
 
                     <div class="col-12 d-grid mt-4">
-					  <button class="btn btn-primary" type="submit">Add Card</button>
+					  <button class="btn btn-primary" type="submit">Request Card</button>
 					</div>
 					</div>
                   </form>

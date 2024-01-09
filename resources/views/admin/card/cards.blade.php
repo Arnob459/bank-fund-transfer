@@ -78,8 +78,19 @@
 
 
                                                           <ul class="list-unstyled">
-                                                            <li class="fw-500">Name</li>
-                                                            <li class="text-muted">{{ $card->user->name }}</li>
+                                                            <li class="fw-500">Expiry Date</li>
+                                                            <li class="text-muted">{{ $card->expiry_date }}</li>
+                                                          </ul>
+
+                                                          <ul class="list-unstyled">
+                                                            <li class="fw-500">Cvv</li>
+                                                            <li class="text-muted">{{ $card->cvv }}</li>
+                                                          </ul>
+
+
+                                                          <ul class="list-unstyled">
+                                                            <li class="fw-500">Card Holder</li>
+                                                            <li class="text-muted">{{ $card->card_holder }}</li>
                                                           </ul>
 
                                                           <ul class="list-unstyled">

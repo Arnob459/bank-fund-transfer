@@ -121,6 +121,9 @@
                 var percent = (amount * percent_charge / 100);
                 var charge = fix_charge + percent;
                 var payAmount = amount - charge;
+
+                payAmount = Math.max(0, payAmount);
+
                 $('#charge').text(charge.toFixed(2));
                 $('#payAmount').text(payAmount.toFixed(2));
 

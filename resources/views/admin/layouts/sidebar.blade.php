@@ -217,16 +217,12 @@
                         <span>Home Page</span>
                     </a>
                     <ul class="submenu ">
-                        <li class="submenu-item {{ Route::is('admin.banner') ? 'active' : '' }}">
-                            <a href="{{ route('admin.banner') }}">Banner</a>
-                        </li>
+
                          <li class="submenu-item {{ Route::is('admin.slider') ? 'active' : '' }}">
                             <a href="{{ route('admin.slider') }}">Slider</a>
                         </li>
 
-                        <li class="submenu-item {{ Route::is('admin.services') ? 'active' : '' }}">
-                            <a href="{{ route('admin.services') }}">Services</a>
-                        </li>
+
 
                        <li class="submenu-item {{ Route::is('admin.about') ? 'active' : '' }}">
                             <a href="{{ route('admin.about') }}">About Us</a>

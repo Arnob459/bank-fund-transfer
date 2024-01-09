@@ -52,8 +52,7 @@ use Illuminate\Support\Facades\Route;
                 Route::put('/kyc-verification', [UserController::class, 'kycUpdate'])->name('kyc.update');
 
                 Route::get('/notifications', [UserController::class, 'notification'])->name('notifications');
-
-
+                Route::get('/contact-us', [UserController::class, 'contact'])->name('contact');
 
 
                 //Account and Card
@@ -62,6 +61,8 @@ use Illuminate\Support\Facades\Route;
                 Route::delete('/account/{id}', [UserController::class, 'destroy'])->name('account.destroy');
                 Route::post('/card', [UserController::class, 'cardStore'])->name('card.store');
                 Route::delete('/card/{id}', [UserController::class, 'cardDestroy'])->name('card.destroy');
+                Route::post('/card/update/{id}', [UserController::class, 'cardUpdate'])->name('card.update');
+
 
 
 

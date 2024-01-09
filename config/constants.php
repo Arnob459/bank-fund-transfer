@@ -24,7 +24,7 @@ return [
 
     'about' => [
         'path' => 'assets/images/about',
-        'size' => '626x626',
+        'size' => '650x433',
     ],
 
     'testimonial' => [
@@ -33,7 +33,7 @@ return [
     ],
     'blog' => [
         'path' => 'assets/images/blog',
-        'size' => '1280x960',
+        'size' => '850x400',
         'thumb' => '624x414',
     ],
 

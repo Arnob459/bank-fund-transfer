@@ -13,17 +13,24 @@
                     <div class="card-body ">
                         <div class="row ">
                             <div class="form-group col-md-12 mb-4">
-                                <label for="" class="mb-2">@lang('Contact email') </label>
+                                <label for="" class="mb-2">Contact email </label>
                                 <input type="text" class="form-control form-control-lg" name="contact_email" value="{{$setting_extra->contact_email}}"
-                                       placeholder="Enter service title">
-                                <code>@lang('this email will use in contact form')</code>
+                                       placeholder="Enter Contact Email">
+                                <code>this email will use in contact </code>
                             </div>
 
                             <div class="form-group col-md-12">
-                                <label for="" class="mb-2">@lang('Contact phone')</label>
+                                <label for="" class="mb-2">Contact phone</label>
                                 <input type="text" class="form-control form-control-lg" name="contact_phone" value="{{$setting_extra->contact_phone}}"
-                                       placeholder="Enter service subtitle">
-                                <code>@lang('this phone will use in header top')</code>
+                                       placeholder="Enter Contact Phone">
+                                <code>this phone will use in contact </code>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label for="" class="mb-2">Contact address</label>
+                                <input type="text" class="form-control form-control-lg" name="contact_address" value="{{$setting_extra->contact_address}}"
+                                       placeholder="Enter Contact Address">
+                                <code>this address will use in contact</code>
                             </div>
 
                         </div>
@@ -37,11 +44,6 @@
             </div>
         </div>
     </div>
-
-@endsection
-
-
-@section('button')
 
 @endsection
 

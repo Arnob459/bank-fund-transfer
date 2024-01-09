@@ -20,7 +20,7 @@ class CheckUsernameController extends Controller
             $query = $request->get('query');
 
             // return $query;
-                $data = User::where('username', $query)
+                $data = User::where('username', $query)->where('status',1)
                     ->first();
                     // return $data;
 
@@ -30,7 +30,7 @@ class CheckUsernameController extends Controller
 
             }
             else{
-                return response()->json(['status' => 'error username ']);
+                return response()->json(['status' => 'Invalid username ']);
 
 
             }

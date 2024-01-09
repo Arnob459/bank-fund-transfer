@@ -13,52 +13,8 @@
 ============================================= -->
 <div id="main-wrapper">
 
-  <!-- Header
-  ============================================= -->
-  <header id="header">
-    <div class="container">
-      <div class="header-row">
-        <div class="header-column justify-content-start">
-          <!-- Logo
-          ============================= -->
-          <div class="logo me-3"> <a class="d-flex" href="index.html" title="Payyed - HTML Template"><img src="https://harnishdesign.net/demo/html/payyed/images/logo.png" width="121" height="33"  alt="Payyed" /></a> </div>
-          <!-- Logo end -->
-          <!-- Collapse Button
-          ============================== -->
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#header-nav"> <span></span> <span></span> <span></span> </button>
-          <!-- Collapse Button end -->
+    @include('frontend.include.header')
 
-          <!-- Primary Navigation
-          ============================== -->
-          <nav class="primary-menu navbar navbar-expand-lg">
-            <div id="header-nav" class="collapse navbar-collapse">
-              {{-- <ul class="navbar-nav me-auto">
-                <li><a href="https://harnishdesign.net/demo/html/payyed/landing-page-send.html">Send</a></li>
-                <li><a href="https://harnishdesign.net/demo/html/payyed/landing-page-receive.html">Receive</a></li>
-                <li><a href="https://harnishdesign.net/demo/html/payyed/about-us.html">About Us</a></li>
-                <li><a href="https://harnishdesign.net/demo/html/payyed/fees.html">Fees</a></li>
-                <li><a href="https://harnishdesign.net/demo/html/payyed/help.html">Help</a></li>
-
-              </ul> --}}
-            </div>
-          </nav>
-          <!-- Primary Navigation end -->
-        </div>
-        <div class="header-column justify-content-end">
-          <!-- Login & Signup Link
-          ============================== -->
-          <nav class="login-signup navbar navbar-expand">
-            <ul class="navbar-nav">
-              <li><a href="{{ route('login') }}">Login</a> </li>
-              <li class="align-items-center h-auto ms-sm-3"><a class="btn btn-primary" href="{{ route('register') }}">Sign Up</a></li>
-            </ul>
-          </nav>
-          <!-- Login & Signup Link end -->
-        </div>
-      </div>
-    </div>
-  </header>
-  <!-- Header End -->
 
   <!-- Content
   ============================================= -->
@@ -76,7 +32,7 @@
                 <div class="container my-auto text-center">
                   <h2 class="text-16 text-white">{{ $slider->title }}</h2>
                   <p class="text-5 text-white mb-4">{{$slider->sub_title}}</p>
-                  <a href="{{ route('register') }}" class="btn btn-primary m-2">Open a Free Account</a> <a class="btn btn-outline-light video-btn m-2" href="#" data-src="https://www.youtube.com/embed/7e90gBu4pas" data-bs-toggle="modal" data-bs-target="#videoModal"><span class="text-2 me-3"><i class="fas fa-play"></i></span>See How it Works</a> </div>
+                  <a href="{{ route('register') }}" class="btn btn-primary m-2">Open a Free Account</a> </div>
               </div>
             </section>
           </div>
@@ -212,48 +168,7 @@
   </div>
   <!-- Content end -->
 
-  <!-- Footer
-  ============================================= -->
-  <footer id="footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg d-lg-flex align-items-center">
-          <ul class="nav justify-content-center justify-content-lg-start text-3">
-            <li class="nav-item"> <a class="nav-link active" href="#">About Us</a></li>
-            <li class="nav-item"> <a class="nav-link" href="#">Support</a></li>
-            <li class="nav-item"> <a class="nav-link" href="#">Help</a></li>
-            <li class="nav-item"> <a class="nav-link" href="#">Careers</a></li>
-            <li class="nav-item"> <a class="nav-link" href="#">Affiliate</a></li>
-            <li class="nav-item"> <a class="nav-link" href="#">Fees</a></li>
-          </ul>
-        </div>
-        <div class="col-lg d-lg-flex justify-content-lg-end mt-3 mt-lg-0">
-          <ul class="social-icons justify-content-center">
-            @foreach ($socials as $social)
-            <li class="social-icons-facebook"><a data-bs-toggle="tooltip" href="{{ $social->url }}" target="_blank" ><i class="{{ $social->icon }}"></i></a></li>
-
-            @endforeach
-
-          </ul>
-        </div>
-      </div>
-      <div class="footer-copyright pt-3 pt-lg-2 mt-2">
-        <div class="row">
-          <div class="col-lg">
-            <p class="text-center text-lg-start mb-2 mb-lg-0">Copyright &copy; 2022 <a href="#">Payyed</a>. All Rights Reserved.</p>
-          </div>
-          <div class="col-lg d-lg-flex align-items-center justify-content-lg-end">
-            <ul class="nav justify-content-center">
-              <li class="nav-item"> <a class="nav-link active" href="#">Security</a></li>
-              <li class="nav-item"> <a class="nav-link" href="#">Terms</a></li>
-              <li class="nav-item"> <a class="nav-link" href="#">Privacy</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
-  <!-- Footer end -->
+  @include('frontend.include.footer')
 
 </div>
 <!-- Document Wrapper end -->

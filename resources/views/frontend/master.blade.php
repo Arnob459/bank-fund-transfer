@@ -6,8 +6,8 @@
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
-<link href="https://harnishdesign.net/demo/html/payyed/images/favicon.png" rel="icon" />
-<title>{{ $gnl->site_name }}  {{$page_title?? ''}}</title>
+<link href="{{ asset('assets/images/logo/'.$gnl->favicon) }}" rel="icon" />
+<title>{{ $gnl->site_name }}- {{$page_title?? ''}}</title>
 <meta name="description" content="This professional design html template is for build a Money Transfer and online payments website.">
 <meta name="author" content="harnishdesign.net">
 

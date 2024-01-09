@@ -19,6 +19,7 @@ use Auth;
 use Illuminate\Support\Facades\Hash;
 use Session;
 use Validator;
+use Carbon\Carbon;
 
 
 class UserController extends Controller
@@ -113,9 +114,11 @@ class UserController extends Controller
 
     public function contactUpdate(Request $request)
     {
+        $userId = auth()->user()->id;
+
         $request->validate([
-            'email' => 'required|unique:users',
-            'phone' => 'required|max:20|unique:users',
+            'email' => 'required|email|unique:users,email,' . $userId,
+            'phone' => 'required|max:20|unique:users,phone,' . $userId,
         ]);
 
         auth()->user()->update([
@@ -123,7 +126,7 @@ class UserController extends Controller
             'phone' => $request->phone,
 
         ]);
-        return back()->with('success', 'Your profile has been updated');
+        return back()->with('success', 'Your Contact has been updated');
     }
 
     public function avatarUpdate(Request $request)
@@ -228,9 +231,12 @@ class UserController extends Controller
             'amount' => 'required|numeric|gt:0||lt:10000000000000000.00',
         ]);
 
-        $username = User::where('username',$request->username)->first();
+        $username = User::where('username',$request->username)->where('status',1)->first();
 
         if ($username) {
+            if ($username->id == auth()->user()->id) {
+                return back()->withErrors('Please input other Username');
+            }
             $data['username'] = $username;
         } else {
             return back()->withErrors('Please input Valid Username');
@@ -239,7 +245,12 @@ class UserController extends Controller
 
         $genaral = Setting::first();
         $charge = $genaral->fixed_charge + ($request->amount * $genaral->percent_charge / 100);
-        $afterCharge = $request->amount - $charge;
+        if ($charge < $request->amount) {
+            $afterCharge = $request->amount - $charge;
+        } else {
+            return back()->withErrors('Please enter greater amount that charges');
+
+        }
 
         $data['page_title'] = "Confirm Request Money";
         $data['amount'] = $request->amount;
@@ -260,8 +271,11 @@ class UserController extends Controller
             'username' => 'required|string|min:6|max:50',
             'amount' => 'required|numeric|gt:0||lt:10000000000000000.00',
         ]);
-        $username = User::where('username',$request->username)->pluck('id')->first();
+        $username = User::where('username',$request->username)->where('status',1)->pluck('id')->first();
             if ($username) {
+                if ($username == auth()->user()->id) {
+                    return back()->withErrors('Please input other Username');
+                }
                 $receiver = $username;
             } else {
                 return back()->withErrors('Please input Valid Username');
@@ -321,7 +335,12 @@ class UserController extends Controller
         if ($request->who == 1) {
 
             $charge = $genaral->fixed_charge + ($request->amount * $genaral->percent_charge / 100);
-            $afterCharge = $request->amount - $charge;
+            if ($charge < $request->amount) {
+                $afterCharge = $request->amount - $charge;
+            } else {
+                return redirect()->route('user.ownbank.requestmoney')->withErrors('Please enter greater amount that charges');
+
+            }
 
             $transfer = new Transfer();
             $transfer->user_id = $user->id;
@@ -385,9 +404,13 @@ class UserController extends Controller
             return back()->withErrors('Insufficient balance');
         }
 
-        $username = User::where('username',$request->username)->first();
+        $username = User::where('username',$request->username)->where('status',1)->first();
+
 
         if ($username) {
+            if ($username->id == auth()->user()->id) {
+                return back()->withErrors('Please input Other Username');
+            }
             $data['username'] = $username;
         } else {
             return back()->withErrors('Please input Valid Username');
@@ -396,10 +419,15 @@ class UserController extends Controller
 
         $genaral = Setting::first();
         $charge = $genaral->fixed_charge + ($request->amount * $genaral->percent_charge / 100);
-        $afterCharge = $request->amount - $charge;
+
+        if ($charge < $request->amount) {
+            $afterCharge = $request->amount - $charge;
+        } else {
+            return back()->withErrors('Please enter greater amount that charges');
+
+        }
 
         $data['page_title'] = "Confirm Send Money";
-        // $data['username'] = User::where('username',$request->username)->first();
         $data['amount'] = $request->amount;
         $data['charge'] = $charge;
         $data['after_charge'] = $afterCharge ;
@@ -417,24 +445,33 @@ class UserController extends Controller
             'username' => 'required|string|min:6|max:50',
             'amount' => 'required|numeric|gt:0',
         ]);
-        $username = User::where('username',$request->username)->pluck('id')->first();
+        $username = User::where('username',$request->username)->where('status',1)->pluck('id')->first();
             if ($username) {
+                if ($username == auth()->user()->id) {
+                    return redirect()->route('user.ownbank.sendmoney')->withErrors('Please input other Username');
+                }
                 $receiver = $username;
             } else {
-                return back()->withErrors('Please input Valid Username');
+                return redirect()->route('user.ownbank.sendmoney')->withErrors('Please input Valid Username');
 
             }
 
         $user = auth()->user();
 
         if ($user->balance < $request->amount) {
-            return back()->withErrors('Insufficient balance');
+            return redirect()->route('user.ownbank.sendmoney')->withErrors('Insufficient balance');
         }
 
         $genaral = Setting::first();
 
         $charge = $genaral->fixed_charge + ($request->amount * $genaral->percent_charge / 100);
-        $afterCharge = $request->amount - $charge;
+
+        if ($charge < $request->amount) {
+            $afterCharge = $request->amount - $charge;
+        } else {
+            return redirect()->route('user.ownbank.sendmoney')->withErrors('Please enter greater amount that charges');
+
+        }
 
 
         $transfer = new Transfer();
@@ -522,6 +559,10 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'card_type_id' => 'required|exists:card_types,id',
             'options' => 'required|integer|min:0|max:2',
+            'card_number' => 'required|string|min:12|max:30',
+            'expiry_date' => 'required|date',
+            'cvv' => 'required|string|min:3|max:10',
+            'card_holder' => 'required|string|max:255',
 
         ]);
 
@@ -534,17 +575,48 @@ class UserController extends Controller
             $card_type_id = $validatedData['card_type_id'];
             $type = $request->options;
 
+            // $expiry_date = Carbon::createFromFormat('Y-m', $request->expiry_date)->format('m/y');
+            $expiry_date =Carbon::createFromFormat('Y-m', $request->input('expiry_date'))->lastOfMonth();
+
             Card::create([
                 'user_id' => $user_id,
                 'card_type_id' => $card_type_id,
                 'type' => $type,
-                'card_number' => getCardNumber(),
-                'expiry_date' => getExpiryDate(),
+                'card_number' => $request->card_number,
+                'cvv' => $request->cvv,
+                'card_holder' => $request->card_holder,
+                'expiry_date' => $expiry_date,
 
             ]);
 
             return back()->with('success', 'Card Request send successfully');
         }
+    }
+
+    public function cardUpdate(Request $request,$id)
+    {
+        $validatedData = $request->validate([
+            'expiry_date' => 'required|date',
+            'cvv' => 'required|string|min:3|max:10',
+            'card_holder' => 'required|string|max:255',
+
+        ]);
+        $expiry_date =Carbon::createFromFormat('Y-m', $request->input('expiry_date'))->lastOfMonth();
+
+        $card = Card::where('user_id',auth()->user()->id)->where('id',$id)->first();
+        if ($card) {
+            $card->expiry_date = $expiry_date;
+            $card->cvv = $request->cvv;
+            $card->card_holder = $request->card_holder;
+            $card->status = 0;
+            $card->save();
+
+                return back()->with('success', 'Card Request send successfully');
+        } else {
+            return back()->withErrors( 'Invalid request');
+        }
+
+
     }
 
 
@@ -710,8 +782,19 @@ class UserController extends Controller
     public function notification()
     {
         $page_title = 'Notifications';
-        $notification = Trx::where('user_id', auth()->user()->id)->where('remark', 'admin_added')->orWhere('remark', 'admin_subtract')->latest()->get();
+        $notification = Trx::where('user_id', auth()->user()->id)
+        ->where(function ($query) {
+            $query->where('remark', 'admin_added')
+                  ->orWhere('remark', 'admin_subtract');
+        })->latest()->get();
         return view('user.notifications', compact('page_title','notification'));
+    }
+
+    public function contact()
+    {
+        $page_title = 'Contact us';
+
+        return view('user.contact', compact('page_title'));
     }
 
 

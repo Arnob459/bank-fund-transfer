@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CheckUsernameController;
+use App\Http\Controllers\FrontendController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,9 @@ Route::get('/send-email', function () {
 Route::get('/', [App\Http\Controllers\FrontendController::class, 'index'])->name('index');
 
 Route::get('checkusername', [CheckUsernameController::class, 'Checkusername'])->name('checkusername');
+Route::get('about-us', [FrontendController::class, 'aboutus'])->name('aboutus');
+Route::get('blog', [FrontendController::class, 'blog'])->name('blog');
+Route::get('terms', [FrontendController::class, 'terms'])->name('terms');
+Route::get('privacy', [FrontendController::class, 'privacy'])->name('privacy');
+
+

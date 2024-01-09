@@ -8,6 +8,8 @@ use App\Models\Choose;
 use App\Models\Title;
 use App\Models\Counter;
 use App\Models\Work;
+use App\Models\Blog;
+
 use App\Models\Testimonial;
 
 
@@ -44,6 +46,30 @@ class FrontendController extends Controller
 
 
         return view('frontend.index', $data);
+
+    }
+
+    public function aboutus()
+    {
+
+        $data['page_title'] = "About Us";
+        $data['testimonials'] = Testimonial::all();
+
+        $data['testimonial_title'] = Title::where('key_value','testimonial')->first();
+
+        return view('frontend.about', $data);
+
+    }
+
+    public function blog()
+    {
+
+        $data['page_title'] = "blog";
+        $data['blogs'] = Blog::all();
+
+        $data['blog_title'] = Title::where('key_value','blog')->first();
+
+        return view('frontend.blog', $data);
 
     }
 

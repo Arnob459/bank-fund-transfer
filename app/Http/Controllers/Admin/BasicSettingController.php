@@ -187,6 +187,8 @@ class BasicSettingController extends Controller
         $request->validate([
             'contact_email' => 'string|max:191',
             'contact_phone' => 'string|max:191',
+            'contact_address' => 'string|max:255',
+
         ]);
 
 
@@ -194,6 +196,8 @@ class BasicSettingController extends Controller
         $gnl = SettingExtra::first();
         $gnl->contact_email = $request->contact_email;
         $gnl->contact_phone = $request->contact_phone;
+        $gnl->contact_address = $request->contact_address;
+
         $gnl->save();
         return back()->with('success', 'Updated successfully');
     }

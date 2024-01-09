@@ -63,7 +63,7 @@
                 <li class="{{ Route::is('user.home') ? 'active' : '' }}"><a href="{{ route('user.home') }}">Dashboard</a></li>
                 <li class="{{ Route::is('user.transections') ? 'active' : '' }}"><a href="{{ route('user.transections') }}">Transactions</a></li>
                 <li class="{{ Str::startsWith(request()->route()->getName(), 'user.ownbank') ? 'active' : '' }}"><a href="{{ route('user.ownbank.sendmoney') }}">Send/Request</a></li>
-                <li><a href="{{ route('index') }}">Help</a></li>
+                <li class="{{ Route::is('user.contact') ? 'active' : '' }}"><a href="{{ route('user.contact') }}">Help</a></li>
                 <li class="{{ Route::is('user.account') ? 'active' : '' }}"><a href="{{ route('user.account') }}">Accounts & Cards</a></li>
                 <li class="{{ Route::is('user.requests') ? 'active' : '' }}"><a href="{{ route('user.requests') }}">Requests</a></li>
 
@@ -79,7 +79,7 @@
           ============================== -->
           <nav class="login-signup navbar navbar-expand">
             <ul class="navbar-nav">
-              <li class="dropdown language"> <a class="dropdown-toggle" href="#">En</a>
+              {{-- <li class="dropdown language"> <a class="dropdown-toggle" href="#">En</a>
                 <ul class="dropdown-menu">
                   <li><a class="dropdown-item" href="#">English</a></li>
                   <li><a class="dropdown-item" href="#">French</a></li>
@@ -87,7 +87,7 @@
                   <li><a class="dropdown-item" href="#">简体中文</a></li>
                   <li><a class="dropdown-item" href="#">Türkçe</a></li>
                 </ul>
-              </li>
+              </li> --}}
 
               <li class="dropdown notifications"> <a class="dropdown-toggle" href="#"><span class="text-5"><i class="far fa-bell"></i></span></a>
                 <ul class="dropdown-menu">
@@ -115,7 +115,7 @@
                   <li class="dropdown-divider mx-n3"></li>
                   <li><a class="dropdown-item" href="{{ route('user.profile') }}"><i class="fas fa-user"></i>My Profile</a></li>
                   <li class="dropdown-divider mx-n3"></li>
-                  <li><a class="dropdown-item" href="{{ route('index') }}"><i class="fas fa-life-ring"></i>Need Help?</a></li>
+                  <li><a class="dropdown-item" href="{{ route('user.contact') }}"><i class="fas fa-life-ring"></i>Need Help?</a></li>
                   <li><a class="dropdown-item" href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i>Sign Out</a></li>
                 </ul>
               </li>
@@ -145,10 +145,9 @@
         </div>
         <div class="col-lg d-lg-flex justify-content-lg-end mt-3 mt-lg-0">
           <ul class="social-icons justify-content-center">
-            <li class="social-icons-facebook"><a data-bs-toggle="tooltip" href="http://www.facebook.com/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
-            <li class="social-icons-twitter"><a data-bs-toggle="tooltip" href="http://www.twitter.com/" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a></li>
-            <li class="social-icons-google"><a data-bs-toggle="tooltip" href="http://www.google.com/" target="_blank" title="Google"><i class="fab fa-google"></i></a></li>
-            <li class="social-icons-youtube"><a data-bs-toggle="tooltip" href="http://www.youtube.com/" target="_blank" title="Youtube"><i class="fab fa-youtube"></i></a></li>
+            @foreach ($socials as $item)
+            <li class="social-icons-facebook"><a data-bs-toggle="tooltip" href="{{ $item->url }}" target="_blank" ><i class="{{ $item->icon }}"></i></a></li>
+            @endforeach
           </ul>
         </div>
       </div>

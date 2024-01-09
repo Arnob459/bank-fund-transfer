@@ -10,6 +10,8 @@ use App\Models\User;
 use App\Models\Transfer;
 use App\Models\Bank;
 use App\Models\Account;
+use App\Models\Card;
+
 
 
 class HomeController extends Controller
@@ -34,8 +36,8 @@ class HomeController extends Controller
         $data['page_title'] = 'Money Transfer' ;
         $data['user'] = Auth::user();
         $data['account'] = Account::where('user_id', Auth::id())->where('status', 1)->count();
-        $data['card'] = Account::where('user_id', Auth::id())->where('status', 1)->count();
-        $data['logs'] = Transfer::where('user_id', Auth::id())->with(['receiver','bank'])->orderBy('id', 'desc')->paginate(config('constants.table.default'));
+        $data['card'] = Card::where('user_id', Auth::id())->where('status', 1)->count();
+        $data['logs'] = Transfer::where('user_id', Auth::id())->with(['receiver','bank'])->orderBy('id', 'desc')->paginate('5');
         return view('user.home',$data);
     }
 }

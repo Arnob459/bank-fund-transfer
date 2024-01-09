@@ -109,6 +109,8 @@
               var payAmount = amount - charge;
               var afterBalance = balance - amount;
 
+              payAmount = Math.max(0, payAmount);
+
               $('#charge').text(charge.toFixed(2));
               $('#payAmount').text(payAmount.toFixed(2));
 
