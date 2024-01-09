@@ -18,7 +18,7 @@
                 <div class="form-group col-md-4 mb-3">
                     <label class="col-lg-6 mb-2 ">Upload image  <span class="required-label">*</span></label>
                     <div class="form-group ">
-                        <img src="{{ asset('assets/admin/images/white-background.png') }}" alt="Image Preview" id="image-preview" style="height:200px" >
+                        <img src="http://placehold.it/850x400" alt="Image Preview" id="image-preview" style="height:100px" >
                     </div>
 
                     <div class="col-lg-12 mb-3">
@@ -28,7 +28,7 @@
                             <label for="image" class="btn btn-primary rounded-pill "><i class="fa fa-file-image"></i> Upload </label>
                         </div>
                     </div>
-                    <p class="text-warning mb-0">Image Will Resize 1280x960 px</p>
+                    <p class="text-warning mb-0">Image Will Resize 850x400 px</p>
                     <p class="text-warning mb-0">Only jpg, jpeg, png image allowed.</p>
                 </div>
 

@@ -27,7 +27,7 @@
         <div class="item">
             <section class="hero-wrap">
               <div class="hero-mask opacity-7 bg-dark"></div>
-              <div class="hero-bg" style="background-image:url('https://harnishdesign.net/demo/html/payyed/images/bg/image-1.jpg');"></div>
+              <div class="hero-bg" style="background-image:url('{{asset('assets/images/slider/' .$slider->image)}}');"></div>
               <div class="hero-content d-flex fullscreen-with-header py-5">
                 <div class="container my-auto text-center">
                   <h2 class="text-16 text-white">{{ $slider->title }}</h2>
@@ -96,7 +96,6 @@
         <div class="row">
           <div class="col-lg-6">
             <div class="card bg-dark-3 shadow-sm border-0"> <img class="card-img img-fluid opacity-8" src="https://harnishdesign.net/demo/html/payyed/images/how-work.jpg" width="570" height="362"  alt="banner">
-              <div class="card-img-overlay p-0"> <a class="d-flex h-100 video-btn" href="#" data-src="https://www.youtube.com/embed/7e90gBu4pas" data-bs-toggle="modal" data-bs-target="#videoModal"> <span class="playButton playButton-pulsing bg-white m-auto"><i class="fas fa-play"></i></span> </a> </div>
             </div>
           </div>
           <div class="col-lg-6 mt-5 mt-lg-0">
@@ -133,7 +132,6 @@
               </div>
             @endforeach
         </div>
-        <div class="text-center mt-4"><a href="#" class="btn-link text-4">See more people review<i class="fas fa-chevron-right text-2 ms-2"></i></a></div>
       </div>
     </section>
     <!-- Testimonial end -->
@@ -145,8 +143,7 @@
       <div class="hero-bg" style="background-image:url('https://harnishdesign.net/demo/html/payyed/images/bg/image-2.jpg');"></div>
       <div class="hero-content py-5">
         <div class="container text-center">
-          <h2 class="text-9 text-white">Awesome Customer Support</h2>
-          <p class="lead text-white mb-4">Have you any query? Don't worry. We have great people ready to help you whenever you need it.</p>
+          <h2 class="text-9 text-white">{{ $gnl->footer_text}}</h2>
           <a href="#" class="btn btn-light">Find out more</a> </div>
       </div>
     </section>

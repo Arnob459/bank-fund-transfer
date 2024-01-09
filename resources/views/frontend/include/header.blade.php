@@ -20,7 +20,7 @@
                 <ul class="navbar-nav me-auto">
                     <li><a href="{{ route('aboutus') }}">About Us</a></li>
                     <li><a href="{{ route('blog') }}">blog</a></li>
-                    <li><a href="">Help</a></li>
+                    <li><a href="{{ route('help') }}">Help</a></li>
 
                   </ul>
             </div>

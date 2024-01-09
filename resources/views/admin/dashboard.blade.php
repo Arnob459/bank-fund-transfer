@@ -272,6 +272,118 @@
                     </div>
                 </div>
 
+
+                <div class="page-heading">
+                    <h3>Cards Statistics</h3>
+                </div>
+
+                <div class="col-6 col-lg-4 col-md-6">
+                    <div class="card">
+                        <div class="card-body ">
+                            <div class="row">
+                                <div class="col-md-3  ">
+                                    <div class="stats-icon blue mb-2">
+                                        <i class="fas fa-credit-card"></i>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-9 ">
+                                    <h6 class="text-muted font-semibold">Total Cards </h6>
+                                    <h6 class="font-extrabold mb-0">{{ $total_card }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-lg-4 col-md-6">
+                    <div class="card">
+                        <div class="card-body ">
+                            <div class="row">
+                                <div class="col-md-3  ">
+                                    <div class="stats-icon green mb-2">
+                                        <i class="fas fa-credit-card"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-9 ">
+                                    <h6 class="text-muted font-semibold">Active Cards</h6>
+                                    <h6 class="font-extrabold mb-0">{{ $active_card }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-4 col-md-6">
+                    <div class="card">
+                        <div class="card-body ">
+                            <div class="row">
+                                <div class="col-md-3 ">
+                                    <div class="stats-icon purple mb-2">
+                                        <i class="fas fa-credit-card"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-9 ">
+                                    <h6 class="text-muted font-semibold">Pending Cards</h6>
+                                    <h6 class="font-extrabold mb-0">{{ $pending_card }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-4 col-md-6">
+                    <div class="card">
+                        <div class="card-body ">
+                            <div class="row">
+                                <div class="col-md-3 ">
+                                    <div class="stats-icon red mb-2">
+                                        <i class="fas fa-credit-card"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-9 ">
+                                    <h6 class="text-muted font-semibold">Reject Cards</h6>
+                                    <h6 class="font-extrabold mb-0">{{ $reject_card}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-lg-4 col-md-6">
+                    <div class="card">
+                        <div class="card-body ">
+                            <div class="row">
+                                <div class="col-md-3 ">
+                                    <div class="stats-icon blue mb-2">
+                                        <i class="fas fa-credit-card"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-9 ">
+                                    <h6 class="text-muted font-semibold">Credit Cards</h6>
+                                    <h6 class="font-extrabold mb-0">{{ $total_credit_card}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-lg-4 col-md-6">
+                    <div class="card">
+                        <div class="card-body ">
+                            <div class="row">
+                                <div class="col-md-3 ">
+                                    <div class="stats-icon purple mb-2">
+                                        <i class="fas fa-credit-card"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-9 ">
+                                    <h6 class="text-muted font-semibold">Debit Cards</h6>
+                                    <h6 class="font-extrabold mb-0">{{ $total_debit_card}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="page-heading">
                     <h3>Request Statistics</h3>
                 </div>

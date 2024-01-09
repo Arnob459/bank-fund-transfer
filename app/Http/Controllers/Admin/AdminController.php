@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Models\UserLogin;
 use App\Models\Account;
 use App\Models\Transfer;
+use App\Models\Card;
 
 
 class AdminController extends Controller
@@ -60,6 +61,14 @@ class AdminController extends Controller
         $data['pending_send_money'] = Transfer::where('type', 1)->where('status', 2)->count();
         $data['active_send_money'] = Transfer::where('type', 1)->where('status', 1)->count();
         $data['reject_send_money'] = Transfer::where('type', 1)->where('status', 3)->count();
+
+        $data['total_card'] = Card::count();
+        $data['total_debit_card'] = Card::where('type', 1)->count();
+        $data['total_credit_card'] = Card::where('type', 2)->count();
+
+        $data['pending_card'] = Card::where('status', 0)->count();
+        $data['active_card'] = Card::where('status', 1)->count();
+        $data['reject_card'] = Card::where('status', 2)->count();
 
 
 

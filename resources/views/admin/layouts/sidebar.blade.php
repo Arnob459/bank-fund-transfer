@@ -194,21 +194,7 @@
                     </ul>
                 </li>
 
-                <li
-                class="sidebar-item  has-sub">
-                <a href="#" class='sidebar-link'>
-                    <i class="fas fa-book"></i>
-                    <span>Subscribers</span>
-                </a>
-                <ul class="submenu ">
-                    <li class="submenu-item {{ Route::is('admin.subscribers') ? 'active' : '' }}">
-                        <a href="{{ route('admin.subscriber') }}">Subscribers</a>
-                    </li>
-                    <li class="submenu-item {{ Route::is('admin.subscribers.mail') ? 'active' : '' }}">
-                        <a href="{{ route('admin.subscriber.mail') }}">Mail to Subscribers</a>
-                    </li>
-                </ul>
-            </li>
+
 
                 <li class="sidebar-title">Home Management</li>
                 <li class="sidebar-item  has-sub">
@@ -245,9 +231,7 @@
                         <li class="submenu-item {{ Route::is('admin.blog') ? 'active' : '' }}">
                             <a href="{{ route('admin.blog') }}">Blog</a>
                         </li>
-                        {{-- <li class="submenu-item {{ Route::is('admin.titleSubtitle') ? 'active' : '' }}">
-                            <a href="{{ route('admin.titleSubtitle') }}">Title Subtitle </a>
-                        </li> --}}
+
                         <li class="submenu-item {{ Route::is('admin.privacy') ? 'active' : '' }}">
                             <a href="{{ route('admin.privacy') }}">Privacy </a>
                         </li>

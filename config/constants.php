@@ -19,7 +19,7 @@ return [
 
     'slider' => [
         'path' => 'assets/images/slider',
-        'size' => '1920x1120'
+        'size' => '1500x1000'
     ],
 
     'about' => [

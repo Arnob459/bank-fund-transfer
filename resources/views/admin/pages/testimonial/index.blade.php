@@ -55,7 +55,6 @@
                             <thead>
                                 <tr>
                                     <th>SL</th>
-                                    <th>Avatar</th>
                                     <th>Author</th>
                                     <th>Designation</th>
                                     <th>Actions</th>
@@ -67,11 +66,7 @@
                                 @foreach ($testimonials as $item)
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
-                                    <td class="text-bold-500">
-                                        <div class="avatar avatar-xl  ">
-                                        <img src="{{ asset('assets/images/testimonial/'.$item->image) }}" >
-                                        </div>
-                                    </td>
+
                                     <td class="text-bold-500">{{ $item->author }}</td>
                                     <td class="text-bold-500">{{ $item->designation }}</td>
                                     <td>

@@ -3,7 +3,7 @@
 @section('content')
 
 @push('button')
-<a href="{{ route('admin.slider.create') }}" class="btn btn-lg btn-warning ">Add New</a>
+<a href="{{ route('admin.slider.create') }}" class="btn  btn-warning ">Add New Slider</a>
 @endpush
 
 <section class="section">

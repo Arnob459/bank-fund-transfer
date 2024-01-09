@@ -24,7 +24,7 @@
                             <label for="image" class="btn btn-primary rounded-pill "><i class="fa fa-file-image"></i> Upload a Image</label>
                         </div>
                     </div>
-                    <p class="text-warning mb-0">Slider Will Resize 1920x1120.</p>
+                    <p class="text-warning mb-0">Slider Will Resize 1500x1000.</p>
                     <p class="text-warning mb-0">Only jpg, jpeg, png image allowed.</p>
                 </div>
 

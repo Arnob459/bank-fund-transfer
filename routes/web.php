@@ -28,6 +28,10 @@ Route::get('/', [App\Http\Controllers\FrontendController::class, 'index'])->name
 Route::get('checkusername', [CheckUsernameController::class, 'Checkusername'])->name('checkusername');
 Route::get('about-us', [FrontendController::class, 'aboutus'])->name('aboutus');
 Route::get('blog', [FrontendController::class, 'blog'])->name('blog');
+Route::get('help', [FrontendController::class, 'help'])->name('help');
+Route::get('contact-us', [FrontendController::class, 'contact'])->name('contact');
+
+
 Route::get('terms', [FrontendController::class, 'terms'])->name('terms');
 Route::get('privacy', [FrontendController::class, 'privacy'])->name('privacy');
 

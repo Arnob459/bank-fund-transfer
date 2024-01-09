@@ -45,25 +45,14 @@ class TestimonialController extends Controller
                 'name' => 'required|string|max:255',
                 'designation' => 'required|string|max:255',
                 'quote' => 'required|string|max:3000',
-                'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             ]);
 
-            if ($request->hasFile('image')) {
-                try {
-                    $path = config('constants.testimonial.path');
-                    $size = config('constants.testimonial.size');
-                    $filename = upload_image($request->image, $path, $size);
-                } catch (\Exception $exp) {
 
-                    return back()->withWarning('Image could not be uploaded');
-                }
-            }
 
             $testimonial = new Testimonial();
             $testimonial->author =  $request->name;
             $testimonial->designation =  $request->designation;
             $testimonial->quote =  $request->quote;
-            $testimonial->image =  $filename;
             $testimonial->save();
             return redirect()->route('admin.testimonial')->with('success','Testimonial Create Successfully');
 
@@ -80,22 +69,9 @@ class TestimonialController extends Controller
                 'name' => 'required|string|max:255',
                 'designation' => 'required|string|max:255',
                 'quote' => 'required|string|max:3000',
-                'image' => 'image|mimes:jpeg,png,jpg|max:2048',
             ]);
 
             $testimonial = Testimonial::findOrfail($id);
-            if ($request->hasFile('image')) {
-                $filename = $testimonial->image;
-                try {
-                    $path = config('constants.testimonial.path');
-                    $size = config('constants.testimonial.size');
-                    remove_file(config('constants.testimonial.path') . '/' .$testimonial->image);
-                    $filename = upload_image($request->image, $path, $size, $filename);
-                } catch (\Exception $exp) {
-                    return back()->withWarning('Image could not be uploaded');
-                }
-                $testimonial->image = $filename;
-            }
             $testimonial->author =  $request->name;
             $testimonial->designation =  $request->designation;
             $testimonial->quote =  $request->quote;

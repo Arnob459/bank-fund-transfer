@@ -70,7 +70,7 @@
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td class="text-bold-500">
-                                        <div class="avatar avatar-xl  ">
+                                        <div class="avatar ">
                                         <img src="{{ asset('assets/images/blog/'.$item->image) }}" >
                                         </div>
                                     </td>

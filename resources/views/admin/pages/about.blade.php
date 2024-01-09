@@ -18,7 +18,7 @@
                 <div class="form-group col-md-4">
                     <label class="col-lg-6 mb-2">About Image  <span class="required-label">*</span></label>
                     <div class="form-group ">
-                        <img src="{{ asset('assets/images/about/'.$about->about_image) }}" alt="Image Preview" id="image-preview" style="height:200px" >
+                        <img src="{{ asset('assets/images/about/'.$about->about_image) }}" alt="Image Preview" id="image-preview" style="height:150px" >
                     </div>
                     <div class="col-lg-12">
                         <div class="input-file input-file-image">
@@ -27,7 +27,7 @@
                             <label for="image" class="btn btn-primary rounded-pill "><i class="fa fa-file-image"></i> Upload </label>
                         </div>
                     </div>
-                    <p class="text-warning mb-0">Image Will Resize 626X626.</p>
+                    <p class="text-warning mb-0">Image Will Resize 650x433.</p>
                     <p class="text-warning mb-0">Only jpg, jpeg, png image allowed.</p>
                 </div>
 
